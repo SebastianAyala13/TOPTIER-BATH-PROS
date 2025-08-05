@@ -86,7 +86,7 @@ export default function Form() {
           <h2 className="text-3xl sm:text-4xl font-bold text-black mb-12 drop-shadow-md">
             {language === 'es' ? 'Obtén tu Cotización Gratuita' : 'Get Your Free Roofing Quote'}
           </h2>
-          <p className="text-sm text-slate-600 mb-6 text-center">
+          <p className="text-sm text-gray-700 mb-6 text-center">
             {language === 'es'
               ? 'Completa el formulario y nuestro equipo se pondrá en contacto contigo.'
               : 'Fill in the form and our team will reach out to you shortly.'}
@@ -98,7 +98,7 @@ export default function Form() {
             value={form.fullName}
             onChange={handleChange}
             placeholder={language === 'es' ? 'Nombre completo' : 'Full Name'}
-            className="w-full mb-4 px-4 py-3 rounded-lg border border-black text-black placeholder:text-slate-500 focus:outline-yellow-500 text-base"
+            className="w-full mb-4 px-4 py-3 rounded-lg border border-black text-black placeholder:text-gray-600 focus:outline-yellow-500 text-base"
             required
           />
           <input
@@ -107,7 +107,7 @@ export default function Form() {
             value={form.email}
             onChange={handleChange}
             placeholder={language === 'es' ? 'Correo electrónico' : 'Email Address'}
-            className="w-full mb-4 px-4 py-3 rounded-lg border border-black text-black placeholder:text-slate-500 focus:outline-yellow-500 text-base"
+            className="w-full mb-4 px-4 py-3 rounded-lg border border-black text-black placeholder:text-gray-600 focus:outline-yellow-500 text-base"
             required
           />
           <input
@@ -116,7 +116,7 @@ export default function Form() {
             value={form.phone}
             onChange={handleChange}
             placeholder={language === 'es' ? 'Número de teléfono' : 'Phone Number'}
-            className="w-full mb-4 px-4 py-3 rounded-lg border border-black text-black placeholder:text-slate-500 focus:outline-yellow-500 text-base"
+            className="w-full mb-4 px-4 py-3 rounded-lg border border-black text-black placeholder:text-gray-600 focus:outline-yellow-500 text-base"
             required
           />
           <input
@@ -125,7 +125,7 @@ export default function Form() {
             value={form.zip}
             onChange={handleChange}
             placeholder={language === 'es' ? 'Código postal' : 'ZIP Code'}
-            className="w-full mb-4 px-4 py-3 rounded-lg border border-black text-black placeholder:text-slate-500 focus:outline-yellow-500 text-base"
+            className="w-full mb-4 px-4 py-3 rounded-lg border border-black text-black placeholder:text-gray-600 focus:outline-yellow-500 text-base"
           />
 
           <select
@@ -172,7 +172,7 @@ export default function Form() {
               value={form.customRoofType}
               onChange={handleChange}
               placeholder={language === 'es' ? 'Especifica el tipo de techo' : 'Specify roof type'}
-              className="w-full mb-4 px-4 py-3 rounded-lg border border-black text-black placeholder:text-slate-500 focus:outline-yellow-500 text-base"
+              className="w-full mb-4 px-4 py-3 rounded-lg border border-black text-black placeholder:text-gray-600 focus:outline-yellow-500 text-base"
               required
             />
           )}
@@ -196,7 +196,7 @@ export default function Form() {
               value={form.customUrgency}
               onChange={handleChange}
               placeholder={language === 'es' ? 'Especifica cuándo' : 'Specify when'}
-              className="w-full mb-4 px-4 py-3 rounded-lg border border-black text-black placeholder:text-slate-500 focus:outline-yellow-500 text-base"
+              className="w-full mb-4 px-4 py-3 rounded-lg border border-black text-black placeholder:text-gray-600 focus:outline-yellow-500 text-base"
               required
             />
           )}
@@ -207,6 +207,14 @@ export default function Form() {
           >
             {language === 'es' ? 'Enviar Solicitud' : 'Submit Request'}
           </button>
+          
+          {/* TCPA Disclosure */}
+          <p className="text-xs text-gray-700 mt-4 text-center leading-relaxed">
+            {language === 'es' 
+              ? 'Al enviar este formulario, consiento recibir llamadas telefónicas y mensajes de texto de Best Deal Roofing sobre servicios de techado, incluyendo a través de sistemas automatizados. El consentimiento no es una condición de compra. Pueden aplicarse tarifas de mensajes y datos.'
+              : 'By submitting this form, I consent to receive phone calls and text messages from Best Deal Roofing regarding roofing services, including via automated systems. Consent is not a condition of purchase. Message and data rates may apply.'
+            }
+          </p>
         </form>
       )}
     </div>

@@ -51,7 +51,20 @@ export default function Footer() {
       <div className="border-t border-slate-700 mt-10 pt-6 text-center text-gray-500 text-xs">
         &copy; {new Date().getFullYear()} Best Deal Roofing. All rights reserved.
 
-        <p className="mt-2">
+        {/* Compliance Links */}
+        <div className="mt-4 flex flex-wrap justify-center gap-4 text-xs">
+          <a href="/privacy-policy" className="text-gray-400 hover:text-white transition">
+            Privacy Policy
+          </a>
+          <a href="/terms-and-conditions" className="text-gray-400 hover:text-white transition">
+            Terms & Conditions
+          </a>
+          <a href="/partners" className="text-gray-400 hover:text-white transition">
+            Partners
+          </a>
+        </div>
+
+        <p className="mt-4">
           Designed by{" "}
           <a
             href="https://wa.me/573107736703?text=Hola%2C+quiero+una+landing+como+la+de+Best+Deal+Roofing"

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { LanguageProvider } from '@/context/LanguageContext';
+import BannerConsent from './components/BannerConsent';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -13,7 +14,6 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
-// Default Metadata
 export const metadata: Metadata = {
   title: 'Best Deal Roofing | Roofing Contractors in the US',
   description:
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     'roof inspection',
     'roof damage insurance',
     'emergency roofing',
-    'roofing near me'
+    'roofing near me',
   ],
   robots: 'index, follow',
   openGraph: {
@@ -70,7 +70,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
 
       <body className="relative bg-white text-gray-900">
-        {/* Background Video Global */}
+        {/* 🔁 Background Video Global */}
         <video
           autoPlay
           muted
@@ -81,14 +81,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           src="/roofing.mp4"
         />
 
-        {/* Darker Overlay for readability */}
+        {/* 🌓 Overlay oscuro para mejorar legibilidad */}
         <div className="fixed top-0 left-0 w-full h-full bg-black/20 z-[-5]" />
 
         <LanguageProvider>
-          <main className="relative z-10">{children}</main>
+          <main className="relative z-10">
+            {children}
+            {/* ✅ Banner de consentimiento legal TCPA + cookies */}
+            <BannerConsent />
+          </main>
         </LanguageProvider>
-        
-
       </body>
     </html>
   );
