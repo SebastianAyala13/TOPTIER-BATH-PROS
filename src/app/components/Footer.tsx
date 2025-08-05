@@ -22,29 +22,10 @@ export default function Footer() {
           <h4 className="text-lg font-semibold mb-2">Contact</h4>
           <ul className="space-y-2 text-gray-300">
             <li className="flex items-center gap-2">
-              <Phone className="w-4 h-4 text-yellow-400" />
-              (000) 000-0000
-            </li>
-            <li className="flex items-center gap-2">
               <Mail className="w-4 h-4 text-yellow-400" />
               contact@bestdealroofing.xyz
             </li>
           </ul>
-        </div>
-
-        {/* Links / redes */}
-        <div>
-          <h4 className="text-lg font-semibold mb-2">Follow Us</h4>
-          <div className="flex gap-4 text-gray-300">
-            <a
-              href="#"
-              className="hover:text-yellow-400 transition"
-              aria-label="Facebook"
-            >
-              <Facebook className="w-5 h-5" />
-            </a>
-            {/* Puedes agregar más redes aquí */}
-          </div>
         </div>
       </div>
 
@@ -73,7 +54,7 @@ export default function Footer() {
             className="text-yellow-400 hover:underline"
           >
             JuSeb SOFTWARE
-          </a> Do you want a landing like this? Write us.
+          </a>. Do you want a landing like this? Write us.
         </p>
       </div>
     </footer>
