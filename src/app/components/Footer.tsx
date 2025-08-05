@@ -75,3 +75,4 @@ export default function Footer() {
     </footer>
   );
 }
+// Footer updated to include JuSeb link and WhatsApp contact
