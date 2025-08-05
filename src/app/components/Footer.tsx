@@ -1,6 +1,6 @@
 'use client';
 
-import { Facebook, Mail, Phone } from 'lucide-react';
+import { Mail } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -23,7 +23,12 @@ export default function Footer() {
           <ul className="space-y-2 text-gray-300">
             <li className="flex items-center gap-2">
               <Mail className="w-4 h-4 text-yellow-400" />
-              contact@bestdealroofing.xyz
+              <a
+                href="mailto:contact@bestdealroofing.xyz"
+                className="hover:text-white transition"
+              >
+                contact@bestdealroofing.xyz
+              </a>
             </li>
           </ul>
         </div>
@@ -45,16 +50,26 @@ export default function Footer() {
           </a>
         </div>
 
-        <p className="mt-4">
+        {/* Developer credit */}
+        <p className="mt-4 text-gray-400">
           Designed by{" "}
           <a
-            href="https://wa.me/573107736703?text=Hola%2C+quiero+una+landing+como+la+de+Best+Deal+Roofing"
+            href="https://ju-seb-software-xqw5.vercel.app/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-yellow-400 hover:underline"
           >
             JuSeb SOFTWARE
-          </a>. Do you want a landing like this? Write us.
+          </a>{" "}
+          —
+          <a
+            href="https://wa.me/573107736703?text=Hola%2C+quiero+una+landing+como+la+de+Best+Deal+Roofing"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-yellow-400 hover:underline ml-1"
+          >
+            Request via WhatsApp
+          </a>
         </p>
       </div>
     </footer>
