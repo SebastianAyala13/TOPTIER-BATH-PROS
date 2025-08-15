@@ -15,14 +15,14 @@ export default function Header() {
           <div className="flex items-center space-x-3 cursor-pointer">
             <Image
               src="/logobestdeal.png"
-              alt="Best Deal Roofing logo"
+              alt="TOPTIER BATH PROS logo"
               width={50}
               height={50}
               priority
             />
             <div className="text-slate-900">
-              <p className="text-lg font-extrabold leading-none">Best Deal</p>
-              <p className="text-sm font-light uppercase tracking-wide -mt-1">Roofing</p>
+              <p className="text-lg font-extrabold leading-none">TOPTIER</p>
+              <p className="text-sm font-light uppercase tracking-wide -mt-1">BATH PROS</p>
             </div>
           </div>
         </Link>
@@ -30,27 +30,21 @@ export default function Header() {
         {/* Menú + idioma */}
           <div className="flex items-center space-x-6">
             <nav className="hidden sm:flex space-x-6 text-sm text-slate-700 font-medium">
-              <a href="#form-section" className="hover:text-yellow-500 transition">
-                {language === 'en' ? 'Free Quote' : 'Cotización'}
+              <a href="#form-section" className="hover:text-teal-500 transition">
+                Bathroom Quote
               </a>
-              <a href="#benefits" className="hover:text-yellow-500 transition">
-                {language === 'en' ? 'Why Us' : 'Por qué elegirnos'}
+              <a href="#benefits" className="hover:text-teal-500 transition">
+                Why Us
               </a>
-              <a href="#projects" className="hover:text-yellow-500 transition">
-                {language === 'en' ? 'Projects' : 'Proyectos'}
+              <a href="#projects" className="hover:text-teal-500 transition">
+                Bathrooms
               </a>
-              <a href="#footer" className="hover:text-yellow-500 transition">
-                {language === 'en' ? 'Contact' : 'Contacto'}
+              <a href="#footer" className="hover:text-teal-500 transition">
+                Contact
               </a>
             </nav>
 
-            <button
-              onClick={toggleLanguage}
-              aria-label="Toggle language"
-              className="text-sm font-semibold text-slate-700 hover:text-yellow-500 transition"
-            >
-              {language === 'en' ? 'ES' : 'EN'}
-            </button>
+            {/* Language toggle disabled for EN-only site */}
           </div>
 
       </div>

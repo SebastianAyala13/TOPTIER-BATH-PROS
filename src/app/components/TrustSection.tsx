@@ -3,69 +3,72 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '../../context/LanguageContext';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const reviews = [
   {
     name: 'Carlos M.',
-    text: 'Quick response and affordable pricing. Highly recommend!',
+    text: 'Excellent guidance and flawless finishes in my primary bathroom.',
     image: '/clients/carlos.jpg',
   },
   {
     name: 'Lindsey W.',
-    text: 'Roof replaced in one day. Clean and respectful crew.',
+    text: 'They converted my tub to a shower. Clean and fast work.',
     image: '/clients/lindsey.jpg',
   },
   {
     name: 'James R.',
-    text: "Most professional roofers I've dealt with.",
+    text: '3D design and material selection helped us a lot.',
     image: '/clients/james.jpg',
   },
   {
     name: 'Laura P.',
-    text: 'Answered all my questions and did a great job.',
+    text: 'They handled permits and delivered on time.',
     image: '/clients/laura.jpg',
   },
   {
     name: 'Anthony G.',
-    text: 'Fast, affordable and high quality roofing service.',
+    text: 'Fair pricing and excellent communication throughout.',
     image: '/clients/anthony.jpg',
   },
   {
     name: 'Stephanie T.',
-    text: 'Loved the service and the new roof looks amazing!',
+    text: 'My bathroom looks amazing, like a magazine.',
     image: '/clients/stephanie.jpg',
   },
   {
     name: 'Brian C.',
-    text: 'They helped with insurance and saved me money.',
+    text: 'They guided us through the process and cared for every detail.',
     image: '/clients/brian.jpg',
   },
   {
     name: 'Monica S.',
-    text: 'Very responsive and helpful during the whole process.',
+    text: 'Very attentive and professional. 10/10.',
     image: '/clients/monica.jpg',
   },
   {
     name: 'Jason H.',
-    text: 'They worked through bad weather to get the job done!',
+    text: 'Luxury finishes, very satisfied.',
     image: '/clients/jason.jpg',
   },
   {
     name: 'Rachel L.',
-    text: 'So grateful for the quality and communication. 5 stars!',
+    text: 'Five-star quality and communication.',
     image: '/clients/rachel.jpg',
   },
 ];
 
 const badges = [
-  { src: '/certified.png', alt: 'Certified Roofing Company' },
+  { src: '/certified.png', alt: 'Certified Remodeling Company' },
   { src: '/insured.png', alt: 'Fully Insured Team' },
   { src: '/warranty.png', alt: 'Work Guaranteed' },
   { src: '/license.png', alt: 'Licensed Professionals' },
+  { src: '/ws-label.png', alt: 'WaterSense Certified' },
 ];
 
 export default function TrustSection() {
+  const { language } = useLanguage();
   const [current, setCurrent] = useState(0);
 
   const next = () => setCurrent((prev) => (prev + 1) % reviews.length);
@@ -87,7 +90,7 @@ export default function TrustSection() {
     >
       <div className="max-w-5xl mx-auto px-6 text-center">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6">
-          Why Homeowners Trust Us
+          {language === 'en' ? 'Why homeowners trust us for bathrooms' : 'Por qué confían en nosotros para su baño'}
         </h2>
 
         {/* Star Rating */}
@@ -95,7 +98,7 @@ export default function TrustSection() {
           {[...Array(5)].map((_, i) => (
             <svg
               key={i}
-              className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-400"
+              className="w-5 h-5 sm:w-6 sm:h-6 text-teal-400"
               fill="currentColor"
               viewBox="0 0 20 20"
             >
@@ -103,7 +106,7 @@ export default function TrustSection() {
             </svg>
           ))}
           <span className="ml-3 text-sm sm:text-base text-slate-300">
-            4.9/5 based on 250+ reviews
+            {language === 'en' ? '4.9/5 based on 250+ reviews' : '4.9/5 basado en 250+ reseñas'}
           </span>
         </div>
 
@@ -124,12 +127,12 @@ export default function TrustSection() {
                   alt={reviews[current].name}
                   width={80}
                   height={80}
-                  className="rounded-full mb-4 border-2 border-yellow-400 object-cover shadow-md hover:shadow-yellow-300 transition"
+                className="rounded-full mb-4 border-2 border-teal-400 object-cover shadow-md hover:shadow-teal-300 transition"
                 />
                 <p className="text-base sm:text-lg italic text-slate-100">
                   &quot;{reviews[current].text}&quot;
                 </p>
-                <p className="mt-3 font-semibold text-yellow-400 text-sm sm:text-base">
+                <p className="mt-3 font-semibold text-teal-400 text-sm sm:text-base">
                   – {reviews[current].name}
                 </p>
               </div>
@@ -139,10 +142,10 @@ export default function TrustSection() {
           {/* Nav Buttons */}
           <div className="absolute top-1/2 -translate-y-1/2 w-full flex justify-between px-2">
             <button onClick={prev} aria-label="Previous">
-              <ChevronLeft className="w-6 h-6 text-yellow-400 hover:scale-110 transition" />
+              <ChevronLeft className="w-6 h-6 text-teal-400 hover:scale-110 transition" />
             </button>
             <button onClick={next} aria-label="Next">
-              <ChevronRight className="w-6 h-6 text-yellow-400 hover:scale-110 transition" />
+              <ChevronRight className="w-6 h-6 text-teal-400 hover:scale-110 transition" />
             </button>
           </div>
 
@@ -153,7 +156,7 @@ export default function TrustSection() {
                 key={i}
                 onClick={() => setCurrent(i)}
                 className={`w-3 h-3 rounded-full transition ${
-                  current === i ? 'bg-yellow-400' : 'bg-slate-500'
+                  current === i ? 'bg-teal-400' : 'bg-slate-500'
                 }`}
               ></button>
             ))}
@@ -161,11 +164,11 @@ export default function TrustSection() {
         </div>
 
         {/* Trust Badges */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 items-center justify-center mt-8">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-6 items-center justify-center mt-8">
           {badges.map((badge) => (
             <motion.div
               key={badge.alt}
-              className="bg-white rounded-2xl shadow-lg p-5 w-full h-36 flex items-center justify-center hover:shadow-yellow-300/40 transition-shadow"
+              className="bg-white rounded-2xl shadow-lg p-5 w-full h-36 flex items-center justify-center hover:shadow-teal-300/40 transition-shadow"
               whileHover={{ scale: 1.05 }}
             >
               <Image

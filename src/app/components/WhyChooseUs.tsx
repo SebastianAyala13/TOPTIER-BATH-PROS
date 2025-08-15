@@ -9,42 +9,42 @@ export default function WhyChooseUs() {
 
   const content = {
     en: {
-      title: 'Why Homeowners Trust Best Deal Roofing',
+      title: 'Why Homeowners Trust TOPTIER BATH PROS',
       features: [
         {
-          icon: <ShieldCheck className="w-8 h-8 text-yellow-400" />,
+          icon: <ShieldCheck className="w-8 h-8 text-teal-400" />,
           title: 'Certified & Insured',
-          description: 'Fully licensed and insured professionals with 10+ years of experience.',
+          description: 'Bathroom remodeling specialists with 10+ years of experience.',
         },
         {
-          icon: <Zap className="w-8 h-8 text-yellow-400" />,
+          icon: <Zap className="w-8 h-8 text-teal-400" />,
           title: 'Fast Turnaround',
-          description: 'Quick inspections, quotes and installations without delays.',
+          description: 'Quick design, material sourcing and installation without delays.',
         },
         {
-          icon: <CheckCircle className="w-8 h-8 text-yellow-400" />,
-          title: 'Lifetime Warranty',
-          description: 'Enjoy peace of mind with our long-term service warranty.',
+          icon: <CheckCircle className="w-8 h-8 text-teal-400" />,
+          title: 'Premium Warranty',
+          description: 'Warranties available on materials and workmanship.',
         },
       ],
     },
     es: {
-      title: 'Por qué los hogares confían en Best Deal Roofing',
+      title: 'Por qué confían en TOPTIER BATH PROS',
       features: [
         {
-          icon: <ShieldCheck className="w-8 h-8 text-yellow-400" />,
+          icon: <ShieldCheck className="w-8 h-8 text-teal-400" />,
           title: 'Certificados y Asegurados',
-          description: 'Profesionales licenciados y asegurados con más de 10 años de experiencia.',
+          description: 'Especialistas en remodelación de baños con más de 10 años de experiencia.',
         },
         {
-          icon: <Zap className="w-8 h-8 text-yellow-400" />,
-          title: 'Respuesta Rápida',
-          description: 'Inspecciones, cotizaciones e instalaciones sin demoras.',
+          icon: <Zap className="w-8 h-8 text-teal-400" />,
+          title: 'Ejecución Rápida',
+          description: 'Diseño, selección de materiales e instalación sin demoras.',
         },
         {
-          icon: <CheckCircle className="w-8 h-8 text-yellow-400" />,
-          title: 'Garantía de por vida',
-          description: 'Tranquilidad total con garantía de servicio a largo plazo.',
+          icon: <CheckCircle className="w-8 h-8 text-teal-400" />,
+          title: 'Garantía Premium',
+          description: 'Garantías disponibles en materiales y mano de obra.',
         },
       ],
     },

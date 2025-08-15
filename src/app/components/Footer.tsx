@@ -11,23 +11,22 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-8">
         {/* Logo + slogan */}
         <div>
-          <h3 className="text-xl font-bold mb-2">Best Deal Roofing</h3>
+          <h3 className="text-xl font-bold mb-2">TOPTIER BATH PROS</h3>
           <p className="text-gray-400">
-            Protecting homes across the U.S. with top-tier roofing services and trusted professionals.
-          </p>
+          Bath remodeling in the US with quality standards, design and professional execution.          </p>
         </div>
 
         {/* Contact info */}
         <div>
-          <h4 className="text-lg font-semibold mb-2">Contact</h4>
+          <h4 className="text-lg font-semibold mb-2">Contacto</h4>
           <ul className="space-y-2 text-gray-300">
             <li className="flex items-center gap-2">
-              <Mail className="w-4 h-4 text-yellow-400" />
+              <Mail className="w-4 h-4 text-teal-400" />
               <a
-                href="mailto:contact@bestdealroofing.xyz"
+                href="mailto:contact@bestdealbathroom.xyz"
                 className="hover:text-white transition"
               >
-                contact@bestdealroofing.xyz
+                contact@bestdealbathroom.xyz
               </a>
             </li>
           </ul>
@@ -35,18 +34,18 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-slate-700 mt-10 pt-6 text-center text-gray-500 text-xs">
-        &copy; {new Date().getFullYear()} Best Deal Roofing. All rights reserved.
+        &copy; {new Date().getFullYear()} TOPTIER BATH PROS. All rights reserved.
 
         {/* Compliance Links */}
         <div className="mt-4 flex flex-wrap justify-center gap-4 text-xs">
           <a href="/privacy-policy" className="text-gray-400 hover:text-white transition">
-            Privacy Policy
+            {"Privacy Policy"}
           </a>
           <a href="/terms-and-conditions" className="text-gray-400 hover:text-white transition">
-            Terms & Conditions
+            {"Terms & Conditions"}
           </a>
           <a href="/partners" className="text-gray-400 hover:text-white transition">
-            Partners
+            {"Partners"}
           </a>
         </div>
 
@@ -57,7 +56,7 @@ export default function Footer() {
             href="https://ju-seb-software-xqw5.vercel.app/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-yellow-400 hover:underline"
+            className="text-teal-400 hover:underline"
           >
             JuSeb SOFTWARE
           </a>{" "}
@@ -66,7 +65,7 @@ export default function Footer() {
             href="https://wa.me/573107736703?text=Hola%2C+quiero+una+landing+como+la+de+Best+Deal+Roofing"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-yellow-400 hover:underline ml-1"
+            className="text-teal-400 hover:underline ml-1"
           >
             Request via WhatsApp
           </a>

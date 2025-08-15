@@ -13,8 +13,8 @@ export default function Form() {
     zip: '',
     service: '',
     ownership: '',
-    roofType: '',
-    customRoofType: '',
+    bathroomStyle: '',
+    customBathroomStyle: '',
     urgency: '',
     customUrgency: '',
   });
@@ -43,7 +43,7 @@ export default function Form() {
 
     const submittedForm = {
       ...form,
-      roofType: form.roofType === 'other' ? form.customRoofType : form.roofType,
+      bathroomStyle: form.bathroomStyle === 'other' ? form.customBathroomStyle : form.bathroomStyle,
       urgency: form.urgency === 'other' ? form.customUrgency : form.urgency,
     };
 
@@ -56,8 +56,8 @@ export default function Form() {
       zip: '',
       service: '',
       ownership: '',
-      roofType: '',
-      customRoofType: '',
+      bathroomStyle: '',
+      customBathroomStyle: '',
       urgency: '',
       customUrgency: '',
     });
@@ -84,7 +84,7 @@ export default function Form() {
           className="w-full max-w-md bg-white/90 p-6 sm:p-8 rounded-2xl shadow-xl backdrop-blur-md"
         >
           <h2 className="text-3xl sm:text-4xl font-bold text-black mb-12 drop-shadow-md">
-            {language === 'es' ? 'Obtén tu Cotización Gratuita' : 'Get Your Free Roofing Quote'}
+            {language === 'es' ? 'Obtén tu Cotización de Baño' : 'Get Your Bathroom Quote'}
           </h2>
           <p className="text-sm text-gray-700 mb-6 text-center">
             {language === 'es'
@@ -98,7 +98,7 @@ export default function Form() {
             value={form.fullName}
             onChange={handleChange}
             placeholder={language === 'es' ? 'Nombre completo' : 'Full Name'}
-            className="w-full mb-4 px-4 py-3 rounded-lg border border-black text-black placeholder:text-gray-600 focus:outline-yellow-500 text-base"
+            className="w-full mb-4 px-4 py-3 rounded-lg border border-black text-black placeholder:text-gray-600 focus:outline-teal-500 text-base"
             required
           />
           <input
@@ -107,7 +107,7 @@ export default function Form() {
             value={form.email}
             onChange={handleChange}
             placeholder={language === 'es' ? 'Correo electrónico' : 'Email Address'}
-            className="w-full mb-4 px-4 py-3 rounded-lg border border-black text-black placeholder:text-gray-600 focus:outline-yellow-500 text-base"
+            className="w-full mb-4 px-4 py-3 rounded-lg border border-black text-black placeholder:text-gray-600 focus:outline-teal-500 text-base"
             required
           />
           <input
@@ -116,7 +116,7 @@ export default function Form() {
             value={form.phone}
             onChange={handleChange}
             placeholder={language === 'es' ? 'Número de teléfono' : 'Phone Number'}
-            className="w-full mb-4 px-4 py-3 rounded-lg border border-black text-black placeholder:text-gray-600 focus:outline-yellow-500 text-base"
+            className="w-full mb-4 px-4 py-3 rounded-lg border border-black text-black placeholder:text-gray-600 focus:outline-teal-500 text-base"
             required
           />
           <input
@@ -125,7 +125,7 @@ export default function Form() {
             value={form.zip}
             onChange={handleChange}
             placeholder={language === 'es' ? 'Código postal' : 'ZIP Code'}
-            className="w-full mb-4 px-4 py-3 rounded-lg border border-black text-black placeholder:text-gray-600 focus:outline-yellow-500 text-base"
+            className="w-full mb-4 px-4 py-3 rounded-lg border border-black text-black placeholder:text-gray-600 focus:outline-teal-500 text-base"
           />
 
           <select
@@ -136,8 +136,10 @@ export default function Form() {
             required
           >
             <option value="">{language === 'es' ? 'Selecciona un servicio' : 'Select a Service'}</option>
-            <option value="replacement">{language === 'es' ? 'Reemplazo de Techo' : 'Roof Replacement'}</option>
-            <option value="repair">{language === 'es' ? 'Reparación' : 'Roof Repair'}</option>
+            <option value="full-remodel">{language === 'es' ? 'Remodelación Completa' : 'Full Remodel'}</option>
+            <option value="tub-to-shower">{language === 'es' ? 'Conversión Tina a Ducha' : 'Tub-to-Shower Conversion'}</option>
+            <option value="vanity-upgrade">{language === 'es' ? 'Cambio de Vanity/Lavamanos' : 'Vanity Upgrade'}</option>
+            <option value="tile-replacement">{language === 'es' ? 'Cambio de Baldosas' : 'Tile Replacement'}</option>
           </select>
 
           <select
@@ -153,26 +155,26 @@ export default function Form() {
           </select>
 
           <select
-            name="roofType"
-            value={form.roofType}
+            name="bathroomStyle"
+            value={form.bathroomStyle}
             onChange={handleChange}
             className="w-full mb-2 px-4 py-3 rounded-lg border border-black text-black text-base"
           >
-            <option value="">{language === 'es' ? 'Tipo de techo' : 'Type of Roof'}</option>
-            <option value="asphalt">{language === 'es' ? 'Asfáltico' : 'Asphalt Shingles'}</option>
-            <option value="metal">{language === 'es' ? 'Metálico' : 'Metal'}</option>
-            <option value="tile">{language === 'es' ? 'Tejas' : 'Tile'}</option>
-            <option value="flat">{language === 'es' ? 'Plano / TPO' : 'Flat / TPO'}</option>
+            <option value="">{language === 'es' ? 'Estilo preferido' : 'Preferred Style'}</option>
+            <option value="modern">{language === 'es' ? 'Moderno' : 'Modern'}</option>
+            <option value="classic">{language === 'es' ? 'Clásico' : 'Classic'}</option>
+            <option value="minimal">{language === 'es' ? 'Minimalista' : 'Minimalist'}</option>
+            <option value="luxury">{language === 'es' ? 'Lujo' : 'Luxury'}</option>
             <option value="other">{language === 'es' ? 'Otro...' : 'Other...'}</option>
           </select>
-          {form.roofType === 'other' && (
+          {form.bathroomStyle === 'other' && (
             <input
               type="text"
-              name="customRoofType"
-              value={form.customRoofType}
+              name="customBathroomStyle"
+              value={form.customBathroomStyle}
               onChange={handleChange}
-              placeholder={language === 'es' ? 'Especifica el tipo de techo' : 'Specify roof type'}
-              className="w-full mb-4 px-4 py-3 rounded-lg border border-black text-black placeholder:text-gray-600 focus:outline-yellow-500 text-base"
+              placeholder={language === 'es' ? 'Especifica el estilo' : 'Specify style'}
+              className="w-full mb-4 px-4 py-3 rounded-lg border border-black text-black placeholder:text-gray-600 focus:outline-teal-500 text-base"
               required
             />
           )}
@@ -196,14 +198,14 @@ export default function Form() {
               value={form.customUrgency}
               onChange={handleChange}
               placeholder={language === 'es' ? 'Especifica cuándo' : 'Specify when'}
-              className="w-full mb-4 px-4 py-3 rounded-lg border border-black text-black placeholder:text-gray-600 focus:outline-yellow-500 text-base"
+              className="w-full mb-4 px-4 py-3 rounded-lg border border-black text-black placeholder:text-gray-600 focus:outline-teal-500 text-base"
               required
             />
           )}
 
           <button
             type="submit"
-            className="w-full bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-bold py-3 rounded-lg transition"
+            className="w-full bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 rounded-lg transition"
           >
             {language === 'es' ? 'Enviar Solicitud' : 'Submit Request'}
           </button>
@@ -211,8 +213,8 @@ export default function Form() {
           {/* TCPA Disclosure */}
           <p className="text-xs text-gray-700 mt-4 text-center leading-relaxed">
             {language === 'es' 
-              ? 'Al enviar este formulario, consiento recibir llamadas telefónicas y mensajes de texto de Best Deal Roofing sobre servicios de techado, incluyendo a través de sistemas automatizados. El consentimiento no es una condición de compra. Pueden aplicarse tarifas de mensajes y datos.'
-              : 'By submitting this form, I consent to receive phone calls and text messages from Best Deal Roofing regarding roofing services, including via automated systems. Consent is not a condition of purchase. Message and data rates may apply.'
+              ? 'Al enviar este formulario, consiento recibir llamadas telefónicas y mensajes de texto de TOPTIER BATH PROS sobre servicios de remodelación de baños, incluyendo a través de sistemas automatizados. El consentimiento no es una condición de compra. Pueden aplicarse tarifas de mensajes y datos.'
+              : 'By submitting this form, I consent to receive phone calls and text messages from TOPTIER BATH PROS regarding bathroom remodeling services, including via automated systems. Consent is not a condition of purchase. Message and data rates may apply.'
             }
           </p>
         </form>

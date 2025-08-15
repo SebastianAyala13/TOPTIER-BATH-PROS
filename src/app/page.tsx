@@ -16,6 +16,10 @@ import Testimonials from './components/Testimonials';
 import ProjectGallery from './components/ProjectGallery';
 import Footer from './components/Footer';
 import MobileVideoHandler from './components/MobileVideoHandler';
+import SectionDivider from './components/SectionDivider';
+import BeforeAfter from './components/BeforeAfter';
+import ProcessSteps from './components/ProcessSteps';
+import Packages from './components/Packages';
 
 export default function Home() {
   const { language } = useLanguage();
@@ -30,82 +34,50 @@ export default function Home() {
   const faqs = [
     {
       en: {
-        q: 'How do I know if my roof needs to be replaced?',
-        a: 'Some common signs include visible water leaks inside your home, curling or missing shingles, mold growth in the attic, and dark spots on the ceiling. A professional inspection can give you a clear diagnosis.',
-      },
-      es: {
-        q: '¿Cómo sé si mi techo necesita ser reemplazado?',
-        a: 'Algunas señales comunes incluyen filtraciones visibles dentro de tu hogar, tejas curvadas o faltantes, moho en el ático y manchas oscuras en el techo. Una inspección profesional puede darte un diagnóstico claro.',
+        q: 'How long does a bathroom remodel take?',
+        a: 'Most bathroom remodels take 1–3 weeks depending on scope, material availability, and inspections. We share a clear timeline before starting.',
       },
     },
     {
       en: {
-        q: 'Are your roofing services licensed and insured?',
-        a: 'Yes. Best Deal Roofing is fully licensed and insured, giving you peace of mind that your home is in professional hands. All work meets local codes and insurance requirements.',
-      },
-      es: {
-        q: '¿Están licenciados y asegurados sus servicios de techado?',
-        a: 'Sí. Best Deal Roofing está completamente licenciada y asegurada, brindándote tranquilidad de que tu hogar está en buenas manos. Todo el trabajo cumple con los códigos locales y los requisitos del seguro.',
+        q: 'Are you licensed and insured?',
+        a: 'Yes. TOPTIER BATH PROS is fully licensed and insured. Our work follows local codes and we manage permits as needed.',
       },
     },
     {
       en: {
         q: 'Do you offer free estimates?',
-        a: 'Yes. We offer 100% free, no-obligation estimates. Simply fill out our contact form or call us, and our team will assess your roof and provide a transparent quote.',
-      },
-      es: {
-        q: '¿Ofrecen estimaciones gratuitas?',
-        a: 'Sí. Ofrecemos estimaciones 100% gratuitas y sin compromiso. Simplemente completa nuestro formulario de contacto o llámanos, y nuestro equipo evaluará tu techo y te proporcionará una cotización transparente.',
+        a: 'Yes, free and no-obligation estimates. We review your bathroom, discuss design and materials, and provide a transparent quote.',
       },
     },
     {
       en: {
-        q: 'How long does a typical roof replacement take?',
-        a: 'Most residential roof replacements are completed within 1–2 days depending on the size, material selected, and weather. We plan efficiently and keep you informed every step of the way.',
-      },
-      es: {
-        q: '¿Cuánto tiempo tarda un reemplazo de techo?',
-        a: 'La mayoría de los reemplazos de techos residenciales se completan en 1 a 2 días, dependiendo del tamaño, el material y el clima. Planificamos eficientemente y te mantenemos informado en todo momento.',
+        q: 'Can you do a tub-to-shower conversion?',
+        a: 'Absolutely. We specialize in safe, modern conversions with low thresholds, glass, and slip-resistant tile.',
       },
     },
     {
       en: {
-        q: 'What types of roofing materials do you offer?',
-        a: 'We offer asphalt shingles, metal roofing, TPO, tile roofing, and energy-efficient options tailored to your home’s needs and climate.',
-      },
-      es: {
-        q: '¿Qué tipos de materiales para techos ofrecen?',
-        a: 'Ofrecemos tejas asfálticas, techos metálicos, TPO, techos de tejas y opciones energéticamente eficientes adaptadas a tu hogar y clima.',
+        q: 'What finishes and materials do you offer?',
+        a: 'Porcelain and ceramic tiles, natural stone, quartz vanities, frameless glass, matte black or brushed gold fixtures, and more.',
       },
     },
     {
       en: {
-        q: 'Is financing available for roof projects?',
-        a: 'Yes. We partner with financing companies to offer flexible payment plans that make roofing projects more affordable for homeowners.',
-      },
-      es: {
-        q: '¿Ofrecen financiación para proyectos de techado?',
-        a: 'Sí. Nos asociamos con empresas financieras para ofrecer planes de pago flexibles que hacen que los proyectos de techado sean más accesibles.',
+        q: 'Is financing available?',
+        a: 'Yes, we offer financing options with flexible plans subject to approval.',
       },
     },
     {
       en: {
-        q: 'Do you provide emergency roof repair services?',
-        a: 'Absolutely. We offer 24/7 emergency services for storm damage, heavy leaks, or insurance claim repairs. Our response team is fast and dependable.',
-      },
-      es: {
-        q: '¿Ofrecen servicios de reparación de emergencia?',
-        a: 'Sí. Ofrecemos servicios de emergencia 24/7 para daños por tormentas, filtraciones fuertes o reparaciones cubiertas por seguros. Nuestro equipo responde rápido y es confiable.',
+        q: 'Do you handle permits and inspections?',
+        a: 'Yes. We manage the permit process and coordinate inspections when required by your city or county.',
       },
     },
     {
       en: {
-        q: 'Can I schedule an inspection even if I’m not sure I need repairs?',
-        a: 'Yes. Our roof inspections are free and educational. We\'ll give you a full report and walk you through any concerns or areas of improvement.',
-      },
-      es: {
-        q: '¿Puedo programar una inspección aunque no esté seguro si necesito reparaciones?',
-        a: 'Sí. Nuestras inspecciones son gratuitas y educativas. Te daremos un informe completo y te guiaremos a través de cualquier preocupación o área de mejora.',
+        q: 'Can I get a 3D design or layout proposal?',
+        a: 'Yes. We can prepare design guidance and layout options to help you visualize the project and make decisions.',
       },
     },
   ];
@@ -115,9 +87,13 @@ export default function Home() {
       <MobileVideoHandler />
       <Header />
       <Hero />
+      <SectionDivider />
       <VideoSection />
+      <SectionDivider />
       <WhyChooseUs />
+      <SectionDivider />
       <TrustSection />
+      <ProcessSteps />
 
       <section id="form-section" className="py-20 px-4 bg-transparent">
         <Form />
@@ -125,8 +101,10 @@ export default function Home() {
 
       {/* Nueva sección de promociones animadas */}
       <Promotions />
+      <SectionDivider />
 
       <ReviewSection />
+      <BeforeAfter />
 
       <section className="py-16 px-4 bg-white text-slate-900" id="testimonials">
         <Testimonials />
@@ -142,9 +120,9 @@ export default function Home() {
           />
         </div>
 
-        <h2 className="text-3xl font-bold mb-6 text-center text-white drop-shadow-md">
-          {language === 'es' ? 'Preguntas Frecuentes' : 'Frequently Asked Questions'}
-        </h2>
+          <h2 className="text-3xl font-bold mb-6 text-center text-white drop-shadow-md">
+            Bathroom Remodeling FAQs
+          </h2>
 
         <div className="max-w-3xl mx-auto space-y-4">
           {faqs.map((faq, idx) => (
@@ -153,8 +131,8 @@ export default function Home() {
               className="bg-white/90 text-slate-900 p-4 rounded-xl shadow-md transition hover:shadow-lg group"
             >
               <summary className="flex items-center justify-between font-semibold cursor-pointer">
-                {language === 'es' ? faq.es.q : faq.en.q}
-                <span className="ml-2 text-yellow-500 group-open:rotate-180 transition-transform">▼</span>
+                {faq.en.q}
+                <span className="ml-2 text-teal-500 group-open:rotate-180 transition-transform">▼</span>
               </summary>
               <motion.p
                 className="mt-2 text-slate-700 text-sm"
@@ -162,14 +140,16 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                {language === 'es' ? faq.es.a : faq.en.a}
+                {faq.en.a}
               </motion.p>
             </details>
           ))}
         </div>
       </section>
 
+      <SectionDivider />
       <ProjectGallery />
+      <Packages />
       <Footer />
 
       <p className="sr-only">

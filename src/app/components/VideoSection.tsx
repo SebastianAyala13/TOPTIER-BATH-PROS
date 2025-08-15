@@ -6,13 +6,13 @@ import { useLanguage } from '../../context/LanguageContext';
 export default function VideoSection() {
   const { language } = useLanguage();
 
-  const videos = ['roofing.mp4', 'roofing2.mp4', 'roofing3.mp4', 'roofing4.mp4', 'roofing5.mp4'];
+  const videos = ['bathroom1.mp4', 'bathroom2.mp4', 'bathroom3.mp4', 'bathroom4.mp4', 'bathroom5.mp4'];
 
   return (
     <section id="video" className="relative py-20 px-6 text-center text-white overflow-hidden">
       {/* Imagen de fondo difuminada */}
       <div className="absolute inset-0 -z-10">
-        <img
+          <img
           src="/background-video-blur.jpg"
           alt=""
           className="w-full h-full object-cover opacity-20"
@@ -27,7 +27,7 @@ export default function VideoSection() {
           viewport={{ amount: 0.5 }}
           className="text-3xl sm:text-4xl font-bold mb-10 drop-shadow-md"
         >
-          {language === 'en' ? 'Look how we work' : 'Mira cómo trabajamos'}
+          {language === 'en' ? 'See our bathroom remodels' : 'Mira nuestras remodelaciones de baños'}
         </motion.h2>
 
         {/* Carrusel horizontal */}
@@ -54,8 +54,8 @@ export default function VideoSection() {
                 controls
                 aria-label={
                   language === 'en'
-                    ? `Roofing video ${idx + 1}`
-                    : `Video de techado ${idx + 1}`
+                    ? `Bathroom remodel video ${idx + 1}`
+                    : `Video de remodelación de baño ${idx + 1}`
                 }
               >
                 {language === 'en'

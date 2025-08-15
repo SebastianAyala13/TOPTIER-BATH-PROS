@@ -18,19 +18,18 @@ interface LanguageContextProps {
 const LanguageContext = createContext<LanguageContextProps | undefined>(undefined);
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [language, setLanguage] = useState<Language>('en'); // inglés por defecto
+  const [language, setLanguage] = useState<Language>('en'); // enforce English
 
   useEffect(() => {
-    const storedLang = localStorage.getItem('lang');
-    if (storedLang === 'es' || storedLang === 'en') {
-      setLanguage(storedLang as Language);
-    }
+    // Force English for US site regardless of previous preference
+    setLanguage('en');
+    localStorage.setItem('lang', 'en');
   }, []);
 
   const toggleLanguage = () => {
-    const newLang = language === 'en' ? 'es' : 'en';
-    setLanguage(newLang);
-    localStorage.setItem('lang', newLang);
+    // No-op: English only site
+    setLanguage('en');
+    localStorage.setItem('lang', 'en');
   };
 
   return (

@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+// English-only site
 
 const reviewVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -17,37 +18,37 @@ export default function ReviewSection() {
     {
       logo: '/google-logo.png',
       alt: 'Google Reviews',
-      text: '“After a major storm in Houston, Best Deal Roofing came the next day and had everything fixed in 24 hours. They even helped with my insurance!”',
+      text: '“TOPTIER BATH PROS converted our tub to a modern glass shower. Impeccable work!”',
       author: '– Alicia R., Texas ⭐⭐⭐⭐⭐',
     },
     {
       logo: '/google-logo.png',
       alt: 'Facebook Reviews',
-      text: '“We just bought our home in Miami and needed a full roof replacement. Fast, affordable and super professional. 10/10.”',
+      text: '“They remodeled our master bathroom completely. On time and spectacular results. 10/10.”',
       author: '– James T., Florida ⭐⭐⭐⭐⭐',
     },
     {
       logo: '/google-logo.png',
       alt: 'LinkedIn Reviews',
-      text: '“Reliable roofing company in California. Great communication and they cleaned up everything after the job. Our HOA was impressed.”',
+      text: '“Reliable company. Excellent communication and spotless cleanup. Our HOA was impressed.”',
       author: '– Carla G., California ⭐⭐⭐⭐⭐',
     },
     {
       logo: '/google-logo.png',
       alt: 'Google Reviews',
-      text: '“They explained every step and gave us a better quote than 2 other companies. Our home in Atlanta looks amazing now.”',
+      text: '“They explained every step and beat two other quotes. The bathroom looks magazine-worthy.”',
       author: '– David P., Georgia ⭐⭐⭐⭐⭐',
     },
     {
       logo: '/google-logo.png',
       alt: 'Facebook Reviews',
-      text: '“I’m a single mom and was scared of roofing scams. Best Deal Roofing was kind, honest, and super transparent. Highly recommended.”',
+      text: '“As a single mom I feared scams. TOPTIER BATH PROS was honest and transparent. Highly recommended.”',
       author: '– Jessica M., North Carolina ⭐⭐⭐⭐⭐',
     },
     {
       logo: '/google-logo.png',
       alt: 'LinkedIn Reviews',
-      text: '“As a realtor, I’ve worked with many contractors. These guys are on another level. Quick, clean and competitive prices.”',
+      text: '“As a realtor I work with many contractors. These guys are next level. Fast, clean, and well-priced.”',
       author: '– Robert S., Nevada ⭐⭐⭐⭐⭐',
     },
   ];
@@ -65,7 +66,7 @@ export default function ReviewSection() {
           viewport={{ amount: 0.5 }}
           className="text-4xl font-bold text-white drop-shadow mb-12"
         >
-          Real Reviews from Real Homeowners
+          Real reviews from real homeowners
         </motion.h2>
 
         <div className="grid md:grid-cols-3 gap-8">
@@ -81,7 +82,7 @@ export default function ReviewSection() {
             >
               <Image src={review.logo} alt={review.alt} width={80} height={20} />
               <p className="mt-4 text-sm italic">{review.text}</p>
-              <p className="mt-3 font-semibold text-yellow-300">{review.author}</p>
+              <p className="mt-3 font-semibold text-teal-300">{review.author}</p>
             </motion.div>
           ))}
         </div>

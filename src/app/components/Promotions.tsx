@@ -10,42 +10,42 @@ export default function Promotions() {
 
   const content = {
     en: {
-      title: '🔥 Types of Promotions',
+      title: '🔥 Bathroom Promotions',
       cards: [
         {
           icon: <FaDollarSign className="text-4xl text-green-600 mb-4" />,
           title: 'No Initial Cost',
-          description: 'Start your project without paying anything in advance.',
+          description: 'Start your bathroom project without paying upfront.',
         },
         {
           icon: <FaHandshake className="text-4xl text-blue-600 mb-4" />,
           title: 'Financing Option',
-          description: 'Accessible plans adjusted to your budget.',
+          description: 'Flexible plans adjusted to your budget.',
         },
         {
           icon: <FaShieldAlt className="text-4xl text-purple-600 mb-4" />,
-          title: '50-Year Guarantee',
-          description: 'Guaranteed protection for your roof for decades.',
+          title: 'Extended Warranty',
+          description: 'Coverage on materials and workmanship.',
         },
       ],
     },
     es: {
-      title: '🔥 Tipos de Promociones',
+      title: '🔥 Promociones para Baños',
       cards: [
         {
           icon: <FaDollarSign className="text-4xl text-green-600 mb-4" />,
           title: 'Sin Costo Inicial',
-          description: 'Comienza tu proyecto sin pagar nada por adelantado.',
+          description: 'Inicia tu remodelación de baño sin pago por adelantado.',
         },
         {
           icon: <FaHandshake className="text-4xl text-blue-600 mb-4" />,
           title: 'Opción de Financiamiento',
-          description: 'Planes accesibles ajustados a tu presupuesto.',
+          description: 'Planes flexibles ajustados a tu presupuesto.',
         },
         {
           icon: <FaShieldAlt className="text-4xl text-purple-600 mb-4" />,
-          title: 'Garantía de 50 Años',
-          description: 'Protección garantizada para tu techo por décadas.',
+          title: 'Garantía Extendida',
+          description: 'Cobertura en materiales y mano de obra.',
         },
       ],
     },
@@ -54,11 +54,11 @@ export default function Promotions() {
   const t = content[language];
 
   return (
-    <section className="relative bg-yellow-50 py-20 px-4 sm:px-8 text-center overflow-hidden" id="promotions">
+    <section className="relative bg-teal-50 py-20 px-4 sm:px-8 text-center overflow-hidden" id="promotions">
       <div className="absolute inset-0 z-0 opacity-10">
         <Image
           src="/bg-promo.jpg"
-          alt="Promotions background"
+          alt="Promotions background bathrooms"
           fill
           style={{ objectFit: 'cover' }}
           priority
@@ -71,7 +71,7 @@ export default function Promotions() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ amount: 0.5 }}
-          className="text-3xl sm:text-4xl font-bold text-yellow-600 mb-10"
+          className="text-3xl sm:text-4xl font-bold text-teal-600 mb-10"
         >
           {t.title}
         </motion.h2>
@@ -93,6 +93,7 @@ export default function Promotions() {
               {card.icon}
               <h3 className="text-lg font-semibold mb-2">{card.title}</h3>
               <p className="text-sm text-slate-600">{card.description}</p>
+              <a href="#form-section" className="mt-4 inline-block text-teal-700 hover:text-teal-800 font-semibold text-sm">Get my quote</a>
             </motion.div>
           ))}
         </motion.div>

@@ -13,7 +13,7 @@ interface FormData {
   email: string;
   phone: string;
   zip: string;
-  roofType: string;
+  bathroomStyle: string;
   urgency: string;
 }
 
@@ -38,7 +38,7 @@ export default function QuoteForm() {
     email: '',
     phone: '',
     zip: '',
-    roofType: '',
+    bathroomStyle: '',
     urgency: ''
   });
 
@@ -52,61 +52,62 @@ export default function QuoteForm() {
         { value: 'yes', label: language === 'es' ? 'Sí, soy el dueño' : 'Yes, I’m the owner' },
         { value: 'no', label: language === 'es' ? 'No, soy inquilino' : 'No, I’m renting' }
       ],
-      image: '/experience6.jpg'
+      image: '/bathrooms/experience6.jpg'
     },
     {
       key: 'service',
-      label: language === 'es' ? '¿Qué servicio necesitas?' : 'What service do you need?',
+      label: language === 'es' ? '¿Qué servicio de baño necesitas?' : 'What bathroom service do you need?',
       type: 'select',
       options: [
         { value: '', label: language === 'es' ? 'Selecciona' : 'Select' },
-        { value: 'replacement', label: language === 'es' ? 'Reemplazo de Techo' : 'Roof Replacement' },
-        { value: 'repair', label: language === 'es' ? 'Reparación de Techo' : 'Roof Repair' }
+        { value: 'full-remodel', label: language === 'es' ? 'Remodelación Completa' : 'Full Remodel' },
+        { value: 'tub-to-shower', label: language === 'es' ? 'Conversión Tina a Ducha' : 'Tub-to-Shower Conversion' },
+        { value: 'vanity-upgrade', label: language === 'es' ? 'Cambio de Vanity/Lavamanos' : 'Vanity Upgrade' },
+        { value: 'tile-replacement', label: language === 'es' ? 'Cambio de Baldosas' : 'Tile Replacement' }
       ],
-      image: '/experience5.jpg'
+      image: '/bathrooms/experience5.jpg'
     },
     {
       key: 'fullName',
       label: language === 'es' ? '¿Cuál es tu nombre completo?' : 'What is your full name?',
       placeholder: language === 'es' ? 'Nombre completo' : 'Full Name',
       type: 'text',
-      image: '/experience1.jpg'
+      image: '/bathrooms/experience1.jpg'
     },
     {
       key: 'email',
       label: language === 'es' ? '¿Cuál es tu correo electrónico?' : 'What is your email?',
       placeholder: 'Email',
       type: 'email',
-      image: '/experience2.jpg'
+      image: '/bathrooms/experience2.jpg'
     },
     {
       key: 'phone',
       label: language === 'es' ? '¿Cuál es tu número de teléfono?' : 'What is your phone number?',
       placeholder: language === 'es' ? 'Teléfono' : 'Phone',
       type: 'tel',
-      image: '/experience3.jpg'
+      image: '/bathrooms/experience3.jpg'
     },
     {
       key: 'zip',
       label: language === 'es' ? '¿Cuál es tu código postal?' : 'What is your ZIP code?',
       placeholder: 'ZIP Code',
       type: 'text',
-      image: '/experience4.jpg'
+      image: '/bathrooms/experience4.jpg'
     },
     {
-      key: 'roofType',
-      label: language === 'es' ? '¿Qué tipo de techo tienes?' : 'What type of roof do you have?',
+      key: 'bathroomStyle',
+      label: language === 'es' ? '¿Qué estilo prefieres?' : 'What style do you prefer?',
       type: 'select',
       options: [
         { value: '', label: language === 'es' ? 'Selecciona' : 'Select' },
-        { value: 'asphalt', label: language === 'es' ? 'Tejas Asfálticas' : 'Asphalt Shingles' },
-        { value: 'metal', label: language === 'es' ? 'Techo Metálico' : 'Metal Roof' },
-        { value: 'tile', label: language === 'es' ? 'Teja de Barro o Concreto' : 'Tile Roof (Clay or Concrete)' },
-        { value: 'wood', label: language === 'es' ? 'Madera' : 'Wood' },
-        { value: 'slate', label: language === 'es' ? 'Pizarra' : 'Slate Roof' },
+        { value: 'modern', label: language === 'es' ? 'Moderno' : 'Modern' },
+        { value: 'classic', label: language === 'es' ? 'Clásico' : 'Classic' },
+        { value: 'minimal', label: language === 'es' ? 'Minimalista' : 'Minimalist' },
+        { value: 'luxury', label: language === 'es' ? 'Lujo' : 'Luxury' },
         { value: 'unknown', label: language === 'es' ? 'No estoy seguro' : 'Not Sure' }
       ],
-      image: '/experience7.jpg'
+      image: '/bathrooms/experience7.jpg'
     },
     {
       key: 'urgency',
@@ -118,7 +119,7 @@ export default function QuoteForm() {
         { value: 'week', label: language === 'es' ? 'Dentro de una semana' : 'Within a week' },
         { value: 'month', label: language === 'es' ? 'Dentro de un mes' : 'Within a month' }
       ],
-      image: '/experience8.jpg'
+      image: '/bathrooms/experience8.jpg'
     }
   ];
 
@@ -170,7 +171,7 @@ export default function QuoteForm() {
           <p className="text-slate-700 mb-6">
             {language === 'es' ? 'Tu información fue enviada correctamente. Pronto recibirás una respuesta.' : 'Your information has been successfully submitted. We will get back to you soon.'}
           </p>
-          <Link href="/" className="inline-block bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-lg transition">
+          <Link href="/" className="inline-block bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-6 rounded-lg transition">
             {language === 'es' ? 'Volver al inicio' : 'Back to Home'}
           </Link>
         </motion.div>
@@ -178,7 +179,7 @@ export default function QuoteForm() {
         <>
           <div className="mb-4 text-sm font-medium text-slate-700">{progress}%</div>
           <div className="w-full h-2 bg-gray-200 rounded-full mb-8">
-            <div className="h-full bg-yellow-400 rounded-full transition-all duration-500" style={{ width: `${progress}%` }}></div>
+            <div className="h-full bg-teal-400 rounded-full transition-all duration-500" style={{ width: `${progress}%` }}></div>
           </div>
 
           <motion.div
@@ -236,7 +237,7 @@ export default function QuoteForm() {
                 </button>
                 <button
                   onClick={handleNext}
-                  className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-6 rounded-lg transition"
+                  className="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-6 rounded-lg transition"
                 >
                   {step === questions.length - 1 ? (language === 'es' ? 'Enviar' : 'Submit') : (language === 'es' ? 'Siguiente' : 'Next')}
                 </button>

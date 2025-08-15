@@ -7,16 +7,16 @@ export default function Hero() {
 
   const content = {
     en: {
-      title: 'Protect your home with',
-      highlight: 'America’s best roofing service',
-      subtitle: 'Get expert guidance and access limited-time offers for new homeowners.',
-      cta: 'Get a Free Quote',
+      title: 'Transform your bathroom with',
+      highlight: 'premium remodeling experts',
+      subtitle: 'Design, materials, and installation — on time and stress-free.',
+      cta: 'Start Your Quote',
     },
     es: {
-      title: 'Protege tu hogar con',
-      highlight: 'el mejor servicio de techado en EE.UU.',
-      subtitle: 'Recibe asesoría experta y ofertas exclusivas para nuevos propietarios.',
-      cta: 'Solicita una Cotización',
+      title: 'Transforma tu baño con',
+      highlight: 'expertos en remodelación',
+      subtitle: 'Diseño, materiales e instalación — a tiempo y sin estrés.',
+      cta: 'Comenzar Cotización',
     },
   };
 
@@ -36,7 +36,7 @@ export default function Hero() {
         playsInline
         preload="metadata"
         className="absolute inset-0 w-full h-full object-cover opacity-20 z-0 pointer-events-none"
-        src="/roofing.mp4"
+        src="/bathroom-hero.mp4"
       />
       <div className="absolute inset-0 bg-slate-900/50 z-0" />
       <motion.div
@@ -47,14 +47,14 @@ export default function Hero() {
       >
         <h1 className="text-4xl sm:text-5xl font-extrabold mb-6 leading-tight">
           {t.title}{' '}
-          <span className="text-yellow-400">{t.highlight}</span>
+          <span className="text-teal-400">{t.highlight}</span>
         </h1>
         <p className="text-lg sm:text-xl mb-8 text-gray-300">{t.subtitle}</p>
 
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Link
-            href="/quote#quote-wizard"
-            className="bg-yellow-400 hover:bg-yellow-500 text-slate-900 px-8 py-3 font-semibold rounded-xl shadow-lg hover:shadow-xl transition inline-block"
+            href="#form-section"
+            className="bg-teal-500 hover:bg-teal-600 text-white px-8 py-3 font-semibold rounded-xl shadow-lg hover:shadow-xl transition inline-block"
           >
             {t.cta}
           </Link>

@@ -15,34 +15,31 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Best Deal Roofing | Roofing Contractors in the US',
+  title: 'TOPTIER BATH PROS | Bathroom Remodeling Experts',
   description:
-    'Trusted roofing company in the US offering free estimates, expert repair, and full roof replacements. Get the best deal now!',
+    'Transform your bathroom with premium design, materials, and installation. Free estimates and fast turnaround.',
   keywords: [
-    'roofing company USA',
-    'roof repair',
-    'licensed roofing contractor',
-    'roof replacement',
-    'roofing services',
-    'roofing experts',
-    'roof inspection',
-    'roof damage insurance',
-    'emergency roofing',
-    'roofing near me',
+    'bathroom remodeling',
+    'bath remodel',
+    'tub to shower conversion',
+    'vanity upgrade',
+    'tile replacement',
+    'bath remodel near me',
+    'bathroom design',
   ],
   robots: 'index, follow',
   openGraph: {
-    title: 'Best Deal Roofing | Expert Roofing Contractors in the US',
+    title: 'TOPTIER BATH PROS | Bathroom Remodeling Experts',
     description:
-      'Protect your home with the best roofing service. Free estimates, fast response, licensed and insured.',
-    url: 'https://www.bestdealroofing.xyz',
-    siteName: 'Best Deal Roofing',
+      'Premium bathroom remodeling with expert design, material selection, and professional installation.',
+    url: 'https://bathroom.homedesignandco.com',
+    siteName: 'TOPTIER BATH PROS',
     images: [
       {
-        url: 'https://www.bestdealroofing.xyz/og-image.jpg',
+        url: 'https://bathroom.homedesignandco.com/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Best Deal Roofing - Free Estimate',
+        alt: 'TOPTIER BATH PROS - Free Estimate',
       },
     ],
     locale: 'en_US',
@@ -50,10 +47,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Best Deal Roofing | Top Roofing Company',
-    description: 'America’s most trusted roofing service. Get your free quote now!',
-    site: '@bestdealroofing',
-    creator: '@bestdealroofing',
+    title: 'TOPTIER BATH PROS | Premium Bathroom Remodeling',
+    description: 'Get your free bathroom quote. Design, materials, and installation — on time and stress-free.',
+    site: '@bestdealbathroom',
+    creator: '@bestdealbathroom',
   },
 };
 
@@ -62,14 +59,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#FBBF24" />
-        <meta name="author" content="Best Deal Roofing Team" />
-        <link rel="canonical" href="https://www.bestdealroofing.xyz/" />
+        <meta name="theme-color" content="#14b8a6" />
+        <meta name="author" content="TOPTIER BATH PROS Team" />
+        <link rel="canonical" href="https://bathroom.homedesignandco.com/" />
         <link rel="icon" href="/favicon.png" type="image/png" />
         <link rel="manifest" href="/manifest.json" />
       </head>
 
-      <body className="relative bg-white text-gray-900">
+      <body className="relative bg-gradient-to-b from-teal-50 to-white text-gray-900">
         {/* 🔁 Background Video Global */}
         <video
           autoPlay
@@ -78,11 +75,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           playsInline
           preload="metadata"
           className="fixed top-0 left-0 w-full h-full object-cover opacity-20 z-[-10]"
-          src="/roofing.mp4"
+          src="/bathroom-ambient.mp4"
         />
 
         {/* 🌓 Overlay oscuro para mejorar legibilidad */}
-        <div className="fixed top-0 left-0 w-full h-full bg-black/20 z-[-5]" />
+        <div className="fixed top-0 left-0 w-full h-full bg-black/10 z-[-5]" />
 
         <LanguageProvider>
           <main className="relative z-10">
@@ -90,6 +87,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {/* ✅ Banner de consentimiento legal TCPA + cookies */}
             <BannerConsent />
           </main>
+          <a href="#form-section" className="fixed bottom-4 right-4 z-50 bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 text-sm font-semibold md:hidden">
+            Get Quote
+          </a>
         </LanguageProvider>
       </body>
     </html>

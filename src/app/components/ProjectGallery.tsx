@@ -9,38 +9,38 @@ import 'swiper/css/navigation';
 
 const projects = [
   {
-    image: '/projects/project1.jpg',
-    title: 'Re-roof in Dallas, TX',
-    description: 'Replaced old asphalt shingles with high-quality GAF materials.',
+    image: '/bath-1.jpg',
+    title: 'Modern Bathroom — Dallas, TX',
+    description: 'Walk-in shower with frameless glass and marble-look porcelain.',
   },
   {
-    image: '/projects/project2.jpg',
-    title: 'Full Replacement in Miami, FL',
-    description: 'New metal roofing system installed with thermal insulation.',
+    image: '/bath-2.jpg',
+    title: 'Coastal Style — Miami, FL',
+    description: 'Floating vanity, LED mirror, and terrazzo-style floor.',
   },
   {
-    image: '/projects/project3.jpg',
-    title: 'Storm Damage Repair - Houston',
-    description: 'Emergency repair after wind and hail damage.',
+    image: '/bath-3.jpg',
+    title: 'Compact Remodel — Houston, TX',
+    description: 'Tub-to-shower conversion to maximize space and accessibility.',
   },
   {
-    image: '/projects/project4.jpg',
-    title: 'New Construction - Austin, TX',
-    description: 'Custom roofing design for a modern family home.',
+    image: '/bath-4.jpg',
+    title: 'Luxury Spa — Austin, TX',
+    description: 'Freestanding tub, brushed gold fixtures, and custom lighting.',
   },
   {
-    image: '/projects/project5.jpg',
-    title: 'Before & After – San Antonio',
-    description: 'Dramatic transformation from damaged to brand-new.',
+    image: '/bath-5.jpg',
+    title: 'Before & After — San Antonio, TX',
+    description: 'Complete transformation with new tile, vanity, and fixtures.',
   },
 ];
 
 export default function ProjectGallery() {
   return (
-    <section id="projects" className="py-20 bg-white">
+    <section id="projects" className="py-20 bg-white bg-pattern">
       <div className="max-w-6xl mx-auto px-6 text-center">
         <h2 className="text-3xl sm:text-4xl font-bold mb-10 text-slate-800">
-          Completed Roofing Projects
+          Recent Bathroom Remodels
         </h2>
 
         <Swiper
