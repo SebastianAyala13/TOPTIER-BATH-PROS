@@ -55,10 +55,11 @@ export default function Testimonials() {
     <section id="testimonials" className="relative py-20 px-4 text-white overflow-hidden">
       {/* Fondo visual */}
       <div className="absolute inset-0 -z-10">
-        <img
+        <Image
           src="/background-video-blur.jpg"
           alt="Background"
-          className="w-full h-full object-cover opacity-20"
+          fill
+          className="object-cover opacity-20"
         />
       </div>
 

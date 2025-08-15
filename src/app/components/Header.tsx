@@ -2,11 +2,8 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useLanguage } from '@/context/LanguageContext'; // Asegúrate que esta ruta sea correcta
 
 export default function Header() {
-  const { language, toggleLanguage } = useLanguage();
-
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">

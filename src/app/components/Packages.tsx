@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const packages = [
   {
@@ -39,7 +40,12 @@ export default function Packages() {
               className="rounded-2xl overflow-hidden shadow-lg border border-slate-100 bg-white"
             >
               <div className="relative h-48 w-full overflow-hidden">
-                <img src={p.image} alt={p.name} className="w-full h-full object-cover" />
+                <Image 
+                  src={p.image} 
+                  alt={p.name} 
+                  fill
+                  className="object-cover" 
+                />
               </div>
               <div className="p-6">
                 <div className="flex items-baseline justify-between">

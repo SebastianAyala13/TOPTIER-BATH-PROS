@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useLanguage } from '@/context/LanguageContext';
+import Image from 'next/image';
 
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -22,8 +22,6 @@ import ProcessSteps from './components/ProcessSteps';
 import Packages from './components/Packages';
 
 export default function Home() {
-  const { language } = useLanguage();
-
   useEffect(() => {
     if (typeof window !== 'undefined' && window.location.hash) {
       const element = document.querySelector(window.location.hash);
@@ -113,10 +111,11 @@ export default function Home() {
       {/* FAQ */}
       <section id="faq" className="relative py-20 px-4 text-white bg-white/10 backdrop-blur-md">
         <div className="absolute inset-0 -z-10">
-          <img
+          <Image
             src="/background-video-blur.jpg"
             alt=""
-            className="w-full h-full object-cover opacity-20"
+            fill
+            className="object-cover opacity-20"
           />
         </div>
 

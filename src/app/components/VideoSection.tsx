@@ -1,21 +1,20 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useLanguage } from '../../context/LanguageContext';
+import Image from 'next/image';
 
 export default function VideoSection() {
-  const { language } = useLanguage();
-
   const videos = ['bathroom1.mp4', 'bathroom2.mp4', 'bathroom3.mp4', 'bathroom4.mp4', 'bathroom5.mp4'];
 
   return (
     <section id="video" className="relative py-20 px-6 text-center text-white overflow-hidden">
       {/* Imagen de fondo difuminada */}
       <div className="absolute inset-0 -z-10">
-          <img
+          <Image
           src="/background-video-blur.jpg"
           alt=""
-          className="w-full h-full object-cover opacity-20"
+          fill
+          className="object-cover opacity-20"
         />
       </div>
 
@@ -27,7 +26,7 @@ export default function VideoSection() {
           viewport={{ amount: 0.5 }}
           className="text-3xl sm:text-4xl font-bold mb-10 drop-shadow-md"
         >
-          {language === 'en' ? 'See our bathroom remodels' : 'Mira nuestras remodelaciones de baños'}
+          See our bathroom remodels
         </motion.h2>
 
         {/* Carrusel horizontal */}
@@ -52,15 +51,9 @@ export default function VideoSection() {
                 playsInline
                 preload="metadata"
                 controls
-                aria-label={
-                  language === 'en'
-                    ? `Bathroom remodel video ${idx + 1}`
-                    : `Video de remodelación de baño ${idx + 1}`
-                }
+                aria-label={`Bathroom remodel video ${idx + 1}`}
               >
-                {language === 'en'
-                  ? 'Your browser does not support the video tag.'
-                  : 'Tu navegador no soporta la etiqueta de video.'}
+                Your browser does not support the video tag.
               </video>
             </div>
           ))}

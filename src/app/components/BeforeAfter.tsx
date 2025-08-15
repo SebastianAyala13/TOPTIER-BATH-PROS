@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 
 export default function BeforeAfter() {
   const [value, setValue] = useState(50);
@@ -14,10 +15,11 @@ export default function BeforeAfter() {
         <p className="text-center text-slate-600 mb-8">Slide to compare the transformation.</p>
 
         <div className="relative w-full max-w-4xl mx-auto aspect-[16/9] rounded-2xl overflow-hidden shadow-xl">
-          <img
+          <Image
             src={afterSrc}
             alt="Bathroom after remodel"
-            className="absolute inset-0 w-full h-full object-cover"
+            fill
+            className="object-cover"
             onError={() => {
               if (afterSrc === '/before-afterbath-after.jpg') setAfterSrc('/before-after/bath-after.jpg');
             }}
@@ -26,10 +28,11 @@ export default function BeforeAfter() {
             className="absolute inset-0 overflow-hidden"
             style={{ width: `${value}%` }}
           >
-            <img
+            <Image
               src={beforeSrc}
               alt="Bathroom before remodel"
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
               onError={() => {
                 if (beforeSrc === '/before-afterbath-before.jpg') setBeforeSrc('/before-after/bath-before.jpg');
               }}
