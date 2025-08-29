@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion';
 import { useLanguage } from '../../context/LanguageContext';
 import Link from 'next/link';
+import { useState } from 'react';
 
 export default function Hero() {
   const { language } = useLanguage();
+  const [videoError, setVideoError] = useState(false);
 
   const content = {
     en: {
@@ -29,20 +31,24 @@ export default function Hero() {
       transition={{ duration: 1 }}
       className="relative min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 text-white flex items-center justify-center px-6"
     >
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="none"
-        poster="/bath-1.jpg"
-        className="absolute inset-0 w-full h-full object-cover opacity-20 z-0 pointer-events-none"
-        src="/bathroom-hero.mp4"
-        onError={(e) => {
-          const target = e.target as HTMLVideoElement;
-          target.style.display = 'none';
-        }}
-      />
+      {!videoError ? (
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="none"
+          poster="/bath-1.jpg"
+          className="absolute inset-0 w-full h-full object-cover opacity-20 z-0 pointer-events-none"
+          src="/bathroom-hero.mp4"
+          onError={() => setVideoError(true)}
+        />
+      ) : (
+        <div 
+          className="absolute inset-0 w-full h-full bg-cover bg-center opacity-20 z-0"
+          style={{ backgroundImage: 'url(/bath-1.jpg)' }}
+        />
+      )}
       <div className="absolute inset-0 bg-slate-900/50 z-0" />
       <motion.div
         initial={{ opacity: 0, y: 40 }}

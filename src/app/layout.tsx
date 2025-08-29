@@ -71,7 +71,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="none"
           className="fixed top-0 left-0 w-full h-full object-cover opacity-20 z-[-10]"
           src="/bathroom-ambient.mp4"
         />
