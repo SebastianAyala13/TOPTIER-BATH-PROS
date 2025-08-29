@@ -1,0 +1,5 @@
+[33ma481df3[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m fix(footer): unify brand + correct email
+[33mc913b22[m[33m ([m[1;31morigin/main[m[33m)[m Fix ESLint errors: remove unused variables and replace img with next/image
+[33m88ef620[m[33m ([m[1;33mtag: [m[1;33mv0.0-pre-merge[m[33m, [m[1;31morigin/safe-upload[m[33m, [m[1;31morigin/RESCUE-LOCAL[m[33m, [m[1;32msafe-upload[m[33m)[m 🚀 Inicial: Best Deal Bathroom listo para subir
+[33m73fdf5c[m 🔁 Trigger redeploy: footer confirmed with links
+[33m8f34b8a[m ✅ Added legal pages (Privacy Policy, Terms) and TCPA consent banner
