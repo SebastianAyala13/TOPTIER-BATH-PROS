@@ -1,155 +1,147 @@
-'use client';
+import type { Metadata } from 'next';
 
-import { useLanguage } from '../../context/LanguageContext';
+export const metadata: Metadata = {
+  title: 'Privacy Policy | TOPTIER BATH PROS',
+  description: 'Privacy Policy for TOPTIER BATH PROS - Learn how we collect, use, and protect your information.',
+};
 
 export default function PrivacyPolicy() {
-  const { language } = useLanguage();
-
-  const content = {
-    en: {
-      title: 'Privacy Policy',
-      effectiveDate: 'Effective Date: July 2025',
-      intro: `At Best Deal Roofing ("we", "our", or "us"), your privacy is of utmost importance. This Privacy Policy outlines how we collect, use, share, and protect your information when you interact with our website or request our services.`,
-      infoCollectedTitle: '1. Information We Collect',
-      infoCollected: [
-        'Personal information provided voluntarily, such as your name, email address, phone number, ZIP code, and service preferences.',
-        'Automatically collected data such as IP address, browser type, pages visited, and time spent on site via cookies or analytics tools.'
-      ],
-      useOfInfoTitle: '2. How We Use Your Information',
-      useOfInfo: [
-        'To respond to inquiries, schedule consultations, and deliver roofing services.',
-        'To send you relevant promotions, service updates, and important announcements.',
-        'To improve our website performance and user experience.'
-      ],
-      legalBasisTitle: '3. Legal Basis for Processing (if applicable)',
-      legalBasis: [
-        'Your consent (when submitting forms).',
-        'The necessity of processing for service delivery.',
-        'Compliance with legal obligations.'
-      ],
-      dataRetentionTitle: '4. Data Retention and Security',
-      dataRetention: [
-        'Your data is retained only for as long as necessary to fulfill the purpose it was collected for.',
-        'We implement security measures to prevent unauthorized access, disclosure, or loss.'
-      ],
-      sharingTitle: '5. Sharing Your Information',
-      sharing: [
-        'We do not sell your personal data.',
-        'We may share your information with trusted contractors, service providers, or legal authorities if required.',
-        'All partners are contractually obligated to protect your data.'
-      ],
-      yourRightsTitle: '6. Your Privacy Rights',
-      yourRights: [
-        'You have the right to access, update, or request deletion of your personal information.',
-        'To exercise these rights, email us at team@bestdealroofing.xyz.'
-      ],
-      disclaimer: 'If you do not agree with our Privacy Policy, we recommend you do not use our site or submit your personal information.',
-    },
-
-    es: {
-      title: 'Política de Privacidad',
-      effectiveDate: 'Fecha Efectiva: Julio 2025',
-      intro: `En Best Deal Roofing ("nosotros", "nuestro" o "nos"), su privacidad es de suma importancia. Esta Política de Privacidad explica cómo recopilamos, usamos, compartimos y protegemos su información cuando interactúa con nuestro sitio web o solicita nuestros servicios.`,
-      infoCollectedTitle: '1. Información que Recopilamos',
-      infoCollected: [
-        'Información personal que usted proporciona voluntariamente, como nombre, correo electrónico, número de teléfono, código postal y preferencias de servicio.',
-        'Datos recopilados automáticamente como dirección IP, tipo de navegador, páginas visitadas y tiempo en el sitio mediante cookies o herramientas de análisis.'
-      ],
-      useOfInfoTitle: '2. Cómo Usamos su Información',
-      useOfInfo: [
-        'Para responder consultas, programar citas y brindar servicios de techado.',
-        'Para enviarle promociones relevantes, actualizaciones de servicios y anuncios importantes.',
-        'Para mejorar el rendimiento del sitio web y la experiencia del usuario.'
-      ],
-      legalBasisTitle: '3. Base Legal para el Tratamiento (si aplica)',
-      legalBasis: [
-        'Su consentimiento (al enviar formularios).',
-        'La necesidad de procesar para la prestación del servicio.',
-        'Cumplimiento de obligaciones legales.'
-      ],
-      dataRetentionTitle: '4. Retención y Seguridad de los Datos',
-      dataRetention: [
-        'Sus datos se conservan solo durante el tiempo necesario para cumplir con el propósito para el que fueron recopilados.',
-        'Implementamos medidas de seguridad para prevenir accesos no autorizados, divulgación o pérdida de datos.'
-      ],
-      sharingTitle: '5. Compartir su Información',
-      sharing: [
-        'No vendemos su información personal.',
-        'Podemos compartir su información con contratistas confiables, proveedores de servicios o autoridades legales si es requerido.',
-        'Todos los socios están obligados contractualmente a proteger su información.'
-      ],
-      yourRightsTitle: '6. Sus Derechos de Privacidad',
-      yourRights: [
-        'Tiene derecho a acceder, actualizar o solicitar la eliminación de su información personal.',
-        'Para ejercer estos derechos, envíenos un correo a team@bestdealroofing.xyz.'
-      ],
-      disclaimer: 'Si no está de acuerdo con esta Política de Privacidad, le recomendamos que no use nuestro sitio ni envíe su información personal.',
-    }
-  };
-
-  const t = content[language];
-
   return (
-    <main className="max-w-4xl mx-auto px-6 py-12 text-gray-800">
-      <h1 className="text-4xl font-bold mb-4">{t.title}</h1>
-      <p className="text-sm text-gray-600 mb-6">{t.effectiveDate}</p>
-      <p className="mb-6">{t.intro}</p>
+    <div className="min-h-screen bg-gradient-to-b from-teal-50 to-white py-12 px-6">
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-white rounded-lg shadow-lg p-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-6">Privacy Policy</h1>
+          
+          <div className="prose prose-lg max-w-none">
+            <p className="text-gray-600 mb-6">
+              <strong>Last updated:</strong> {new Date().toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+              })}
+            </p>
 
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-2">{t.infoCollectedTitle}</h2>
-        <ul className="list-disc pl-6 space-y-2">
-          {t.infoCollected.map((item, i) => (
-            <li key={i}>{item}</li>
-          ))}
-        </ul>
-      </section>
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">1. Introduction</h2>
+              <p className="text-gray-700 mb-4">
+                                 TOPTIER BATH PROS (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website or use our bathroom remodeling services.
+              </p>
+            </section>
 
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-2">{t.useOfInfoTitle}</h2>
-        <ul className="list-disc pl-6 space-y-2">
-          {t.useOfInfo.map((item, i) => (
-            <li key={i}>{item}</li>
-          ))}
-        </ul>
-      </section>
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">2. Information We Collect</h2>
+              <h3 className="text-xl font-medium text-gray-800 mb-3">2.1 Personal Information</h3>
+              <p className="text-gray-700 mb-4">
+                We may collect personal information that you voluntarily provide to us, including:
+              </p>
+              <ul className="list-disc pl-6 text-gray-700 mb-4">
+                <li>Name and contact information (email, phone number, address)</li>
+                <li>Project details and preferences for bathroom remodeling</li>
+                <li>Communication history and correspondence</li>
+                <li>Payment information (processed securely through third-party providers)</li>
+              </ul>
 
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-2">{t.legalBasisTitle}</h2>
-        <ul className="list-disc pl-6 space-y-2">
-          {t.legalBasis.map((item, i) => (
-            <li key={i}>{item}</li>
-          ))}
-        </ul>
-      </section>
+              <h3 className="text-xl font-medium text-gray-800 mb-3">2.2 Automatically Collected Information</h3>
+              <p className="text-gray-700 mb-4">
+                When you visit our website, we automatically collect certain information, including:
+              </p>
+              <ul className="list-disc pl-6 text-gray-700 mb-4">
+                <li>IP address and browser type</li>
+                <li>Pages visited and time spent on our website</li>
+                <li>Device information and operating system</li>
+                <li>Cookies and similar tracking technologies</li>
+              </ul>
+            </section>
 
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-2">{t.dataRetentionTitle}</h2>
-        <ul className="list-disc pl-6 space-y-2">
-          {t.dataRetention.map((item, i) => (
-            <li key={i}>{item}</li>
-          ))}
-        </ul>
-      </section>
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">3. How We Use Your Information</h2>
+              <p className="text-gray-700 mb-4">
+                We use the information we collect to:
+              </p>
+              <ul className="list-disc pl-6 text-gray-700 mb-4">
+                <li>Provide bathroom remodeling quotes and estimates</li>
+                <li>Schedule consultations and project planning</li>
+                <li>Communicate with you about your project</li>
+                <li>Process payments and manage billing</li>
+                <li>Improve our services and website experience</li>
+                <li>Comply with legal obligations</li>
+              </ul>
+            </section>
 
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-2">{t.sharingTitle}</h2>
-        <ul className="list-disc pl-6 space-y-2">
-          {t.sharing.map((item, i) => (
-            <li key={i}>{item}</li>
-          ))}
-        </ul>
-      </section>
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">4. Cookies and Analytics</h2>
+              <p className="text-gray-700 mb-4">
+                We use cookies and similar technologies to enhance your browsing experience and analyze website traffic. You can control cookie settings through your browser preferences.
+              </p>
+              <p className="text-gray-700 mb-4">
+                We may use third-party analytics services to understand how visitors use our website. These services may collect information about your use of our website and other websites.
+              </p>
+            </section>
 
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-2">{t.yourRightsTitle}</h2>
-        <ul className="list-disc pl-6 space-y-2">
-          {t.yourRights.map((item, i) => (
-            <li key={i}>{item}</li>
-          ))}
-        </ul>
-      </section>
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">5. Information Sharing</h2>
+              <p className="text-gray-700 mb-4">
+                We do not sell, trade, or rent your personal information to third parties. We may share your information only in the following circumstances:
+              </p>
+              <ul className="list-disc pl-6 text-gray-700 mb-4">
+                <li>With service providers who assist in our operations (contractors, suppliers)</li>
+                <li>To comply with legal requirements or protect our rights</li>
+                <li>With your explicit consent</li>
+              </ul>
+            </section>
 
-      <p className="mt-8">{t.disclaimer}</p>
-    </main>
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">6. Your Rights</h2>
+              <p className="text-gray-700 mb-4">
+                You have the right to:
+              </p>
+              <ul className="list-disc pl-6 text-gray-700 mb-4">
+                <li>Access and review your personal information</li>
+                <li>Request correction of inaccurate information</li>
+                <li>Request deletion of your personal information</li>
+                <li>Opt-out of marketing communications</li>
+                <li>Lodge a complaint with relevant authorities</li>
+              </ul>
+            </section>
+
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">7. Data Security</h2>
+              <p className="text-gray-700 mb-4">
+                We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.
+              </p>
+            </section>
+
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">8. Children&apos;s Privacy</h2>
+              <p className="text-gray-700 mb-4">
+                Our services are not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13.
+              </p>
+            </section>
+
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">9. Changes to This Policy</h2>
+              <p className="text-gray-700 mb-4">
+                We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the &quot;Last updated&quot; date.
+              </p>
+            </section>
+
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">10. Contact Us</h2>
+              <p className="text-gray-700 mb-4">
+                If you have any questions about this Privacy Policy or our privacy practices, please contact us:
+              </p>
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <p className="text-gray-700">
+                  <strong>TOPTIER BATH PROS</strong><br />
+                  Email: <a href="mailto:contact@toptierbathpros.com" className="text-teal-600 hover:text-teal-800">contact@toptierbathpros.com</a><br />
+                  Address: Los Angeles, CA<br />
+                  Phone: Available upon request
+                </p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

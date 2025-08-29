@@ -1,4 +1,13 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://bestdealroofing.xyz/sitemap.xml
+# Sitemap
+Sitemap: https://toptierbathpros.com/sitemap.xml
+
+# Disallow admin or private areas
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1

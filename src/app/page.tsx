@@ -152,7 +152,7 @@ export default function Home() {
       <Footer />
 
       <p className="sr-only">
-        Best Deal Roofing is a trusted and licensed roofing contractor offering full roof replacements, emergency roof repairs, and free estimates across the United States including Texas, Florida, and California.
+        TOPTIER BATH PROS is a trusted and licensed bathroom remodeling contractor offering full bathroom renovations, tub to shower conversions, and free estimates across the United States including Texas, Florida, and California.
       </p>
     </>
   );

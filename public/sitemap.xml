@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://bestdealroofing.xyz/</loc>
+    <loc>https://toptierbathpros.com/</loc>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://bestdealroofing.xyz/#form-section</loc>
+    <loc>https://toptierbathpros.com/privacy-policy</loc>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://bestdealroofing.xyz/#faq</loc>
+    <loc>https://toptierbathpros.com/terms</loc>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://toptierbathpros.com/partners</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
 </urlset>

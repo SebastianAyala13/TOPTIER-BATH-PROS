@@ -23,10 +23,10 @@ export default function Footer() {
             <li className="flex items-center gap-2">
               <Mail className="w-4 h-4 text-teal-400" />
               <a
-                href="mailto:contact@bestdealbathroom.xyz"
+                href="mailto:contact@toptierbathpros.com"
                 className="hover:text-white transition"
               >
-                contact@bestdealbathroom.xyz
+                contact@toptierbathpros.com
               </a>
             </li>
           </ul>
@@ -41,7 +41,7 @@ export default function Footer() {
           <a href="/privacy-policy" className="text-gray-400 hover:text-white transition">
             {"Privacy Policy"}
           </a>
-          <a href="/terms-and-conditions" className="text-gray-400 hover:text-white transition">
+          <a href="/terms" className="text-gray-400 hover:text-white transition">
             {"Terms & Conditions"}
           </a>
           <a href="/partners" className="text-gray-400 hover:text-white transition">
@@ -62,7 +62,7 @@ export default function Footer() {
           </a>{" "}
           —
           <a
-            href="https://wa.me/573107736703?text=Hola%2C+quiero+una+landing+como+la+de+Best+Deal+Roofing"
+            href="https://wa.me/573107736703?text=Hola%2C+quiero+una+landing+como+la+de+TOPTIER+BATH+PROS"
             target="_blank"
             rel="noopener noreferrer"
             className="text-teal-400 hover:underline ml-1"

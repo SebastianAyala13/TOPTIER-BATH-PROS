@@ -20,6 +20,9 @@ export default function Form() {
   });
 
   const [isNotEligible, setIsNotEligible] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submitMessage, setSubmitMessage] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -38,31 +41,55 @@ export default function Form() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
 
-    const submittedForm = {
-      ...form,
-      bathroomStyle: form.bathroomStyle === 'other' ? form.customBathroomStyle : form.bathroomStyle,
-      urgency: form.urgency === 'other' ? form.customUrgency : form.urgency,
-    };
+    try {
+      const submittedForm = {
+        name: form.fullName,
+        email: form.email,
+        phone: form.phone,
+        message: `Service: ${form.service}, Style: ${form.bathroomStyle === 'other' ? form.customBathroomStyle : form.bathroomStyle}, Urgency: ${form.urgency === 'other' ? form.customUrgency : form.urgency}, ZIP: ${form.zip}`,
+        service: form.service,
+      };
 
-    console.log('Lead captured:', submittedForm);
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submittedForm),
+      });
 
-    setForm({
-      fullName: '',
-      email: '',
-      phone: '',
-      zip: '',
-      service: '',
-      ownership: '',
-      bathroomStyle: '',
-      customBathroomStyle: '',
-      urgency: '',
-      customUrgency: '',
-    });
+      const data = await response.json();
 
-    alert(language === 'es' ? '¡Gracias! Hemos recibido tu solicitud.' : 'Thanks! Your request has been submitted.');
+      if (response.ok) {
+        setSubmitStatus('success');
+        setSubmitMessage(data.message);
+        setForm({
+          fullName: '',
+          email: '',
+          phone: '',
+          zip: '',
+          service: '',
+          ownership: '',
+          bathroomStyle: '',
+          customBathroomStyle: '',
+          urgency: '',
+          customUrgency: '',
+        });
+      } else {
+        setSubmitStatus('error');
+        setSubmitMessage(data.error || 'Something went wrong. Please try again.');
+      }
+    } catch {
+      setSubmitStatus('error');
+      setSubmitMessage('Network error. Please check your connection and try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -203,11 +230,31 @@ export default function Form() {
             />
           )}
 
+          {submitStatus === 'success' && (
+            <div className="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+              {submitMessage}
+            </div>
+          )}
+
+          {submitStatus === 'error' && (
+            <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+              {submitMessage}
+            </div>
+          )}
+
           <button
             type="submit"
-            className="w-full bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 rounded-lg transition"
+            disabled={isSubmitting}
+            className={`w-full font-bold py-3 rounded-lg transition ${
+              isSubmitting 
+                ? 'bg-gray-400 cursor-not-allowed' 
+                : 'bg-teal-500 hover:bg-teal-600'
+            } text-white`}
           >
-            {language === 'es' ? 'Enviar Solicitud' : 'Submit Request'}
+            {isSubmitting 
+              ? (language === 'es' ? 'Enviando...' : 'Sending...') 
+              : (language === 'es' ? 'Enviar Solicitud' : 'Submit Request')
+            }
           </button>
           
           {/* TCPA Disclosure */}

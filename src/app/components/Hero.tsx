@@ -34,9 +34,14 @@ export default function Hero() {
         muted
         loop
         playsInline
-        preload="metadata"
+        preload="none"
+        poster="/bath-1.jpg"
         className="absolute inset-0 w-full h-full object-cover opacity-20 z-0 pointer-events-none"
         src="/bathroom-hero.mp4"
+        onError={(e) => {
+          const target = e.target as HTMLVideoElement;
+          target.style.display = 'none';
+        }}
       />
       <div className="absolute inset-0 bg-slate-900/50 z-0" />
       <motion.div

@@ -49,8 +49,6 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'TOPTIER BATH PROS | Premium Bathroom Remodeling',
     description: 'Get your free bathroom quote. Design, materials, and installation — on time and stress-free.',
-    site: '@bestdealbathroom',
-    creator: '@bestdealbathroom',
   },
 };
 
