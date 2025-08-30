@@ -11,7 +11,7 @@ export default function Header() {
         <Link href="/" scroll={false}>
           <div className="flex items-center space-x-3 cursor-pointer">
             <Image
-              src="/logobestdeal.png"
+              src="/logotoptierbathpros.png"
               alt="TOPTIER BATH PROS logo"
               width={50}
               height={50}
