@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { LanguageProvider } from '@/context/LanguageContext';
 import BannerConsent from './components/BannerConsent';
+import BackgroundVideo from './components/BackgroundVideo';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -86,15 +87,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
       <body className="relative bg-gradient-to-b from-teal-50 to-white text-gray-900">
         {/* 🔁 Background Video Global */}
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="none"
-          className="fixed top-0 left-0 w-full h-full object-cover opacity-20 z-[-10]"
-          src="/bathroom-ambient.mp4"
-        />
+        <BackgroundVideo />
 
         {/* 🌓 Overlay oscuro para mejorar legibilidad */}
         <div className="fixed top-0 left-0 w-full h-full bg-black/10 z-[-5]" />
