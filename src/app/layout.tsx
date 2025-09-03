@@ -62,6 +62,26 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="canonical" href="https://bathroom.homedesignandco.com/" />
         <link rel="icon" href="/favicon.png" type="image/png" />
         <link rel="manifest" href="/manifest.json" />
+        
+        {/* TrustedForm Script */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                var tf = document.createElement('script');
+                tf.type = 'text/javascript';
+                tf.async = true;
+                tf.src = ("https:" == document.location.protocol ? 'https' : 'http') +
+                  '://api.trustedform.com/trustedform.js?field=xxTrustedFormCertUrl&use_tagged_consent=true&l=' +
+                  new Date().getTime() + Math.random();
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(tf, s);
+              })();
+            `
+          }}
+        />
+        <noscript>
+          <img src='https://api.trustedform.com/ns.gif' />
+        </noscript>
       </head>
 
       <body className="relative bg-gradient-to-b from-teal-50 to-white text-gray-900">
