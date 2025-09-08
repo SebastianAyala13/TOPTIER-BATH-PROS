@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
+import { getFormEndpoint } from '@/lib/formConfig';
 
 export default function Form() {
   const { language } = useLanguage();
@@ -55,7 +56,8 @@ export default function Form() {
         service: form.service,
       };
 
-      const response = await fetch('/api/contact', {
+      // Para sitio estático, usar un servicio externo como Formspree, Netlify Forms, o EmailJS
+      const response = await fetch(getFormEndpoint(), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
