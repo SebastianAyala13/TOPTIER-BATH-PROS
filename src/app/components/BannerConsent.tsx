@@ -8,14 +8,18 @@ export default function BannerConsent() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const accepted = localStorage.getItem('cookieConsent');
-    if (!accepted) {
-      setVisible(true);
+    if (typeof window !== 'undefined') {
+      const accepted = localStorage.getItem('cookieConsent');
+      if (!accepted) {
+        setVisible(true);
+      }
     }
   }, []);
 
   const acceptConsent = () => {
-    localStorage.setItem('cookieConsent', 'true');
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('cookieConsent', 'true');
+    }
     setVisible(false);
   };
 

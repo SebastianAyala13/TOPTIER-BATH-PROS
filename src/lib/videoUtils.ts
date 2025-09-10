@@ -7,12 +7,7 @@ export const getVideoUrl = (videoPath: string): string => {
   // Remover slash inicial si existe
   const cleanPath = videoPath.startsWith('/') ? videoPath.slice(1) : videoPath;
   
-  // En producción, usar URL absoluta
-  if (typeof window !== 'undefined' && window.location.hostname !== 'localhost') {
-    return `https://bathroom.homedesignandco.com/${cleanPath}`;
-  }
-  
-  // En desarrollo, usar ruta relativa
+  // Siempre usar ruta relativa para hosting estático
   return `/${cleanPath}`;
 };
 
@@ -20,12 +15,7 @@ export const getImageUrl = (imagePath: string): string => {
   // Remover slash inicial si existe
   const cleanPath = imagePath.startsWith('/') ? imagePath.slice(1) : imagePath;
   
-  // En producción, usar URL absoluta
-  if (typeof window !== 'undefined' && window.location.hostname !== 'localhost') {
-    return `https://bathroom.homedesignandco.com/${cleanPath}`;
-  }
-  
-  // En desarrollo, usar ruta relativa
+  // Siempre usar ruta relativa para hosting estático
   return `/${cleanPath}`;
 };
 

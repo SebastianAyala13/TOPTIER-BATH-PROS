@@ -4,6 +4,7 @@ import './globals.css';
 import { LanguageProvider } from '@/context/LanguageContext';
 import BannerConsent from './components/BannerConsent';
 import BackgroundVideo from './components/BackgroundVideo';
+import { GoogleTagManagerHead, GoogleTagManagerNoScript } from './components/GoogleTagManager';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -64,6 +65,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="icon" href="/favicon.png" type="image/png" />
         <link rel="manifest" href="/manifest.json" />
         
+        {/* Google Tag Manager */}
+        <GoogleTagManagerHead />
+        
         {/* TrustedForm Script */}
         <script
           dangerouslySetInnerHTML={{
@@ -86,6 +90,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
 
       <body className="relative bg-gradient-to-b from-teal-50 to-white text-gray-900">
+        {/* Google Tag Manager (noscript) */}
+        <GoogleTagManagerNoScript />
+        
         {/* 🔁 Background Video Global */}
         <BackgroundVideo />
 
