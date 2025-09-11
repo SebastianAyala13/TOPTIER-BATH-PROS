@@ -50,7 +50,7 @@ export default function Form() {
     setSubmitStatus('idle');
 
     try {
-      // Formato organizado para Zapier - cada campo por separado
+      // Formato JSON organizado para Zapier - cada campo por separado
       const formData = {
         // Información básica del lead (campos individuales)
         'Nombre Completo': form.fullName,
@@ -74,18 +74,13 @@ export default function Form() {
         'Resumen': `Lead de ${form.fullName} - ${form.service} - ${form.urgency}`
       };
 
-      // Enviar a Zapier Webhook (formato URL-encoded para mejor compatibilidad)
-      const formDataToSend = new URLSearchParams();
-      Object.entries(formData).forEach(([key, value]) => {
-        formDataToSend.append(key, String(value));
-      });
-
+      // Enviar a Zapier Webhook (formato JSON para mejor organización)
       const response = await fetch(getFormEndpoint(), {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json',
         },
-        body: formDataToSend,
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
@@ -118,17 +113,17 @@ export default function Form() {
   };
 
   if (isNotEligible) {
-    return (
+  return (
       <div className="bg-white p-8 rounded-3xl shadow-xl text-center">
         <h2 className="text-2xl font-bold text-red-600 mb-4">
           {language === 'es' ? 'No Elegible' : 'Not Eligible'}
-        </h2>
+          </h2>
         <p className="text-gray-700 mb-6">
-          {language === 'es' 
+            {language === 'es'
             ? 'Lo sentimos, este formulario es solo para propietarios de vivienda.' 
             : 'Sorry, this form is only for homeowners.'}
-        </p>
-      </div>
+          </p>
+        </div>
     );
   }
 
@@ -136,7 +131,7 @@ export default function Form() {
     <div className="bg-white p-8 rounded-3xl shadow-xl">
       <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
         {language === 'es' ? 'Solicita tu Cotización Gratuita' : 'Get Your Free Quote'}
-      </h2>
+          </h2>
       
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -144,13 +139,13 @@ export default function Form() {
             <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-2">
               {language === 'es' ? 'Nombre Completo' : 'Full Name'} *
             </label>
-            <input
-              type="text"
+          <input
+            type="text"
               id="fullName"
-              name="fullName"
-              value={form.fullName}
-              onChange={handleChange}
-              required
+            name="fullName"
+            value={form.fullName}
+            onChange={handleChange}
+            required
               className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder={language === 'es' ? 'Tu nombre completo' : 'Your full name'}
             />
@@ -160,13 +155,13 @@ export default function Form() {
             <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
               {language === 'es' ? 'Correo Electrónico' : 'Email'} *
             </label>
-            <input
-              type="email"
+          <input
+            type="email"
               id="email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              required
+            name="email"
+            value={form.email}
+            onChange={handleChange}
+            required
               className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder="tu@email.com"
             />
@@ -176,13 +171,13 @@ export default function Form() {
             <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
               {language === 'es' ? 'Teléfono' : 'Phone'} *
             </label>
-            <input
-              type="tel"
+          <input
+            type="tel"
               id="phone"
-              name="phone"
-              value={form.phone}
-              onChange={handleChange}
-              required
+            name="phone"
+            value={form.phone}
+            onChange={handleChange}
+            required
               className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder={language === 'es' ? 'Tu número de teléfono' : 'Your phone number'}
             />
@@ -192,16 +187,16 @@ export default function Form() {
             <label htmlFor="zip" className="block text-sm font-medium text-gray-700 mb-2">
               {language === 'es' ? 'Código Postal' : 'ZIP Code'} *
             </label>
-            <input
-              type="text"
+          <input
+            type="text"
               id="zip"
-              name="zip"
-              value={form.zip}
-              onChange={handleChange}
+            name="zip"
+            value={form.zip}
+            onChange={handleChange}
               required
               className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder="12345"
-            />
+          />
           </div>
         </div>
 
@@ -264,7 +259,7 @@ export default function Form() {
           </select>
         </div>
 
-        {form.bathroomStyle === 'other' && (
+          {form.bathroomStyle === 'other' && (
           <div>
             <label htmlFor="customBathroomStyle" className="block text-sm font-medium text-gray-700 mb-2">
               {language === 'es' ? 'Especifica el estilo' : 'Specify style'}
@@ -279,7 +274,7 @@ export default function Form() {
               placeholder={language === 'es' ? 'Describe tu estilo preferido' : 'Describe your preferred style'}
             />
           </div>
-        )}
+          )}
 
         <div>
           <label htmlFor="urgency" className="block text-sm font-medium text-gray-700 mb-2">
@@ -302,7 +297,7 @@ export default function Form() {
           </select>
         </div>
 
-        {form.urgency === 'other' && (
+          {form.urgency === 'other' && (
           <div>
             <label htmlFor="customUrgency" className="block text-sm font-medium text-gray-700 mb-2">
               {language === 'es' ? 'Especifica el tiempo' : 'Specify timeline'}
@@ -316,32 +311,32 @@ export default function Form() {
               className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder={language === 'es' ? 'Describe tu timeline' : 'Describe your timeline'}
             />
-          </div>
-        )}
+            </div>
+          )}
 
-        {submitStatus === 'error' && (
+          {submitStatus === 'error' && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-            {submitMessage}
-          </div>
-        )}
+              {submitMessage}
+            </div>
+          )}
 
-        <button
-          type="submit"
+          <button
+            type="submit"
           disabled={!isFormValid() || isSubmitting}
           className="w-full bg-teal-500 hover:bg-teal-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-4 px-6 rounded-lg transition duration-300"
-        >
-          {isSubmitting 
+          >
+            {isSubmitting 
             ? (language === 'es' ? 'Enviando...' : 'Submitting...') 
             : (language === 'es' ? 'Solicitar Cotización Gratuita' : 'Get Free Quote')
-          }
-        </button>
-
+            }
+          </button>
+          
         <p className="text-xs text-gray-600 text-center">
-          {language === 'es' 
+            {language === 'es' 
             ? 'Al enviar este formulario, aceptas ser contactado por TOPTIER BATH PROS por teléfono, SMS o correo electrónico. No se requiere consentimiento como condición de compra.' 
             : 'By submitting this form, you agree to be contacted by TOPTIER BATH PROS via phone, SMS, or email. Consent is not a condition of purchase.'}
-        </p>
-      </form>
+          </p>
+        </form>
     </div>
   );
 }
