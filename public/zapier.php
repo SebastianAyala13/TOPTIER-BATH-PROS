@@ -16,7 +16,7 @@ if (!$body) {
 
 // --- Config ---
 $hook = 'https://hooks.zapier.com/hooks/catch/24574105/udv6m97/';
-$secret = 'TU_SECRETO_UNICO'; // <-- cámbialo y filtra en Zapier con Headers.x-zapier-secret
+$secret = 'TOPTIER_BATH_PROS'; // <-- cámbialo y filtra en Zapier con Headers.x-zapier-secret
 
 // --- Reenviar a Zapier ---
 $ch = curl_init($hook);
