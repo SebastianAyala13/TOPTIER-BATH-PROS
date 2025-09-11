@@ -4,17 +4,13 @@
  */
 
 export const FORM_CONFIG = {
-  // Webhook de Zapier configurado para TOPTIER BATH PROS
-  endpoint: 'https://hooks.zapier.com/hooks/catch/22208931/udjiyrz/',
-  
-  // Opción alternativa: Formspree + Zapier
-  // endpoint: 'https://formspree.io/f/YOUR_FORM_ID',
-  
-  // Opción alternativa: Netlify Forms + Zapier
-  // endpoint: '/',
-  // formName: 'contact',
+  // Si existe un proxy (Cloudflare Worker / Pipedream), úsalo; si no, usa el hook directo
+  proxy: process.env.NEXT_PUBLIC_ZAPIER_PROXY_URL,
+  direct: 'https://hooks.zapier.com/hooks/catch/22208931/udjiyrz/',
 };
 
-export const getFormEndpoint = () => {
-  return FORM_CONFIG.endpoint;
+export const getFormEndpoint = (): string => {
+  return FORM_CONFIG.proxy && FORM_CONFIG.proxy.length > 0
+    ? FORM_CONFIG.proxy
+    : FORM_CONFIG.direct;
 };
