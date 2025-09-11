@@ -50,28 +50,25 @@ export default function Form() {
     setSubmitStatus('idle');
 
     try {
-      // Formato JSON organizado para Zapier - cada campo por separado
+      // Normalización de campos derivados
+      const normalizedBathroomStyle = form.bathroomStyle === 'other' ? form.customBathroomStyle : form.bathroomStyle;
+      const normalizedUrgency = form.urgency === 'other' ? form.customUrgency : form.urgency;
+
+      // Payload en claves simples (inglés) para un mapeo fácil en Zapier
       const formData = {
-        // Información básica del lead (campos individuales)
-        'Nombre Completo': form.fullName,
-        'Correo Electrónico': form.email,
-        'Teléfono': form.phone,
-        'Código Postal': form.zip,
-        
-        // Detalles del servicio (campos individuales)
-        'Servicio Solicitado': form.service,
-        'Es Propietario': form.ownership,
-        'Estilo Preferido': form.bathroomStyle === 'other' ? form.customBathroomStyle : form.bathroomStyle,
-        'Urgencia': form.urgency === 'other' ? form.customUrgency : form.urgency,
-        
-        // Metadatos para tracking (campos individuales)
-        'Fecha y Hora': new Date().toLocaleString(),
-        'Origen': 'TOPTIER BATH PROS Website',
-        'Idioma': language,
-        'Sitio Web': 'toptierbathpros.com',
-        
-        // Resumen completo (opcional, para referencia)
-        'Resumen': `Lead de ${form.fullName} - ${form.service} - ${form.urgency}`
+        fullName: form.fullName,
+        email: form.email,
+        phone: form.phone,
+        zipCode: form.zip,
+        service: form.service,
+        ownership: form.ownership,
+        bathroomStyle: normalizedBathroomStyle,
+        urgency: normalizedUrgency,
+        timestamp: new Date().toISOString(),
+        source: 'TOPTIER BATH PROS Website',
+        language,
+        website: 'toptierbathpros.com',
+        summary: `Lead from ${form.fullName} - ${form.service} - ${normalizedUrgency}`,
       };
 
       // Enviar a Zapier Webhook (formato JSON para mejor organización)
