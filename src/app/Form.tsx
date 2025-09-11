@@ -50,40 +50,28 @@ export default function Form() {
     setSubmitStatus('idle');
 
     try {
-      // Formato optimizado para Zapier Webhook
+      // Formato organizado para Zapier - cada campo por separado
       const formData = {
-        // Información básica del lead
-        fullName: form.fullName,
-        email: form.email,
-        phone: form.phone,
-        zipCode: form.zip,
+        // Información básica del lead (campos individuales)
+        'Nombre Completo': form.fullName,
+        'Correo Electrónico': form.email,
+        'Teléfono': form.phone,
+        'Código Postal': form.zip,
         
-        // Detalles del servicio solicitado
-        service: form.service,
-        ownership: form.ownership,
-        bathroomStyle: form.bathroomStyle === 'other' ? form.customBathroomStyle : form.bathroomStyle,
-        urgency: form.urgency === 'other' ? form.customUrgency : form.urgency,
+        // Detalles del servicio (campos individuales)
+        'Servicio Solicitado': form.service,
+        'Es Propietario': form.ownership,
+        'Estilo Preferido': form.bathroomStyle === 'other' ? form.customBathroomStyle : form.bathroomStyle,
+        'Urgencia': form.urgency === 'other' ? form.customUrgency : form.urgency,
         
-        // Metadatos para tracking
-        timestamp: new Date().toISOString(),
-        source: 'TOPTIER BATH PROS Website',
-        language: language,
-        website: 'toptierbathpros.com',
+        // Metadatos para tracking (campos individuales)
+        'Fecha y Hora': new Date().toLocaleString(),
+        'Origen': 'TOPTIER BATH PROS Website',
+        'Idioma': language,
+        'Sitio Web': 'toptierbathpros.com',
         
-        // Mensaje completo para referencia
-        message: `Nuevo lead de TOPTIER BATH PROS:
-        
-Nombre: ${form.fullName}
-Email: ${form.email}
-Teléfono: ${form.phone}
-Código Postal: ${form.zip}
-Servicio: ${form.service}
-Propietario: ${form.ownership}
-Estilo: ${form.bathroomStyle === 'other' ? form.customBathroomStyle : form.bathroomStyle}
-Urgencia: ${form.urgency === 'other' ? form.customUrgency : form.urgency}
-Idioma: ${language}
-Fecha: ${new Date().toLocaleString()}
-Origen: Sitio Web TOPTIER BATH PROS`
+        // Resumen completo (opcional, para referencia)
+        'Resumen': `Lead de ${form.fullName} - ${form.service} - ${form.urgency}`
       };
 
       // Enviar a Zapier Webhook (formato URL-encoded para mejor compatibilidad)
