@@ -5,5 +5,5 @@
 
 // Usamos la ruta API local (Vercel) para evitar CORS: /api/zapier
 export function getFormEndpoint(): string {
-  return '/zapier.php';
+  return '/api/zapier';
 }
