@@ -6,7 +6,7 @@
 export const FORM_CONFIG = {
   // Si existe un proxy (Cloudflare Worker / Pipedream), úsalo; si no, usa el hook directo
   proxy: process.env.NEXT_PUBLIC_ZAPIER_PROXY_URL,
-  direct: 'https://hooks.zapier.com/hooks/catch/22208931/udjiyrz/',
+  direct: 'https://hooks.zapier.com/hooks/catch/24574105/udv6m97/',
 };
 
 export const getFormEndpoint = (): string => {
