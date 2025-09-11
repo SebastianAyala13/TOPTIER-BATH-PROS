@@ -86,13 +86,18 @@ Fecha: ${new Date().toLocaleString()}
 Origen: Sitio Web TOPTIER BATH PROS`
       };
 
-      // Enviar a Zapier Webhook
+      // Enviar a Zapier Webhook (formato URL-encoded para mejor compatibilidad)
+      const formDataToSend = new URLSearchParams();
+      Object.entries(formData).forEach(([key, value]) => {
+        formDataToSend.append(key, String(value));
+      });
+
       const response = await fetch(getFormEndpoint(), {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: JSON.stringify(formData),
+        body: formDataToSend,
       });
 
       if (response.ok) {

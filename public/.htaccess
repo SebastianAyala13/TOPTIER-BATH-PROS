@@ -9,6 +9,16 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^([^/]+)/?$ $1.html [L]
 
+# Manejo específico para rutas de Next.js
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^thankyou/?$ thankyou.html [L]
+
+# Fallback para todas las rutas
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^.*$ index.html [L]
+
 # Manejo de archivos estáticos
 <FilesMatch "\.(css|js|png|jpg|jpeg|gif|ico|svg|mp4|webm|ogg)$">
     Header set Cache-Control "public, max-age=31536000"
