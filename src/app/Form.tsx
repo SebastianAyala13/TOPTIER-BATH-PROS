@@ -42,7 +42,7 @@ export default function Form() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [submitMessage] = useState('');
-  const [tfToken, setTfToken] = useState('');
+  const [, setTfToken] = useState('');
   const tfHiddenRef = useRef<HTMLInputElement>(null);
 
   // TrustedForm integration

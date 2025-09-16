@@ -85,7 +85,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
         <noscript>
-          <img src='https://api.trustedform.com/ns.gif' />
+          <img src='https://api.trustedform.com/ns.gif' alt="" />
         </noscript>
       </head>
 
