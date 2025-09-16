@@ -93,7 +93,7 @@ export default function Promotions() {
               {card.icon}
               <h3 className="text-lg font-semibold mb-2">{card.title}</h3>
               <p className="text-sm text-slate-600">{card.description}</p>
-              <a href="#form-section" className="mt-4 inline-block text-teal-700 hover:text-teal-800 font-semibold text-sm">Get my quote</a>
+              <a href="#lead-form" className="mt-4 inline-block text-teal-700 hover:text-teal-800 font-semibold text-sm">Get my quote</a>
             </motion.div>
           ))}
         </motion.div>

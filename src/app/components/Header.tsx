@@ -27,7 +27,7 @@ export default function Header() {
         {/* Menú + idioma */}
           <div className="flex items-center space-x-6">
             <nav className="hidden sm:flex space-x-6 text-sm text-slate-700 font-medium">
-              <a href="#form-section" className="hover:text-teal-500 transition">
+              <a href="#lead-form" className="hover:text-teal-500 transition">
                 Bathroom Quote
               </a>
               <a href="#benefits" className="hover:text-teal-500 transition">

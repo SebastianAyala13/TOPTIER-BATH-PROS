@@ -20,6 +20,7 @@ import SectionDivider from './components/SectionDivider';
 import BeforeAfter from './components/BeforeAfter';
 import ProcessSteps from './components/ProcessSteps';
 import Packages from './components/Packages';
+import StickyLeadForm from '@/components/StickyLeadForm';
 
 export default function Home() {
   useEffect(() => {
@@ -94,7 +95,9 @@ export default function Home() {
       <ProcessSteps />
 
       <section id="form-section" className="py-20 px-4 bg-transparent">
-        <Form />
+        <div className="max-w-2xl mx-auto">
+          <Form />
+        </div>
       </section>
 
       {/* Nueva sección de promociones animadas */}
@@ -150,6 +153,9 @@ export default function Home() {
       <ProjectGallery />
       <Packages />
       <Footer />
+
+      {/* Sticky Lead Form */}
+      <StickyLeadForm />
 
       <p className="sr-only">
         TOPTIER BATH PROS is a trusted and licensed bathroom remodeling contractor offering full bathroom renovations, tub to shower conversions, and free estimates across the United States including Texas, Florida, and California.

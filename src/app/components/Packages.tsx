@@ -58,7 +58,7 @@ export default function Packages() {
                   ))}
                 </ul>
                 <div className="mt-5">
-                  <a href="#form-section" className="inline-block bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded-full">Get a Quote</a>
+                  <a href="#lead-form" className="inline-block bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded-full">Get a Quote</a>
                 </div>
               </div>
             </motion.div>
