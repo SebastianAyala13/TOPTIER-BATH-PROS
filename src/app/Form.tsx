@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
 import { getFormEndpoint } from '@/lib/formConfig';
 
@@ -187,24 +188,18 @@ export default function Form() {
       });
 
       if (response.ok) {
-        // Éxito - alternar entre thankyou y partners
-        const redirectPages = ['/thankyou', '/partners'];
-        const randomPage = redirectPages[Math.floor(Math.random() * redirectPages.length)];
-        router.push(randomPage);
+        // Éxito - redirigir a página de agradecimiento
+        router.push('/thankyou');
       } else {
         // Si falla, redirigir de todas formas (para testing)
-        console.log('Zapier webhook failed, but continuing to redirect');
-        const redirectPages = ['/thankyou', '/partners'];
-        const randomPage = redirectPages[Math.floor(Math.random() * redirectPages.length)];
-        router.push(randomPage);
+        console.log('Zapier webhook failed, but continuing to thank you page');
+        router.push('/thankyou');
       }
 
     } catch (error) {
-      // En caso de error, redirigir aleatoriamente
+      // En caso de error, redirigir a página de agradecimiento
       console.log('Form submission error:', error);
-      const redirectPages = ['/thankyou', '/partners'];
-      const randomPage = redirectPages[Math.floor(Math.random() * redirectPages.length)];
-      router.push(randomPage);
+      router.push('/thankyou');
     } finally {
       setIsSubmitting(false);
     }
@@ -430,7 +425,7 @@ export default function Form() {
               By clicking Submit, You agree to give express consent to receive marketing communications regarding HomeImprovement services by automatic dialing system and pre-recorded calls and artificial voice messages from Home Services Partners at the phone number and E-mail address provided by you, including wireless numbers, if applicable, even if you have previously registered the provided number on the Do not Call Registery. SMS/MMS and data messaging rates may apply. You understand that my consent here is not a condition for buying any goods or services. You agree to the{' '}
               <a className="underline" href="/privacy-policy" target="_blank" rel="noreferrer">Privacy Policy</a> and{' '}
               <a className="underline ml-1" href="/terms-conditions" target="_blank" rel="noreferrer">Terms & Conditions</a>. See{' '}
-              <a className="underline ml-1" href="https://offers.homequotepos.com/bathroom/v4" target="_blank" rel="noreferrer">Home Services Partners</a>.
+              <Link href="/partners" className="underline ml-1 text-teal-600 hover:text-teal-800">Home Services Partners</Link>.
             </p>
           </label>
         </div>
