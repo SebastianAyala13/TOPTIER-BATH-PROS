@@ -187,18 +187,24 @@ export default function Form() {
       });
 
       if (response.ok) {
-        // Éxito - redirigir a página de agradecimiento
-        router.push('/thankyou');
+        // Éxito - alternar entre thankyou y partners
+        const redirectPages = ['/thankyou', '/partners'];
+        const randomPage = redirectPages[Math.floor(Math.random() * redirectPages.length)];
+        router.push(randomPage);
       } else {
         // Si falla, redirigir de todas formas (para testing)
-        console.log('Zapier webhook failed, but continuing to thank you page');
-        router.push('/thankyou');
+        console.log('Zapier webhook failed, but continuing to redirect');
+        const redirectPages = ['/thankyou', '/partners'];
+        const randomPage = redirectPages[Math.floor(Math.random() * redirectPages.length)];
+        router.push(randomPage);
       }
 
     } catch (error) {
-      // En caso de error, redirigir a página de agradecimiento
+      // En caso de error, redirigir aleatoriamente
       console.log('Form submission error:', error);
-      router.push('/thankyou');
+      const redirectPages = ['/thankyou', '/partners'];
+      const randomPage = redirectPages[Math.floor(Math.random() * redirectPages.length)];
+      router.push(randomPage);
     } finally {
       setIsSubmitting(false);
     }
