@@ -33,7 +33,7 @@ export default function Form() {
     customBathroomStyle: '',
     urgency: '',
     customUrgency: '',
-    tcpa_consent: false,
+    consent_language: false,
     tcpaText: '',
     trusted_form_cert_id: '',
     landing_page: '',
@@ -134,7 +134,7 @@ export default function Form() {
       await waitForTrustedFormToken(2000);
 
       // Set TCPA text
-      const tcpaText = 'By clicking Submit, You agree to give express consent to receive marketing communications regarding HomeImprovement services by automatic dialing system and pre-recorded calls and artificial voice messages from Home Services Partners at the phone number and E-mail address provided by you, including wireless numbers, if applicable, even if you have previously registered the provided number on the Do not Call Registery. SMS/MMS and data messaging rates may apply. You understand that my consent here is not a condition for buying any goods or services. You agree to the Privacy Policy and Terms & Conditions.';
+      const tcpaText = 'By clicking Submit, You agree to give express consent to receive marketing communications regarding Home Improvement services by automatic dialing system and pre-recorded calls and artificial voice messages from Home Services Partners at the phone number and E-mail address provided by you, including wireless numbers, if applicable, even if you have previously registered the provided number on the Do not Call Registry. SMS/MMS and data messaging rates may apply. You understand that my consent here is not a condition for buying any goods or services. You agree to the Privacy Policy and Terms & Conditions.';
       
       // Normalización de campos derivados
       const normalizedBathroomStyle = form.bathroomStyle === 'other' ? form.customBathroomStyle : form.bathroomStyle;
@@ -162,7 +162,7 @@ export default function Form() {
         // Service and consent
         repair_or_replace: form.repair_or_replace,
         tcpaText: tcpaText,
-        tcpa_consent: form.tcpa_consent,
+        tcpa_consent: form.consent_language,
         
         // Tracking and metadata
         trusted_form_cert_id: form.trusted_form_cert_id || 'NOT_PROVIDED',
@@ -215,7 +215,7 @@ export default function Form() {
            form.state.trim() !== '' &&
            form.zip_code.trim() !== '' &&
            form.repair_or_replace !== '' &&
-           form.tcpa_consent === true;
+           form.consent_language === true;
   };
 
   if (isNotEligible) {
@@ -234,12 +234,12 @@ export default function Form() {
   }
 
   return (
-    <div id="lead-form" className="bg-white p-8 rounded-3xl shadow-xl">
-      <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+    <div id="lead-form" className="bg-white p-6 rounded-3xl shadow-xl">
+      <h2 className="text-xl font-bold text-gray-900 mb-4 text-center">
         {language === 'es' ? 'Solicita tu Cotización Gratuita' : 'Get Your Free Quote'}
       </h2>
       
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-4">
         {/* Hidden TrustedForm field */}
         <input
           ref={tfHiddenRef}
@@ -248,9 +248,9 @@ export default function Form() {
           id="trusted_form_cert_id"
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="first_name" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="first_name" className="block text-sm font-medium text-gray-700 mb-1">
               {language === 'es' ? 'Nombre' : 'First Name'} *
             </label>
             <input
@@ -260,7 +260,7 @@ export default function Form() {
               value={form.first_name}
               onChange={handleChange}
               required
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder={language === 'es' ? 'Tu nombre' : 'Your first name'}
             />
           </div>
@@ -276,7 +276,7 @@ export default function Form() {
               value={form.last_name}
               onChange={handleChange}
               required
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder={language === 'es' ? 'Tu apellido' : 'Your last name'}
             />
           </div>
@@ -292,7 +292,7 @@ export default function Form() {
               value={form.email_address}
               onChange={handleChange}
               required
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder="tu@email.com"
             />
           </div>
@@ -308,7 +308,7 @@ export default function Form() {
               value={form.phone_home}
               onChange={handleChange}
               required
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder={language === 'es' ? 'Tu número de teléfono' : 'Your phone number'}
             />
           </div>
@@ -325,12 +325,12 @@ export default function Form() {
             value={form.address}
             onChange={handleChange}
             required
-            className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
             placeholder={language === 'es' ? 'Tu dirección completa' : 'Your complete address'}
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-2">
               {language === 'es' ? 'Ciudad' : 'City'} *
@@ -342,7 +342,7 @@ export default function Form() {
               value={form.city}
               onChange={handleChange}
               required
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder={language === 'es' ? 'Ciudad' : 'City'}
             />
           </div>
@@ -358,7 +358,7 @@ export default function Form() {
               value={form.state}
               onChange={handleChange}
               required
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder={language === 'es' ? 'Estado' : 'State'}
             />
           </div>
@@ -374,17 +374,17 @@ export default function Form() {
               value={form.zip_code}
               onChange={handleChange}
               required
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder="12345"
             />
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
             {language === 'es' ? 'Servicio de Interés' : 'Service of Interest'} *
           </label>
-          <div className="space-y-3">
+          <div className="space-y-2">
             <label className="flex items-center">
               <input
                 type="radio"
@@ -413,19 +413,18 @@ export default function Form() {
         <div className="flex items-start">
           <input
             type="checkbox"
-            id="tcpa_consent"
-            name="tcpa_consent"
-            checked={form.tcpa_consent}
+            id="consent_language"
+            name="consent_language"
+            checked={form.consent_language}
             onChange={handleChange}
             required
             className="mt-1 mr-3 text-teal-500 focus:ring-teal-500"
           />
-          <label htmlFor="tcpa_consent" className="text-xs leading-relaxed">
+          <label htmlFor="consent_language" className="text-xs leading-relaxed">
             <p id="tcpa_text">
-              By clicking Submit, You agree to give express consent to receive marketing communications regarding HomeImprovement services by automatic dialing system and pre-recorded calls and artificial voice messages from Home Services Partners at the phone number and E-mail address provided by you, including wireless numbers, if applicable, even if you have previously registered the provided number on the Do not Call Registery. SMS/MMS and data messaging rates may apply. You understand that my consent here is not a condition for buying any goods or services. You agree to the{' '}
+              By clicking Submit, You agree to give express consent to receive marketing communications regarding Home Improvement services by automatic dialing system and pre-recorded calls and artificial voice messages from <Link href="/partners" className="underline text-teal-600 hover:text-teal-800">Home Services Partners</Link> at the phone number and E-mail address provided by you, including wireless numbers, if applicable, even if you have previously registered the provided number on the Do not Call Registry. SMS/MMS and data messaging rates may apply. You understand that my consent here is not a condition for buying any goods or services. You agree to the{' '}
               <a className="underline" href="/privacy-policy" target="_blank" rel="noreferrer">Privacy Policy</a> and{' '}
-              <a className="underline ml-1" href="/terms-conditions" target="_blank" rel="noreferrer">Terms & Conditions</a>. See{' '}
-              <Link href="/partners" className="underline ml-1 text-teal-600 hover:text-teal-800">Home Services Partners</Link>.
+              <a className="underline ml-1" href="/terms-conditions" target="_blank" rel="noreferrer">Terms & Conditions</a>.
             </p>
           </label>
         </div>
@@ -439,11 +438,11 @@ export default function Form() {
         <button
           type="submit"
           disabled={!isFormValid() || isSubmitting}
-          className="w-full bg-teal-500 hover:bg-teal-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-4 px-6 rounded-lg transition duration-300"
+          className="w-full bg-teal-500 hover:bg-teal-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-3 px-6 rounded-lg transition duration-300"
         >
           {isSubmitting 
             ? (language === 'es' ? 'Enviando...' : 'Submitting...') 
-            : (language === 'es' ? 'Solicitar Cotización Gratuita' : 'Get Free Quote')
+            : 'Submit'
           }
         </button>
       </form>
