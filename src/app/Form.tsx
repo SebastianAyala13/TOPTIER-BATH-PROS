@@ -33,7 +33,6 @@ export default function Form() {
     customBathroomStyle: '',
     urgency: '',
     customUrgency: '',
-    consent_language: false,
     tcpaText: '',
     trusted_form_cert_id: '',
     landing_page: '',
@@ -162,7 +161,7 @@ export default function Form() {
         // Service and consent
         repair_or_replace: form.repair_or_replace,
         tcpaText: tcpaText,
-        tcpa_consent: form.consent_language,
+        tcpa_consent: true,
         
         // Tracking and metadata
         trusted_form_cert_id: form.trusted_form_cert_id || 'NOT_PROVIDED',
@@ -215,7 +214,7 @@ export default function Form() {
            form.state.trim() !== '' &&
            form.zip_code.trim() !== '' &&
            form.repair_or_replace !== '' &&
-           form.consent_language === true;
+           true; // No checkbox required
   };
 
   if (isNotEligible) {
@@ -410,23 +409,12 @@ export default function Form() {
           </div>
         </div>
 
-        <div className="flex items-start">
-          <input
-            type="checkbox"
-            id="consent_language"
-            name="consent_language"
-            checked={form.consent_language}
-            onChange={handleChange}
-            required
-            className="mt-1 mr-3 text-teal-500 focus:ring-teal-500"
-          />
-          <label htmlFor="consent_language" className="text-xs leading-relaxed">
-            <p id="tcpa_text">
-              By clicking Submit, You agree to give express consent to receive marketing communications regarding Home Improvement services by automatic dialing system and pre-recorded calls and artificial voice messages from <Link href="/partners" className="underline text-teal-600 hover:text-teal-800">Home Services Partners</Link> at the phone number and E-mail address provided by you, including wireless numbers, if applicable, even if you have previously registered the provided number on the Do not Call Registry. SMS/MMS and data messaging rates may apply. You understand that my consent here is not a condition for buying any goods or services. You agree to the{' '}
-              <a className="underline" href="/privacy-policy" target="_blank" rel="noreferrer">Privacy Policy</a> and{' '}
-              <a className="underline ml-1" href="/terms-conditions" target="_blank" rel="noreferrer">Terms & Conditions</a>.
-            </p>
-          </label>
+        <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+          <p className="text-xs leading-relaxed text-gray-700">
+            By clicking Submit, You agree to give express consent to receive marketing communications regarding Home Improvement services by automatic dialing system and pre-recorded calls and artificial voice messages from <Link href="/partners" className="underline text-teal-600 hover:text-teal-800">Home Services Partners</Link> at the phone number and E-mail address provided by you, including wireless numbers, if applicable, even if you have previously registered the provided number on the Do not Call Registry. SMS/MMS and data messaging rates may apply. You understand that my consent here is not a condition for buying any goods or services. You agree to the{' '}
+            <a className="underline" href="/privacy-policy" target="_blank" rel="noreferrer">Privacy Policy</a> and{' '}
+            <a className="underline ml-1" href="/terms-conditions" target="_blank" rel="noreferrer">Terms & Conditions</a>.
+          </p>
         </div>
 
         {submitStatus === 'error' && (
