@@ -105,7 +105,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {/* ✅ Banner de consentimiento legal TCPA + cookies */}
             <BannerConsent />
           </main>
-          <a href="#form-section" className="fixed bottom-4 right-4 z-50 bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 text-sm font-semibold md:hidden">
+          <a href="#lead-form" className="fixed bottom-4 right-4 z-50 bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 text-sm font-semibold md:hidden">
             Get Quote
           </a>
         </LanguageProvider>
