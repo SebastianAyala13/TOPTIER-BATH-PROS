@@ -161,17 +161,17 @@ export default function Home() {
         </div>
 
         {/* Columna lateral - Formulario fijo */}
-        <div className="fixed right-0 top-0 h-full w-full sm:w-96 bg-white/95 backdrop-blur-sm border-l border-gray-200 shadow-xl z-40 overflow-y-auto">
+        <div className="fixed right-0 top-0 h-full w-full sm:w-96 bg-white/95 backdrop-blur-sm border-l border-gray-200 shadow-xl z-40 overflow-y-auto animate-pulse">
           <div className="p-4 sm:p-6">
             <div className="mb-4">
               <h2 className="text-xl font-bold text-gray-900 text-center">
-                Get Your Free Quote
+                🎯 Get Your Free Quote
               </h2>
               <p className="text-sm text-gray-600 text-center mt-1">
                 Complete bathroom remodeling consultation
               </p>
             </div>
-            <div id="lead-form">
+            <div id="lead-form" className="border-2 border-teal-200 rounded-2xl p-2">
               <Form />
             </div>
           </div>

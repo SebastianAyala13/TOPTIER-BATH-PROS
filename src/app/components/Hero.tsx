@@ -74,13 +74,13 @@ export default function Hero() {
       title: 'Transform your bathroom with',
       highlight: 'premium remodeling experts',
       subtitle: 'Design, materials, and installation — on time and stress-free.',
-      cta: 'Start Your Quote',
+      cta: 'Get Free Quote Now →',
     },
     es: {
       title: 'Transforma tu baño con',
       highlight: 'expertos en remodelación',
       subtitle: 'Diseño, materiales e instalación — a tiempo y sin estrés.',
-      cta: 'Comenzar Cotización',
+      cta: 'Cotización Gratis Ahora →',
     },
   };
 
