@@ -233,12 +233,8 @@ export default function Form() {
   }
 
   return (
-    <div id="lead-form" className="bg-white p-6 rounded-3xl shadow-xl">
-      <h2 className="text-xl font-bold text-gray-900 mb-4 text-center">
-        {language === 'es' ? 'Solicita tu Cotización Gratuita' : 'Get Your Free Quote'}
-      </h2>
-      
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div id="lead-form" className="bg-white p-4 rounded-2xl shadow-lg">
+      <form onSubmit={handleSubmit} className="space-y-3">
         {/* Hidden TrustedForm field */}
         <input
           ref={tfHiddenRef}
@@ -259,7 +255,7 @@ export default function Form() {
               value={form.first_name}
               onChange={handleChange}
               required
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              className="w-full border border-gray-300 rounded-lg px-2 py-2 text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder={language === 'es' ? 'Tu nombre' : 'Your first name'}
             />
           </div>
@@ -275,7 +271,7 @@ export default function Form() {
               value={form.last_name}
               onChange={handleChange}
               required
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              className="w-full border border-gray-300 rounded-lg px-2 py-2 text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder={language === 'es' ? 'Tu apellido' : 'Your last name'}
             />
           </div>
@@ -291,7 +287,7 @@ export default function Form() {
               value={form.email_address}
               onChange={handleChange}
               required
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              className="w-full border border-gray-300 rounded-lg px-2 py-2 text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder="tu@email.com"
             />
           </div>
@@ -307,7 +303,7 @@ export default function Form() {
               value={form.phone_home}
               onChange={handleChange}
               required
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              className="w-full border border-gray-300 rounded-lg px-2 py-2 text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder={language === 'es' ? 'Tu número de teléfono' : 'Your phone number'}
             />
           </div>
@@ -341,7 +337,7 @@ export default function Form() {
               value={form.city}
               onChange={handleChange}
               required
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              className="w-full border border-gray-300 rounded-lg px-2 py-2 text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder={language === 'es' ? 'Ciudad' : 'City'}
             />
           </div>
@@ -357,7 +353,7 @@ export default function Form() {
               value={form.state}
               onChange={handleChange}
               required
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              className="w-full border border-gray-300 rounded-lg px-2 py-2 text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder={language === 'es' ? 'Estado' : 'State'}
             />
           </div>
@@ -373,7 +369,7 @@ export default function Form() {
               value={form.zip_code}
               onChange={handleChange}
               required
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              className="w-full border border-gray-300 rounded-lg px-2 py-2 text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder="12345"
             />
           </div>
@@ -426,7 +422,7 @@ export default function Form() {
         <button
           type="submit"
           disabled={!isFormValid() || isSubmitting}
-          className="w-full bg-teal-500 hover:bg-teal-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-3 px-6 rounded-lg transition duration-300"
+          className="w-full bg-teal-500 hover:bg-teal-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-2 px-4 rounded-lg transition duration-300 text-sm"
         >
           {isSubmitting 
             ? (language === 'es' ? 'Enviando...' : 'Submitting...') 

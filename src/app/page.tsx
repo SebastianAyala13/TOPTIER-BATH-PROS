@@ -88,7 +88,7 @@ export default function Home() {
       {/* Layout de dos columnas: contenido principal + formulario fijo */}
       <div className="flex flex-col lg:flex-row min-h-screen">
         {/* Columna principal - Contenido */}
-        <div className="flex-1 lg:mr-96">
+        <div className="flex-1 sm:mr-96">
           <Hero />
           <SectionDivider />
           <VideoSection />
@@ -98,8 +98,8 @@ export default function Home() {
           <TrustSection />
           <ProcessSteps />
 
-          {/* Sección de formulario en móvil */}
-          <section id="form-section" className="py-20 px-4 bg-transparent lg:hidden">
+          {/* Sección de formulario en móvil - Ocultada ya que está en sidebar */}
+          <section id="form-section" className="py-20 px-4 bg-transparent hidden">
             <div className="max-w-2xl mx-auto">
               <Form />
             </div>
@@ -160,9 +160,17 @@ export default function Home() {
           <Footer />
         </div>
 
-        {/* Columna lateral - Formulario fijo (solo desktop) */}
-        <div className="hidden lg:block fixed right-0 top-0 h-full w-96 bg-white/95 backdrop-blur-sm border-l border-gray-200 shadow-xl z-40 overflow-y-auto">
-          <div className="p-6">
+        {/* Columna lateral - Formulario fijo */}
+        <div className="fixed right-0 top-0 h-full w-full sm:w-96 bg-white/95 backdrop-blur-sm border-l border-gray-200 shadow-xl z-40 overflow-y-auto">
+          <div className="p-4 sm:p-6">
+            <div className="mb-4">
+              <h2 className="text-xl font-bold text-gray-900 text-center">
+                Get Your Free Quote
+              </h2>
+              <p className="text-sm text-gray-600 text-center mt-1">
+                Complete bathroom remodeling consultation
+              </p>
+            </div>
             <div id="lead-form">
               <Form />
             </div>
