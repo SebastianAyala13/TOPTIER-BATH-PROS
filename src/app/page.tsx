@@ -98,12 +98,6 @@ export default function Home() {
           <TrustSection />
           <ProcessSteps />
 
-          {/* Sección de formulario en móvil - Ocultada ya que está en sidebar */}
-          <section id="form-section" className="py-20 px-4 bg-transparent hidden">
-            <div className="max-w-2xl mx-auto">
-              <Form />
-            </div>
-          </section>
 
           {/* Nueva sección de promociones animadas */}
           <Promotions />
