@@ -84,75 +84,91 @@ export default function Home() {
     <>
       <MobileVideoHandler />
       <Header />
-      <Hero />
-      <SectionDivider />
-      <VideoSection />
-      <SectionDivider />
-      <WhyChooseUs />
-      <SectionDivider />
-      <TrustSection />
-      <ProcessSteps />
+      
+      {/* Layout de dos columnas: contenido principal + formulario fijo */}
+      <div className="flex flex-col lg:flex-row min-h-screen">
+        {/* Columna principal - Contenido */}
+        <div className="flex-1 lg:mr-96">
+          <Hero />
+          <SectionDivider />
+          <VideoSection />
+          <SectionDivider />
+          <WhyChooseUs />
+          <SectionDivider />
+          <TrustSection />
+          <ProcessSteps />
 
-      <section id="form-section" className="py-20 px-4 bg-transparent">
-        <div className="max-w-2xl mx-auto">
-          <Form />
+          {/* Sección de formulario en móvil */}
+          <section id="form-section" className="py-20 px-4 bg-transparent lg:hidden">
+            <div className="max-w-2xl mx-auto">
+              <Form />
+            </div>
+          </section>
+
+          {/* Nueva sección de promociones animadas */}
+          <Promotions />
+          <SectionDivider />
+
+          <ReviewSection />
+          <BeforeAfter />
+
+          <section className="py-16 px-4 bg-white text-slate-900" id="testimonials">
+            <Testimonials />
+          </section>
+
+          {/* FAQ */}
+          <section id="faq" className="relative py-20 px-4 text-white bg-white/10 backdrop-blur-md">
+            <div className="absolute inset-0 -z-10">
+              <Image
+                src="/background-video-blur.jpg"
+                alt=""
+                fill
+                className="object-cover opacity-20"
+              />
+            </div>
+
+            <h2 className="text-3xl font-bold mb-6 text-center text-white drop-shadow-md">
+              Bathroom Remodeling FAQs
+            </h2>
+
+            <div className="max-w-3xl mx-auto space-y-4">
+              {faqs.map((faq, idx) => (
+                <details
+                  key={idx}
+                  className="bg-white/90 text-slate-900 p-4 rounded-xl shadow-md transition hover:shadow-lg group"
+                >
+                  <summary className="flex items-center justify-between font-semibold cursor-pointer">
+                    {faq.en.q}
+                    <span className="ml-2 text-teal-500 group-open:rotate-180 transition-transform">▼</span>
+                  </summary>
+                  <motion.p
+                    className="mt-2 text-slate-700 text-sm"
+                    initial={{ opacity: 0, y: -5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {faq.en.a}
+                  </motion.p>
+                </details>
+              ))}
+            </div>
+          </section>
+
+          <SectionDivider />
+          <ProjectGallery />
+          <Packages />
+          <Footer />
         </div>
-      </section>
 
-      {/* Nueva sección de promociones animadas */}
-      <Promotions />
-      <SectionDivider />
-
-      <ReviewSection />
-      <BeforeAfter />
-
-      <section className="py-16 px-4 bg-white text-slate-900" id="testimonials">
-        <Testimonials />
-      </section>
-
-      {/* FAQ */}
-      <section id="faq" className="relative py-20 px-4 text-white bg-white/10 backdrop-blur-md">
-        <div className="absolute inset-0 -z-10">
-          <Image
-            src="/background-video-blur.jpg"
-            alt=""
-            fill
-            className="object-cover opacity-20"
-          />
+        {/* Columna lateral - Formulario fijo (solo desktop) */}
+        <div className="hidden lg:block fixed right-0 top-0 h-full w-96 bg-white/95 backdrop-blur-sm border-l border-gray-200 shadow-xl z-40 overflow-y-auto">
+          <div className="p-6">
+            <div id="lead-form">
+              <Form />
+            </div>
+          </div>
         </div>
-
-          <h2 className="text-3xl font-bold mb-6 text-center text-white drop-shadow-md">
-            Bathroom Remodeling FAQs
-          </h2>
-
-        <div className="max-w-3xl mx-auto space-y-4">
-          {faqs.map((faq, idx) => (
-            <details
-              key={idx}
-              className="bg-white/90 text-slate-900 p-4 rounded-xl shadow-md transition hover:shadow-lg group"
-            >
-              <summary className="flex items-center justify-between font-semibold cursor-pointer">
-                {faq.en.q}
-                <span className="ml-2 text-teal-500 group-open:rotate-180 transition-transform">▼</span>
-              </summary>
-              <motion.p
-                className="mt-2 text-slate-700 text-sm"
-                initial={{ opacity: 0, y: -5 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                {faq.en.a}
-              </motion.p>
-            </details>
-          ))}
-        </div>
-      </section>
-
-      <SectionDivider />
-      <ProjectGallery />
-      <Packages />
-      <Footer />
-
+      </div>
 
       <p className="sr-only">
         TOPTIER BATH PROS is a trusted and licensed bathroom remodeling contractor offering full bathroom renovations, tub to shower conversions, and free estimates across the United States including Texas, Florida, and California.
