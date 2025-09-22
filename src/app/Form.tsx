@@ -44,6 +44,8 @@ export default function Form() {
   const [submitMessage] = useState('');
   const [, setTfToken] = useState('');
   const tfHiddenRef = useRef<HTMLInputElement>(null);
+  const hasSubmitted = useRef(false); // Prevenir envíos duplicados
+  const formRef = useRef<HTMLFormElement>(null);
 
   // TrustedForm integration
   useEffect(() => {
@@ -125,6 +127,14 @@ export default function Form() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Prevenir envíos duplicados
+    if (hasSubmitted.current || isSubmitting) {
+      console.log('Form submission blocked - already submitted or submitting');
+      return;
+    }
+    
+    hasSubmitted.current = true;
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
@@ -177,6 +187,8 @@ export default function Form() {
         website: 'toptierbathpros.com',
       };
 
+      console.log('Sending form data to Zapier:', formData);
+
       // Enviar a Zapier Webhook (formato JSON para mejor organización)
       const response = await fetch(getFormEndpoint(), {
         method: 'POST',
@@ -187,6 +199,7 @@ export default function Form() {
       });
 
       if (response.ok) {
+        console.log('Form submitted successfully');
         // Éxito - redirigir a página de agradecimiento
         router.push('/thankyou');
       } else {
@@ -218,23 +231,23 @@ export default function Form() {
   };
 
   if (isNotEligible) {
-  return (
+    return (
       <div className="bg-white p-8 rounded-3xl shadow-xl text-center">
         <h2 className="text-2xl font-bold text-red-600 mb-4">
           {language === 'es' ? 'No Elegible' : 'Not Eligible'}
-          </h2>
+        </h2>
         <p className="text-gray-700 mb-6">
-            {language === 'es'
+          {language === 'es'
             ? 'Lo sentimos, este formulario es solo para propietarios de vivienda.' 
             : 'Sorry, this form is only for homeowners.'}
-          </p>
-        </div>
+        </p>
+      </div>
     );
   }
 
   return (
-    <div id="lead-form" className="bg-white p-4 rounded-2xl shadow-lg">
-      <form onSubmit={handleSubmit} className="space-y-3">
+    <div className="bg-white p-4 rounded-2xl shadow-lg">
+      <form ref={formRef} onSubmit={handleSubmit} className="space-y-3">
         {/* Hidden TrustedForm field */}
         <input
           ref={tfHiddenRef}
