@@ -23,11 +23,17 @@ import Packages from './components/Packages';
 
 export default function Home() {
   const [isDesktop, setIsDesktop] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+  
   useEffect(() => {
+    // Marcar que estamos en el cliente
+    setIsClient(true);
+    
     if (typeof window !== 'undefined' && window.location.hash) {
       const element = document.querySelector(window.location.hash);
       if (element) element.scrollIntoView({ behavior: 'smooth' });
     }
+    
     const mq = window.matchMedia('(min-width: 1024px)');
     const setFromMQ = () => setIsDesktop(mq.matches);
     setFromMQ();
@@ -85,6 +91,59 @@ export default function Home() {
       },
     },
   ];
+
+  // No renderizar formularios hasta que estemos en el cliente
+  if (!isClient) {
+    return (
+      <>
+        <MobileVideoHandler />
+        <Header />
+        <div className="lg:mr-96">
+          <Hero />
+          <SectionDivider />
+          <VideoSection />
+          <SectionDivider />
+          <WhyChooseUs />
+          <SectionDivider />
+          <TrustSection />
+          <ProcessSteps />
+          <Promotions />
+          <SectionDivider />
+          <ReviewSection />
+          <BeforeAfter />
+          <section className="py-16 px-4 bg-white text-slate-900" id="testimonials">
+            <Testimonials />
+          </section>
+          <section id="faq" className="relative py-20 px-4 text-white bg-white/10 backdrop-blur-md">
+            <div className="absolute inset-0 -z-10">
+              <Image src="/background-video-blur.jpg" alt="" fill className="object-cover opacity-20" />
+            </div>
+            <h2 className="text-3xl font-bold mb-6 text-center text-white drop-shadow-md">Bathroom Remodeling FAQs</h2>
+            <div className="max-w-3xl mx-auto space-y-4">
+              {faqs.map((faq, idx) => (
+                <details key={idx} className="bg-white/90 text-slate-900 p-4 rounded-xl shadow-md transition hover:shadow-lg group">
+                  <summary className="flex items-center justify-between font-semibold cursor-pointer">
+                    {faq.en.q}
+                    <span className="ml-2 text-teal-500 group-open:rotate-180 transition-transform">▼</span>
+                  </summary>
+                  <motion.p className="mt-2 text-slate-700 text-sm" initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
+                    {faq.en.a}
+                  </motion.p>
+                </details>
+              ))}
+            </div>
+          </section>
+          <SectionDivider />
+          <ProjectGallery />
+          <Packages />
+          <Footer />
+        </div>
+        <p className="sr-only">
+          TOPTIER BATH PROS is a trusted and licensed bathroom remodeling contractor offering full bathroom renovations, tub to shower conversions, and free estimates across the United States including Texas, Florida, and California.
+        </p>
+      </>
+    );
+  }
 
   return (
     <>
@@ -150,7 +209,7 @@ export default function Home() {
                 <h2 className="text-xl font-bold text-gray-900 text-center">🎯 Get Your Free Quote</h2>
                 <p className="text-sm text-gray-600 text-center mt-1">Complete bathroom remodeling consultation</p>
               </div>
-              <div id="lead-form" className="border-2 border-teal-200 rounded-2xl p-2">
+              <div id="lead-form-desktop" className="border-2 border-teal-200 rounded-2xl p-2">
                 <Form />
               </div>
             </div>
@@ -165,7 +224,7 @@ export default function Home() {
                 <h2 className="text-xl font-bold text-gray-900 text-center">🎯 Get Your Free Quote</h2>
                 <p className="text-sm text-gray-600 text-center mt-1">Complete bathroom remodeling consultation</p>
               </div>
-              <div id="lead-form" className="border-2 border-teal-200 rounded-2xl p-2">
+              <div id="lead-form-mobile" className="border-2 border-teal-200 rounded-2xl p-2">
                 <Form />
               </div>
             </div>
