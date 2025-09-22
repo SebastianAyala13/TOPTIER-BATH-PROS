@@ -51,7 +51,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       // Service and consent
       repair_or_replace: formBody.repair_or_replace ?? '',
       tcpaText: formBody.tcpaText ?? '',
-      tcpa_consent: !!formBody.tcpa_consent,
+      "consent-language": !!formBody["consent-language"],
       
       // Legacy fields for compatibility
       bathroomStyle: formBody.bathroomStyle ?? '',

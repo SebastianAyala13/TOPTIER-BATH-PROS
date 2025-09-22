@@ -181,7 +181,7 @@ export default function Form() {
         // Service and consent
         repair_or_replace: form.repair_or_replace,
         tcpaText: tcpaText,
-        tcpa_consent: true,
+        "consent-language": true,
         
         // Tracking and metadata
         trusted_form_cert_id: form.trusted_form_cert_id || 'NOT_PROVIDED',
