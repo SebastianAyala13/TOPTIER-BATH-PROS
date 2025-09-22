@@ -11,6 +11,7 @@ declare global {
     TrustedForm?: {
       getCertUrl?: () => string;
     };
+    dataLayer?: any[];
   }
 }
 
@@ -200,6 +201,25 @@ export default function Form() {
 
       if (response.ok) {
         console.log('Form submitted successfully');
+        
+        // Disparar Custom Event para GTM (solo una vez)
+        if (typeof window !== 'undefined' && window.dataLayer) {
+          window.dataLayer.push({
+            event: 'lead_submit',
+            form_id: 'toptier_bath_pros_form',
+            form_type: 'bathroom_remodeling_quote',
+            lead_data: {
+              first_name: form.first_name,
+              last_name: form.last_name,
+              email: form.email_address,
+              phone: form.phone_home,
+              service: form.repair_or_replace,
+              zip_code: form.zip_code
+            }
+          });
+          console.log('Custom GTM event pushed: lead_submit');
+        }
+        
         // Éxito - redirigir a página de agradecimiento
         router.push('/thankyou');
       } else {

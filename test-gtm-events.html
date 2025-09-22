@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GTM Events Test - TOPTIER BATH PROS</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ccc; }
+        .event-log { background: #f5f5f5; padding: 10px; margin: 10px 0; max-height: 200px; overflow-y: auto; }
+        button { background: #14b8a6; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #0f9488; }
+    </style>
+</head>
+<body>
+    <h1>🧪 GTM Events Test - TOPTIER BATH PROS</h1>
+    
+    <div class="test-section">
+        <h2>Test 1: Simular envío de formulario</h2>
+        <p>Este botón simula el envío del formulario y debería disparar el evento 'lead_submit' UNA sola vez.</p>
+        <button onclick="simulateFormSubmit()">🚀 Simular Envío de Formulario</button>
+        <div id="test1-result" class="event-log"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 2: Verificar dataLayer</h2>
+        <p>Verifica el contenido actual del dataLayer.</p>
+        <button onclick="checkDataLayer()">📊 Verificar DataLayer</button>
+        <div id="test2-result" class="event-log"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 3: Limpiar dataLayer</h2>
+        <p>Limpia el dataLayer para pruebas frescas.</p>
+        <button onclick="clearDataLayer()">🧹 Limpiar DataLayer</button>
+        <div id="test3-result" class="event-log"></div>
+    </div>
+
+    <script>
+        // Inicializar dataLayer si no existe
+        window.dataLayer = window.dataLayer || [];
+        
+        function log(message, containerId) {
+            const container = document.getElementById(containerId);
+            const timestamp = new Date().toLocaleTimeString();
+            container.innerHTML += `<div>[${timestamp}] ${message}</div>`;
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function simulateFormSubmit() {
+            log('🚀 Iniciando simulación de envío de formulario...', 'test1-result');
+            
+            // Simular los datos del formulario
+            const formData = {
+                first_name: 'Test',
+                last_name: 'User',
+                email_address: 'test@example.com',
+                phone_home: '555-1234',
+                repair_or_replace: 'replace',
+                zip_code: '12345'
+            };
+
+            // Disparar el Custom Event (igual que en el código real)
+            if (window.dataLayer) {
+                window.dataLayer.push({
+                    event: 'lead_submit',
+                    form_id: 'toptier_bath_pros_form',
+                    form_type: 'bathroom_remodeling_quote',
+                    lead_data: {
+                        first_name: formData.first_name,
+                        last_name: formData.last_name,
+                        email: formData.email_address,
+                        phone: formData.phone_home,
+                        service: formData.repair_or_replace,
+                        zip_code: formData.zip_code
+                    }
+                });
+                log('✅ Custom GTM event pushed: lead_submit', 'test1-result');
+                log('📊 Datos enviados: ' + JSON.stringify(formData, null, 2), 'test1-result');
+            } else {
+                log('❌ Error: dataLayer no disponible', 'test1-result');
+            }
+        }
+
+        function checkDataLayer() {
+            log('📊 Verificando dataLayer...', 'test2-result');
+            log('📊 Total de eventos en dataLayer: ' + window.dataLayer.length, 'test2-result');
+            
+            // Buscar eventos lead_submit
+            const leadSubmitEvents = window.dataLayer.filter(item => item.event === 'lead_submit');
+            log('🎯 Eventos lead_submit encontrados: ' + leadSubmitEvents.length, 'test2-result');
+            
+            if (leadSubmitEvents.length > 0) {
+                leadSubmitEvents.forEach((event, index) => {
+                    log(`📋 Evento ${index + 1}: ${JSON.stringify(event, null, 2)}`, 'test2-result');
+                });
+            }
+        }
+
+        function clearDataLayer() {
+            log('🧹 Limpiando dataLayer...', 'test3-result');
+            window.dataLayer = [];
+            log('✅ DataLayer limpiado. Nuevo tamaño: ' + window.dataLayer.length, 'test3-result');
+        }
+
+        // Log inicial
+        log('🔧 Página de prueba cargada. DataLayer inicializado.', 'test1-result');
+        log('📊 Tamaño inicial del dataLayer: ' + window.dataLayer.length, 'test2-result');
+    </script>
+</body>
+</html>
