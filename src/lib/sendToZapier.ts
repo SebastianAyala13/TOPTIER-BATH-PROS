@@ -1,7 +1,10 @@
 export async function sendToZapier(data: Record<string, unknown>): Promise<void> {
   const url = process.env.ZAPIER_HOOK_URL as string | undefined;
   const secret = process.env.ZAPIER_SECRET as string | undefined;
-  if (!url || !secret) throw new Error('ZAPIER env vars missing');
+  if (!url || !secret) {
+    console.log('ZAPIER env vars missing, skipping webhook');
+    return;
+  }
 
   const r = await fetch(url, {
     method: 'POST',

@@ -11,7 +11,7 @@ declare global {
     TrustedForm?: {
       getCertUrl?: () => string;
     };
-    dataLayer?: any[];
+    dataLayer?: Record<string, unknown>[];
   }
 }
 
