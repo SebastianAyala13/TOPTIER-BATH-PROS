@@ -18,6 +18,14 @@ declare global {
 export default function Form() {
   const { language } = useLanguage();
   const router = useRouter();
+  
+  // Log para verificar cuántas instancias se montan
+  useEffect(() => {
+    console.log('🔧 Form component mounted - timestamp:', new Date().toISOString());
+    return () => {
+      console.log('🔧 Form component unmounted - timestamp:', new Date().toISOString());
+    };
+  }, []);
 
   const [form, setForm] = useState({
     first_name: '',
@@ -131,10 +139,11 @@ export default function Form() {
     
     // Prevenir envíos duplicados
     if (hasSubmitted.current || isSubmitting) {
-      console.log('Form submission blocked - already submitted or submitting');
+      console.log('🚫 Form submission blocked - already submitted or submitting');
       return;
     }
     
+    console.log('🚀 Form submission started - hasSubmitted:', hasSubmitted.current, 'isSubmitting:', isSubmitting);
     hasSubmitted.current = true;
     setIsSubmitting(true);
     setSubmitStatus('idle');
@@ -204,7 +213,7 @@ export default function Form() {
         
         // Disparar Custom Event para GTM (solo una vez)
         if (typeof window !== 'undefined' && window.dataLayer) {
-          window.dataLayer.push({
+          const eventData = {
             event: 'lead_submit',
             form_id: 'toptier_bath_pros_form',
             form_type: 'bathroom_remodeling_quote',
@@ -216,8 +225,14 @@ export default function Form() {
               service: form.repair_or_replace,
               zip_code: form.zip_code
             }
-          });
-          console.log('Custom GTM event pushed: lead_submit');
+          };
+          
+          window.dataLayer.push(eventData);
+          console.log('✅ Custom GTM event pushed: lead_submit');
+          console.log('📊 Event data:', eventData);
+          console.log('📊 Total dataLayer events:', window.dataLayer.length);
+        } else {
+          console.log('❌ dataLayer not available');
         }
         
         // Éxito - redirigir a página de agradecimiento
