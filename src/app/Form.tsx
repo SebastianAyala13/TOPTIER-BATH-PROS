@@ -282,7 +282,7 @@ export default function Form() {
 
   return (
     <div className="bg-white p-4 rounded-2xl shadow-lg">
-      <form ref={formRef} onSubmit={handleSubmit} className="space-y-3">
+      <form ref={formRef} onSubmit={handleSubmit} className="space-y-3" data-tf-element-role="offer">
         {/* Hidden TrustedForm field */}
         <input
           ref={tfHiddenRef}
@@ -459,24 +459,22 @@ export default function Form() {
           </div>
         )}
 
-        <button
-          type="submit"
-          disabled={!isFormValid() || isSubmitting}
-          className="w-full bg-teal-500 hover:bg-teal-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-2 px-4 rounded-lg transition duration-300 text-sm"
-        >
-          {isSubmitting 
-            ? (language === 'es' ? 'Enviando...' : 'Submitting...') 
-            : 'Submit'
-          }
-        </button>
-
-        <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 mt-3">
-          <p className="text-xs leading-relaxed text-gray-700">
+        <label className="bg-gray-50 p-4 rounded-lg border border-gray-200 mt-3 block" data-tf-element-role="consent-language">
+          <span className="text-xs leading-relaxed text-gray-700">
             By clicking Submit, You agree to give express consent to receive marketing communications regarding Home Improvement services by automatic dialing system and pre-recorded calls and artificial voice messages from <Link href="/partners" className="underline text-teal-600 hover:text-teal-800">Home Services Partners</Link> at the phone number and E-mail address provided by you, including wireless numbers, if applicable, even if you have previously registered the provided number on the Do not Call Registry. SMS/MMS and data messaging rates may apply. You understand that my consent here is not a condition for buying any goods or services. You agree to the{' '}
             <a className="underline" href="/privacy-policy" target="_blank" rel="noreferrer">Privacy Policy</a> and{' '}
             <a className="underline ml-1" href="/terms-conditions" target="_blank" rel="noreferrer">Terms & Conditions</a>.
-          </p>
-        </div>
+          </span>
+        </label>
+
+        <input
+          type="submit"
+          name="submit"
+          data-tf-element-role="submit"
+          disabled={!isFormValid() || isSubmitting}
+          className="w-full bg-teal-500 hover:bg-teal-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-2 px-4 rounded-lg transition duration-300 text-sm cursor-pointer"
+          value={isSubmitting ? (language === 'es' ? 'Enviando...' : 'Submitting...') : 'Submit'}
+        />
       </form>
     </div>
   );
