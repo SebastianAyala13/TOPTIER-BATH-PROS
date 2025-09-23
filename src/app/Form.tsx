@@ -453,14 +453,6 @@ export default function Form() {
           </div>
         </div>
 
-        <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-          <p className="text-xs leading-relaxed text-gray-700">
-            By clicking Submit, You agree to give express consent to receive marketing communications regarding Home Improvement services by automatic dialing system and pre-recorded calls and artificial voice messages from <Link href="/partners" className="underline text-teal-600 hover:text-teal-800">Home Services Partners</Link> at the phone number and E-mail address provided by you, including wireless numbers, if applicable, even if you have previously registered the provided number on the Do not Call Registry. SMS/MMS and data messaging rates may apply. You understand that my consent here is not a condition for buying any goods or services. You agree to the{' '}
-            <a className="underline" href="/privacy-policy" target="_blank" rel="noreferrer">Privacy Policy</a> and{' '}
-            <a className="underline ml-1" href="/terms-conditions" target="_blank" rel="noreferrer">Terms & Conditions</a>.
-          </p>
-        </div>
-
         {submitStatus === 'error' && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
             {submitMessage}
@@ -477,6 +469,14 @@ export default function Form() {
             : 'Submit'
           }
         </button>
+
+        <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 mt-3">
+          <p className="text-xs leading-relaxed text-gray-700">
+            By clicking Submit, You agree to give express consent to receive marketing communications regarding Home Improvement services by automatic dialing system and pre-recorded calls and artificial voice messages from <Link href="/partners" className="underline text-teal-600 hover:text-teal-800">Home Services Partners</Link> at the phone number and E-mail address provided by you, including wireless numbers, if applicable, even if you have previously registered the provided number on the Do not Call Registry. SMS/MMS and data messaging rates may apply. You understand that my consent here is not a condition for buying any goods or services. You agree to the{' '}
+            <a className="underline" href="/privacy-policy" target="_blank" rel="noreferrer">Privacy Policy</a> and{' '}
+            <a className="underline ml-1" href="/terms-conditions" target="_blank" rel="noreferrer">Terms & Conditions</a>.
+          </p>
+        </div>
       </form>
     </div>
   );

@@ -218,7 +218,7 @@ export default function Home() {
       ) : (
         <>
           {/* Mobile: formulario al inicio (una sola instancia de Form) */}
-          <div id="form-section" className="bg-white border-b border-gray-200 shadow-sm">
+          <div id="form-section" className="bg-white border-b border-gray-200 shadow-sm pt-8">
             <div className="p-4">
               <div className="mb-4">
                 <h2 className="text-xl font-bold text-gray-900 text-center">🎯 Get Your Free Quote</h2>
