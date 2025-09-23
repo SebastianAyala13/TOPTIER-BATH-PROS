@@ -122,12 +122,6 @@ export default function VideoSection() {
                     className="object-cover"
                     priority={idx < 2}
                   />
-                  <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                    <div className="text-center">
-                      <div className="text-4xl mb-2">🖼️</div>
-                      <p className="text-sm opacity-80">Image Preview</p>
-                    </div>
-                  </div>
                 </div>
               ) : (
                 // Video con fallback
