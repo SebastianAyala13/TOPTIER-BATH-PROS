@@ -11,7 +11,7 @@ export default function Partners() {
     {
       title: 'Bathroom Remodeling Partners',
       partners: [
-        'Bath Experts', 'Bath Experts LLC', 'Bath Remodel by Capital', 'BCI Acrylic',
+        'Bath Experts', 'Bath Experts LLC', 'Bath Remodel by Capital', 'Bath concepts',
         'Billy.com', 'Jacuzzi', 'Premier Home Pros', 'Zintex', 'My Bath Colorado',
         'Tubbs by Grubbs', 'New Pro', 'New Bath Today', 'Kohler', 'Long Home',
         'BathWorks of Michigan', 'CareFree Home Pros'
