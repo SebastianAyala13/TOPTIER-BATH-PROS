@@ -100,6 +100,8 @@ export default function Form() {
   useEffect(() => {
     if (!leadidTokenRef.current) return;
     
+    let tokenFound = false;
+    
     const checkForLeadId = () => {
       try {
         // Check multiple possible global variables that Jornaya might use
@@ -114,12 +116,23 @@ export default function Form() {
         // Also check if the script has populated the field directly
         const fieldValue = leadidTokenRef.current?.value || '';
         
-        const finalLeadId = leadId || fieldValue;
+        // Check if Jornaya has populated any element with the token
+        const jornayaElements = document.querySelectorAll('[id*="jornaya"], [id*="lead"], [class*="jornaya"], [class*="lead"]');
+        let elementValue = '';
+        for (const element of jornayaElements) {
+          if (element instanceof HTMLInputElement && element.value) {
+            elementValue = element.value;
+            break;
+          }
+        }
         
-        if (finalLeadId && leadidTokenRef.current) {
+        const finalLeadId = leadId || fieldValue || elementValue;
+        
+        if (finalLeadId && finalLeadId.trim() !== '' && leadidTokenRef.current) {
           leadidTokenRef.current.value = finalLeadId;
           setForm(prev => ({ ...prev, universal_leadid: finalLeadId }));
           console.log('✅ Jornaya Lead ID capturado:', finalLeadId);
+          tokenFound = true;
           return true; // Found the token
         }
         
@@ -133,18 +146,45 @@ export default function Form() {
     // Check immediately
     if (checkForLeadId()) return; // If found immediately, no need for interval
     
-    // Check periodically until we get the token
+    // Check more frequently for the first few seconds, then less frequently
+    let checkCount = 0;
     const interval = setInterval(() => {
-      if (checkForLeadId()) {
+      checkCount++;
+      if (checkForLeadId() || tokenFound) {
         clearInterval(interval);
+        return;
+      }
+      
+      // Log progress every 5 seconds
+      if (checkCount % 10 === 0) {
+        console.log(`🔍 Buscando Jornaya Lead ID... intento ${checkCount}`);
+      }
+      
+      // Check if Jornaya script is loaded
+      if (checkCount === 20) {
+        const jornayaScript = document.querySelector('script[src*="lidstatic.com"]');
+        if (jornayaScript) {
+          console.log('✅ Script de Jornaya detectado');
+        } else {
+          console.log('⚠️ Script de Jornaya no encontrado');
+        }
       }
     }, 500);
     
-    // Clear interval after 15 seconds to avoid infinite checking
+    // Clear interval after 30 seconds to avoid infinite checking
     const timeout = setTimeout(() => {
       clearInterval(interval);
-      console.log('⚠️ Jornaya Lead ID timeout - token not captured');
-    }, 15000);
+      if (!tokenFound) {
+        console.log('⚠️ Jornaya Lead ID timeout - token not captured after 30 seconds');
+        console.log('🔍 Verificando si el script de Jornaya está cargado...');
+        
+        // Final attempt - check all possible sources
+        const finalCheck = checkForLeadId();
+        if (!finalCheck) {
+          console.log('❌ Jornaya Lead ID no pudo ser capturado');
+        }
+      }
+    }, 30000);
     
     return () => {
       clearInterval(interval);
@@ -204,6 +244,31 @@ export default function Form() {
     if (hasSubmitted.current || isSubmitting) {
       console.log('🚫 Form submission blocked - already submitted or submitting');
       return;
+    }
+    
+    // Final attempt to capture Jornaya Lead ID before submission
+    console.log('🔍 Final attempt to capture Jornaya Lead ID before submission...');
+    try {
+      const finalLeadId = 
+        window.jornaya_lead_id || 
+        window.leadid_token || 
+        window.jornayaLeadId ||
+        window.leadId ||
+        window.jornaya_token ||
+        leadidTokenRef.current?.value ||
+        '';
+      
+      if (finalLeadId && finalLeadId.trim() !== '') {
+        console.log('✅ Jornaya Lead ID captured before submission:', finalLeadId);
+        if (leadidTokenRef.current) {
+          leadidTokenRef.current.value = finalLeadId;
+        }
+        setForm(prev => ({ ...prev, universal_leadid: finalLeadId }));
+      } else {
+        console.log('⚠️ No Jornaya Lead ID found before submission');
+      }
+    } catch (error) {
+      console.log('Error capturing Jornaya Lead ID:', error);
     }
     
     console.log('🚀 Form submission started - hasSubmitted:', hasSubmitted.current, 'isSubmitting:', isSubmitting);

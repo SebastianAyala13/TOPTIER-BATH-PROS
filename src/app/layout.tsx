@@ -125,19 +125,67 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 var LeadiDscript = document.getElementById('LeadiDscript');
                 LeadiDscript.parentNode.insertBefore(s, LeadiDscript);
                 
-                // Monitor for Jornaya token population
+                // Enhanced monitoring for Jornaya token population
+                var tokenCheckCount = 0;
                 var tokenCheckInterval = setInterval(function() {
+                  tokenCheckCount++;
+                  
+                  // Check the specific field
                   var tokenField = document.getElementById('leadid_token');
-                  if (tokenField && tokenField.value) {
-                    console.log('Jornaya Lead ID detected in field:', tokenField.value);
+                  if (tokenField && tokenField.value && tokenField.value.trim() !== '') {
+                    console.log('✅ Jornaya Lead ID detected in field:', tokenField.value);
                     clearInterval(tokenCheckInterval);
+                    return;
                   }
-                }, 1000);
+                  
+                  // Check for any global variables
+                  if (window.jornaya_lead_id || window.leadid_token || window.jornayaLeadId) {
+                    var token = window.jornaya_lead_id || window.leadid_token || window.jornayaLeadId;
+                    if (token && token.trim() !== '') {
+                      console.log('✅ Jornaya Lead ID detected in global variable:', token);
+                      if (tokenField) {
+                        tokenField.value = token;
+                      }
+                      clearInterval(tokenCheckInterval);
+                      return;
+                    }
+                  }
+                  
+                  // Check for any elements with Jornaya-related content
+                  var allInputs = document.querySelectorAll('input[type="hidden"]');
+                  for (var i = 0; i < allInputs.length; i++) {
+                    var input = allInputs[i];
+                    if (input.value && input.value.length > 10 && /^[A-F0-9-]+$/i.test(input.value)) {
+                      console.log('✅ Possible Jornaya Lead ID detected in hidden field:', input.value);
+                      if (tokenField) {
+                        tokenField.value = input.value;
+                      }
+                      clearInterval(tokenCheckInterval);
+                      return;
+                    }
+                  }
+                  
+                  // Log progress
+                  if (tokenCheckCount % 10 === 0) {
+                    console.log('🔍 Checking for Jornaya Lead ID... attempt ' + tokenCheckCount);
+                  }
+                  
+                  // Check if script loaded
+                  if (tokenCheckCount === 20) {
+                    var script = document.querySelector('script[src*="lidstatic.com"]');
+                    if (script) {
+                      console.log('✅ Jornaya script loaded successfully');
+                    } else {
+                      console.log('⚠️ Jornaya script not found');
+                    }
+                  }
+                }, 500);
                 
-                // Clear interval after 20 seconds
+                // Clear interval after 30 seconds
                 setTimeout(function() {
                   clearInterval(tokenCheckInterval);
-                }, 20000);
+                  console.log('⚠️ Jornaya Lead ID monitoring stopped after 30 seconds');
+                }, 30000);
               })();
             `
           }}
