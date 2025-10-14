@@ -57,9 +57,8 @@ export default function Form() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [submitMessage] = useState('');
-  const [, setTfToken] = useState('');
+  const [tfToken, setTfToken] = useState('');
   const tfHiddenRef = useRef<HTMLInputElement>(null);
-  const leadidTokenRef = useRef<HTMLInputElement>(null);
   const hasSubmitted = useRef(false); // Prevenir envíos duplicados
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -96,101 +95,21 @@ export default function Form() {
     return () => { obs.disconnect(); clearInterval(id); };
   }, []);
 
-  // Jornaya Lead ID integration
-  useEffect(() => {
-    if (!leadidTokenRef.current) return;
-    
-    let tokenFound = false;
-    
-    const checkForLeadId = () => {
-      try {
-        // Check multiple possible global variables that Jornaya might use
-        const leadId = 
-          window.jornaya_lead_id || 
-          window.leadid_token || 
-          window.jornayaLeadId ||
-          window.leadId ||
-          window.jornaya_token ||
-          '';
-        
-        // Also check if the script has populated the field directly
-        const fieldValue = leadidTokenRef.current?.value || '';
-        
-        // Check if Jornaya has populated any element with the token
-        const jornayaElements = document.querySelectorAll('[id*="jornaya"], [id*="lead"], [class*="jornaya"], [class*="lead"]');
-        let elementValue = '';
-        for (const element of jornayaElements) {
-          if (element instanceof HTMLInputElement && element.value) {
-            elementValue = element.value;
-            break;
-          }
-        }
-        
-        const finalLeadId = leadId || fieldValue || elementValue;
-        
-        if (finalLeadId && finalLeadId.trim() !== '' && leadidTokenRef.current) {
-          leadidTokenRef.current.value = finalLeadId;
-          setForm(prev => ({ ...prev, universal_leadid: finalLeadId }));
-          console.log('✅ Jornaya Lead ID capturado:', finalLeadId);
-          tokenFound = true;
-          return true; // Found the token
-        }
-        
-        return false; // Token not found yet
-      } catch (error) {
-        console.log('Jornaya Lead ID not yet available:', error);
-        return false;
+  // Función para Jornaya Lead ID - Exacta del patrón exitoso
+  async function waitForJornayaToken(maxWaitMs = 2000) {
+    const start = Date.now();
+    const poll = async (): Promise<string> => {
+      const leadIdInput = document.getElementById('leadid_token') as HTMLInputElement;
+      const val = leadIdInput?.value || '';
+      if (val) {
+        return val;
       }
+      if (Date.now() - start >= maxWaitMs) return '';
+      await new Promise(r => setTimeout(r, 150));
+      return poll();
     };
-    
-    // Check immediately
-    if (checkForLeadId()) return; // If found immediately, no need for interval
-    
-    // Check more frequently for the first few seconds, then less frequently
-    let checkCount = 0;
-    const interval = setInterval(() => {
-      checkCount++;
-      if (checkForLeadId() || tokenFound) {
-        clearInterval(interval);
-        return;
-      }
-      
-      // Log progress every 5 seconds
-      if (checkCount % 10 === 0) {
-        console.log(`🔍 Buscando Jornaya Lead ID... intento ${checkCount}`);
-      }
-      
-      // Check if Jornaya script is loaded
-      if (checkCount === 20) {
-        const jornayaScript = document.querySelector('script[src*="lidstatic.com"]');
-        if (jornayaScript) {
-          console.log('✅ Script de Jornaya detectado');
-        } else {
-          console.log('⚠️ Script de Jornaya no encontrado');
-        }
-      }
-    }, 500);
-    
-    // Clear interval after 30 seconds to avoid infinite checking
-    const timeout = setTimeout(() => {
-      clearInterval(interval);
-      if (!tokenFound) {
-        console.log('⚠️ Jornaya Lead ID timeout - token not captured after 30 seconds');
-        console.log('🔍 Verificando si el script de Jornaya está cargado...');
-        
-        // Final attempt - check all possible sources
-        const finalCheck = checkForLeadId();
-        if (!finalCheck) {
-          console.log('❌ Jornaya Lead ID no pudo ser capturado');
-        }
-      }
-    }, 30000);
-    
-    return () => {
-      clearInterval(interval);
-      clearTimeout(timeout);
-    };
-  }, []);
+    return poll();
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
@@ -246,40 +165,17 @@ export default function Form() {
       return;
     }
     
-    // Final attempt to capture Jornaya Lead ID before submission
-    console.log('🔍 Final attempt to capture Jornaya Lead ID before submission...');
-    try {
-      const finalLeadId = 
-        window.jornaya_lead_id || 
-        window.leadid_token || 
-        window.jornayaLeadId ||
-        window.leadId ||
-        window.jornaya_token ||
-        leadidTokenRef.current?.value ||
-        '';
-      
-      if (finalLeadId && finalLeadId.trim() !== '') {
-        console.log('✅ Jornaya Lead ID captured before submission:', finalLeadId);
-        if (leadidTokenRef.current) {
-          leadidTokenRef.current.value = finalLeadId;
-        }
-        setForm(prev => ({ ...prev, universal_leadid: finalLeadId }));
-      } else {
-        console.log('⚠️ No Jornaya Lead ID found before submission');
-      }
-    } catch (error) {
-      console.log('Error capturing Jornaya Lead ID:', error);
-    }
-    
-    console.log('🚀 Form submission started - hasSubmitted:', hasSubmitted.current, 'isSubmitting:', isSubmitting);
     hasSubmitted.current = true;
     setIsSubmitting(true);
     setSubmitStatus('idle');
+    
+    const formEl = e.currentTarget as HTMLFormElement;
+    // Espera breve para que TrustedForm y Jornaya completen los tokens
+    await waitForTrustedFormToken(2000);
+    await waitForJornayaToken(2000);
+    const f = new FormData(formEl);
 
     try {
-      // Wait for TrustedForm token
-      await waitForTrustedFormToken(2000);
-
       // Set TCPA text
       const tcpaText = 'By clicking Submit, You agree to give express consent to receive marketing communications regarding Home Improvement services by automatic dialing system and pre-recorded calls and artificial voice messages from Home Services Partners at the phone number and E-mail address provided by you, including wireless numbers, if applicable, even if you have previously registered the provided number on the Do not Call Registry. SMS/MMS and data messaging rates may apply. You understand that my consent here is not a condition for buying any goods or services. You agree to the Privacy Policy and Terms & Conditions.';
       
@@ -287,8 +183,8 @@ export default function Form() {
       const normalizedBathroomStyle = form.bathroomStyle === 'other' ? form.customBathroomStyle : form.bathroomStyle;
       const normalizedUrgency = form.urgency === 'other' ? form.customUrgency : form.urgency;
 
-      // Payload completo según checklist
-      const formData = {
+      // Payload completo según patrón exitoso
+      const payload = {
         // Campaign fields
         lp_campaign_id: process.env.NEXT_PUBLIC_LP_CAMPAIGN_ID || 'Provided',
         lp_campaign_key: process.env.NEXT_PUBLIC_LP_CAMPAIGN_KEY || 'Provided', 
@@ -311,8 +207,9 @@ export default function Form() {
         tcpaText: tcpaText,
         "consent-language": true,
         
-        // Tracking and metadata
-        trusted_form_cert_id: form.trusted_form_cert_id || 'NOT_PROVIDED',
+        // Tracking and metadata - EXACTO DEL PATRÓN EXITOSO
+        trusted_form_cert_id: (tfHiddenRef.current?.value || tfToken || f.get('trusted_form_cert_id')?.toString() || ''),
+        jornaya_lead_id: f.get('universal_leadid')?.toString() || '',
         landing_page: form.landing_page || window.location.href,
         
         // Legacy fields for compatibility
@@ -325,7 +222,7 @@ export default function Form() {
         website: 'toptierbathpros.com',
       };
 
-      console.log('Sending form data to Zapier:', formData);
+      console.log('Sending form data to Zapier:', payload);
 
       // Enviar a Zapier Webhook (formato JSON para mejor organización)
       const response = await fetch(getFormEndpoint(), {
@@ -333,7 +230,7 @@ export default function Form() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       if (response.ok) {
@@ -374,6 +271,7 @@ export default function Form() {
     } catch (error) {
       // En caso de error, redirigir a página de agradecimiento
       console.log('Form submission error:', error);
+      hasSubmitted.current = false; // Reset para permitir reintento según patrón exitoso
       router.push('/thankyou');
     } finally {
       setIsSubmitting(false);
@@ -412,21 +310,10 @@ export default function Form() {
     <div className="bg-white p-4 rounded-2xl shadow-lg">
       <form ref={formRef} onSubmit={handleSubmit} className="space-y-3" data-tf-element-role="offer">
         {/* Hidden TrustedForm field */}
-        <input
-          ref={tfHiddenRef}
-          type="hidden"
-          name="trusted_form_cert_id"
-          id="trusted_form_cert_id"
-        />
+        <input ref={tfHiddenRef} type="hidden" name="trusted_form_cert_id" />
         
         {/* Hidden Jornaya Lead ID field */}
-        <input
-          ref={leadidTokenRef}
-          type="hidden"
-          name="leadid_token"
-          id="leadid_token"
-          value={form.universal_leadid}
-        />
+        <input id="leadid_token" type="hidden" name="universal_leadid" value="" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>

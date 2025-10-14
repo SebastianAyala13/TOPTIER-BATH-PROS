@@ -68,24 +68,49 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Google Tag Manager */}
         <GoogleTagManagerHead />
         
-        {/* TrustedForm Script */}
+        {/* TrustedForm Lead Tracking - Professional Implementation */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
+                // TrustedForm Lead Tracking
                 var tf = document.createElement('script');
                 tf.type = 'text/javascript';
                 tf.async = true;
                 tf.src = ("https:" == document.location.protocol ? 'https' : 'http') +
                   '://api.trustedform.com/trustedform.js?field=trusted_form_cert_id&use_tagged_consent=true&l=' +
-                  new Date().getTime() + Math.random();
-                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(tf, s);
+                  (new Date().getTime() + Math.random());
+                var s = document.getElementsByTagName('script')[0]; 
+                s.parentNode.insertBefore(tf, s);
+                
+                // Enhanced tracking for form interactions
+                document.addEventListener('DOMContentLoaded', function() {
+                  // Track form focus events
+                  var forms = document.querySelectorAll('form');
+                  forms.forEach(function(form) {
+                    var inputs = form.querySelectorAll('input, select, textarea');
+                    inputs.forEach(function(input) {
+                      input.addEventListener('focus', function() {
+                        if (window.TrustedForm) {
+                          window.TrustedForm.tag();
+                        }
+                      });
+                    });
+                  });
+                  
+                  // Track form submission attempts
+                  document.addEventListener('submit', function(e) {
+                    if (window.TrustedForm) {
+                      window.TrustedForm.tag();
+                    }
+                  });
+                });
               })();
             `
           }}
         />
         <noscript>
-          <img src='https://api.trustedform.com/ns.gif' alt="" />
+          <img src='https://api.trustedform.com/ns.gif' />
         </noscript>
       </head>
 
@@ -124,68 +149,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 s.src = '//create.lidstatic.com/campaign/e65966e8-6ae1-2bff-6dd1-97b99a2c15cf.js?snippet_version=2';
                 var LeadiDscript = document.getElementById('LeadiDscript');
                 LeadiDscript.parentNode.insertBefore(s, LeadiDscript);
-                
-                // Enhanced monitoring for Jornaya token population
-                var tokenCheckCount = 0;
-                var tokenCheckInterval = setInterval(function() {
-                  tokenCheckCount++;
-                  
-                  // Check the specific field
-                  var tokenField = document.getElementById('leadid_token');
-                  if (tokenField && tokenField.value && tokenField.value.trim() !== '') {
-                    console.log('✅ Jornaya Lead ID detected in field:', tokenField.value);
-                    clearInterval(tokenCheckInterval);
-                    return;
-                  }
-                  
-                  // Check for any global variables
-                  if (window.jornaya_lead_id || window.leadid_token || window.jornayaLeadId) {
-                    var token = window.jornaya_lead_id || window.leadid_token || window.jornayaLeadId;
-                    if (token && token.trim() !== '') {
-                      console.log('✅ Jornaya Lead ID detected in global variable:', token);
-                      if (tokenField) {
-                        tokenField.value = token;
-                      }
-                      clearInterval(tokenCheckInterval);
-                      return;
-                    }
-                  }
-                  
-                  // Check for any elements with Jornaya-related content
-                  var allInputs = document.querySelectorAll('input[type="hidden"]');
-                  for (var i = 0; i < allInputs.length; i++) {
-                    var input = allInputs[i];
-                    if (input.value && input.value.length > 10 && /^[A-F0-9-]+$/i.test(input.value)) {
-                      console.log('✅ Possible Jornaya Lead ID detected in hidden field:', input.value);
-                      if (tokenField) {
-                        tokenField.value = input.value;
-                      }
-                      clearInterval(tokenCheckInterval);
-                      return;
-                    }
-                  }
-                  
-                  // Log progress
-                  if (tokenCheckCount % 10 === 0) {
-                    console.log('🔍 Checking for Jornaya Lead ID... attempt ' + tokenCheckCount);
-                  }
-                  
-                  // Check if script loaded
-                  if (tokenCheckCount === 20) {
-                    var script = document.querySelector('script[src*="lidstatic.com"]');
-                    if (script) {
-                      console.log('✅ Jornaya script loaded successfully');
-                    } else {
-                      console.log('⚠️ Jornaya script not found');
-                    }
-                  }
-                }, 500);
-                
-                // Clear interval after 30 seconds
-                setTimeout(function() {
-                  clearInterval(tokenCheckInterval);
-                  console.log('⚠️ Jornaya Lead ID monitoring stopped after 30 seconds');
-                }, 30000);
               })();
             `
           }}
