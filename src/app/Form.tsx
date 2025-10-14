@@ -12,6 +12,8 @@ declare global {
       getCertUrl?: () => string;
     };
     dataLayer?: Record<string, unknown>[];
+    jornaya_lead_id?: string;
+    leadid_token?: string;
   }
 }
 
@@ -45,6 +47,7 @@ export default function Form() {
     tcpaText: '',
     trusted_form_cert_id: '',
     landing_page: '',
+    universal_leadid: '',
   });
 
   const [isNotEligible, setIsNotEligible] = useState(false);
@@ -53,6 +56,7 @@ export default function Form() {
   const [submitMessage] = useState('');
   const [, setTfToken] = useState('');
   const tfHiddenRef = useRef<HTMLInputElement>(null);
+  const leadidTokenRef = useRef<HTMLInputElement>(null);
   const hasSubmitted = useRef(false); // Prevenir envíos duplicados
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -87,6 +91,38 @@ export default function Form() {
     const id = setInterval(applyFromGlobal, 300);
     
     return () => { obs.disconnect(); clearInterval(id); };
+  }, []);
+
+  // Jornaya Lead ID integration
+  useEffect(() => {
+    if (!leadidTokenRef.current) return;
+    
+    const checkForLeadId = () => {
+      try {
+        // Check if Jornaya Lead ID is available in the global scope
+        const leadId = window.jornaya_lead_id || window.leadid_token || '';
+        if (leadId && leadidTokenRef.current) {
+          leadidTokenRef.current.value = leadId;
+          setForm(prev => ({ ...prev, universal_leadid: leadId }));
+        }
+      } catch {
+        console.log('Jornaya Lead ID not yet available');
+      }
+    };
+    
+    // Check immediately
+    checkForLeadId();
+    
+    // Check periodically until we get the token
+    const interval = setInterval(checkForLeadId, 500);
+    
+    // Clear interval after 10 seconds to avoid infinite checking
+    const timeout = setTimeout(() => clearInterval(interval), 10000);
+    
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -289,6 +325,15 @@ export default function Form() {
           type="hidden"
           name="trusted_form_cert_id"
           id="trusted_form_cert_id"
+        />
+        
+        {/* Hidden Jornaya Lead ID field */}
+        <input
+          ref={leadidTokenRef}
+          type="hidden"
+          name="universal_leadid"
+          id="leadid_token"
+          value={form.universal_leadid}
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

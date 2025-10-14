@@ -14,7 +14,9 @@ export default function Partners() {
         'Bath Experts', 'Bath Experts LLC', 'Bath Remodel by Capital', 'Bath concepts',
         'Billy.com', 'Jacuzzi', 'Premier Home Pros', 'Zintex', 'My Bath Colorado',
         'Tubbs by Grubbs', 'New Pro', 'New Bath Today', 'Kohler', 'Long Home',
-        'BathWorks of Michigan', 'CareFree Home Pros'
+        'BathWorks of Michigan', 'CareFree Home Pros', 'OpenHome', 'OpenHome Pros',
+        'Midwest Bath Company', 'Rocky Mountain Bath Company', 'Bath Wizard',
+        'American Standard', 'American Home Shield'
       ]
     },
     {
@@ -23,7 +25,8 @@ export default function Partners() {
         '1800 Remodel', 'American Remodeling', 'Victory Home Remodeling',
         'Clear Choice Home Improvement', 'Future Remodeling', 'DaBella',
         'Continental Siding', 'New Pro Home Remodeling', 'C Michael Exteriors',
-        'Champion Siding', 'Home Genius Exteriors', 'Capital Construction Contracting'
+        'Champion Siding', 'Home Genius Exteriors', 'Capital Construction Contracting',
+        'National Home Project', 'Floor Coverings International'
       ]
     },
     {
@@ -45,7 +48,7 @@ export default function Partners() {
       title: 'Window & Door Partners',
       partners: [
         'Champion Windows and Home Exteriors', 'Anderson Windows',
-        'Superior Home', 'SmartHome Solutions USA'
+        'Superior Home', 'SmartHome Solutions USA', 'NewStrata'
       ]
     },
     {
@@ -54,7 +57,9 @@ export default function Partners() {
         'AA Media Inc', 'Ad Energy', 'CallCore Media', 'Direct Web Advertising',
         'DSG Media', 'General Lab Marketing Solutions', 'Global Summit Media',
         'Native Media, LLC', 'Presidio Interactive Corporation', 'Pointer Leads',
-        'VSC Digital Media'
+        'VSC Digital Media', 'Adventum.io', 'Rex Direct Net, Inc.', 'Pointer Leads Inc.',
+        'Everconnect', 'Alpine Digital Group, Inc.', 'RGR Marketing', 'EverContractor',
+        'MediaDevoted1', 'SolarGiveback', 'Homelix'
       ]
     },
     {
