@@ -14,6 +14,9 @@ declare global {
     dataLayer?: Record<string, unknown>[];
     jornaya_lead_id?: string;
     leadid_token?: string;
+    jornayaLeadId?: string;
+    leadId?: string;
+    jornaya_token?: string;
   }
 }
 
@@ -99,25 +102,49 @@ export default function Form() {
     
     const checkForLeadId = () => {
       try {
-        // Check if Jornaya Lead ID is available in the global scope
-        const leadId = window.jornaya_lead_id || window.leadid_token || '';
-        if (leadId && leadidTokenRef.current) {
-          leadidTokenRef.current.value = leadId;
-          setForm(prev => ({ ...prev, universal_leadid: leadId }));
+        // Check multiple possible global variables that Jornaya might use
+        const leadId = 
+          window.jornaya_lead_id || 
+          window.leadid_token || 
+          window.jornayaLeadId ||
+          window.leadId ||
+          window.jornaya_token ||
+          '';
+        
+        // Also check if the script has populated the field directly
+        const fieldValue = leadidTokenRef.current?.value || '';
+        
+        const finalLeadId = leadId || fieldValue;
+        
+        if (finalLeadId && leadidTokenRef.current) {
+          leadidTokenRef.current.value = finalLeadId;
+          setForm(prev => ({ ...prev, universal_leadid: finalLeadId }));
+          console.log('✅ Jornaya Lead ID capturado:', finalLeadId);
+          return true; // Found the token
         }
-      } catch {
-        console.log('Jornaya Lead ID not yet available');
+        
+        return false; // Token not found yet
+      } catch (error) {
+        console.log('Jornaya Lead ID not yet available:', error);
+        return false;
       }
     };
     
     // Check immediately
-    checkForLeadId();
+    if (checkForLeadId()) return; // If found immediately, no need for interval
     
     // Check periodically until we get the token
-    const interval = setInterval(checkForLeadId, 500);
+    const interval = setInterval(() => {
+      if (checkForLeadId()) {
+        clearInterval(interval);
+      }
+    }, 500);
     
-    // Clear interval after 10 seconds to avoid infinite checking
-    const timeout = setTimeout(() => clearInterval(interval), 10000);
+    // Clear interval after 15 seconds to avoid infinite checking
+    const timeout = setTimeout(() => {
+      clearInterval(interval);
+      console.log('⚠️ Jornaya Lead ID timeout - token not captured');
+    }, 15000);
     
     return () => {
       clearInterval(interval);
@@ -331,7 +358,7 @@ export default function Form() {
         <input
           ref={leadidTokenRef}
           type="hidden"
-          name="universal_leadid"
+          name="leadid_token"
           id="leadid_token"
           value={form.universal_leadid}
         />

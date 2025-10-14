@@ -124,6 +124,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 s.src = '//create.lidstatic.com/campaign/e65966e8-6ae1-2bff-6dd1-97b99a2c15cf.js?snippet_version=2';
                 var LeadiDscript = document.getElementById('LeadiDscript');
                 LeadiDscript.parentNode.insertBefore(s, LeadiDscript);
+                
+                // Monitor for Jornaya token population
+                var tokenCheckInterval = setInterval(function() {
+                  var tokenField = document.getElementById('leadid_token');
+                  if (tokenField && tokenField.value) {
+                    console.log('Jornaya Lead ID detected in field:', tokenField.value);
+                    clearInterval(tokenCheckInterval);
+                  }
+                }, 1000);
+                
+                // Clear interval after 20 seconds
+                setTimeout(function() {
+                  clearInterval(tokenCheckInterval);
+                }, 20000);
               })();
             `
           }}
