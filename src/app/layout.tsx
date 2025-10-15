@@ -148,6 +148,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 s.async = true;
                 s.src = '//create.lidstatic.com/campaign/e65966e8-6ae1-2bff-6dd1-97b99a2c15cf.js?snippet_version=2';
                 var LeadiDscript = document.getElementById('LeadiDscript');
+                s.onload = function(){
+                  try { console.log('✅ Jornaya (LeadiD) script cargado'); } catch(e) {}
+                };
+                s.onerror = function(){
+                  try { console.log('❌ Error cargando Jornaya (LeadiD) script'); } catch(e) {}
+                };
                 LeadiDscript.parentNode.insertBefore(s, LeadiDscript);
               })();
             `

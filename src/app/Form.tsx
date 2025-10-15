@@ -95,6 +95,35 @@ export default function Form() {
     return () => { obs.disconnect(); clearInterval(id); };
   }, []);
 
+  // Jornaya LeadID integration: observar y registrar cambios del token
+  useEffect(() => {
+    const input = document.getElementById('leadid_token') as HTMLInputElement | null;
+    if (!input) return;
+
+    const logCurrent = () => {
+      if (input && input.value) {
+        console.log('🔎 Jornaya lead token detectado:', input.value);
+      } else {
+        console.log('⌛ Jornaya lead token aún no disponible');
+      }
+    };
+
+    // Log inicial y cada cambio del atributo value
+    logCurrent();
+    const observer = new MutationObserver(() => {
+      console.log('✳️ Cambio detectado en leadid_token:', input.value);
+    });
+    observer.observe(input, { attributes: true, attributeFilter: ['value'] });
+
+    // Poll suave por si el script actualiza por JS sin mutación de atributo
+    const intervalId = setInterval(logCurrent, 500);
+
+    return () => {
+      observer.disconnect();
+      clearInterval(intervalId);
+    };
+  }, []);
+
   // Función para Jornaya Lead ID - Exacta del patrón exitoso
   async function waitForJornayaToken(maxWaitMs = 2000) {
     const start = Date.now();
@@ -312,8 +341,8 @@ export default function Form() {
         {/* Hidden TrustedForm field */}
         <input ref={tfHiddenRef} type="hidden" name="trusted_form_cert_id" />
         
-        {/* Hidden Jornaya Lead ID field */}
-        <input id="leadid_token" type="hidden" name="universal_leadid" value="" />
+        {/* Hidden Jornaya Lead ID field (sin value para permitir escritura del script) */}
+        <input id="leadid_token" type="hidden" name="universal_leadid" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
