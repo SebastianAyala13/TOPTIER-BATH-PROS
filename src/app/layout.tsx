@@ -135,7 +135,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </a>
         </LanguageProvider>
         
-        {/* Jornaya Lead ID Script */}
+        {/* Jornaya Lead ID Script - DEBE estar exactamente así */}
         <script
           id="LeadiDscript"
           type="text/javascript"

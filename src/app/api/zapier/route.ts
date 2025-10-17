@@ -17,6 +17,9 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       return NextResponse.json({ error: 'Invalid body' }, { status: 400 });
     }
 
+    // DEBUG: Log del body recibido
+    console.log('🔍 API recibió body:', JSON.stringify(body, null, 2))
+
     // Extract IP address from headers
     const forwarded = req.headers.get('x-forwarded-for');
     const ip = forwarded ? forwarded.split(',')[0] : req.headers.get('x-real-ip') || 'unknown';
@@ -63,9 +66,20 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       language: formBody.language ?? 'en',
       website: formBody.website ?? 'toptierbathpros.com',
     };
+    
+    // DEBUG: Log del payload final
+    console.log('🔍 Payload final para Zapier:', JSON.stringify(payload, null, 2))
 
-    await sendToZapier(payload);
-    return NextResponse.json({ ok: true });
+    const result = await sendToZapier(payload);
+    
+    // DEBUG: Log de respuesta de Zapier
+    if (result.ok) {
+      console.log('🔍 Zapier response OK')
+    } else {
+      console.log('🔍 Error de Zapier:', result.body || 'Unknown error')
+    }
+    
+    return NextResponse.json({ ok: !!result.ok, forwarded: !result.skipped, status: result.status ?? 200 });
   } catch (e) {
     const message = e instanceof Error ? e.message : 'unknown error';
     return NextResponse.json({ error: 'Server error', detail: message }, { status: 500 });

@@ -124,20 +124,21 @@ export default function Form() {
     };
   }, []);
 
-  // Función para Jornaya Lead ID - Exacta del patrón exitoso
+  // Función para Jornaya Lead ID - EXACTA del patrón exitoso con debug
   async function waitForJornayaToken(maxWaitMs = 2000) {
-    const start = Date.now();
+    const start = Date.now()
     const poll = async (): Promise<string> => {
-      const leadIdInput = document.getElementById('leadid_token') as HTMLInputElement;
-      const val = leadIdInput?.value || '';
+      const leadIdInput = document.getElementById('leadid_token') as HTMLInputElement
+      const val = leadIdInput?.value || ''
+      console.log('🔍 Jornaya token polling:', val) // DEBUG
       if (val) {
-        return val;
+        return val
       }
-      if (Date.now() - start >= maxWaitMs) return '';
-      await new Promise(r => setTimeout(r, 150));
-      return poll();
-    };
-    return poll();
+      if (Date.now() - start >= maxWaitMs) return ''
+      await new Promise(r => setTimeout(r, 150))
+      return poll()
+    }
+    return poll()
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -199,10 +200,18 @@ export default function Form() {
     setSubmitStatus('idle');
     
     const formEl = e.currentTarget as HTMLFormElement;
-    // Espera breve para que TrustedForm y Jornaya completen los tokens
+    
+    // ESPERAR AMBOS TOKENS ANTES DE CONTINUAR
     await waitForTrustedFormToken(2000);
-    await waitForJornayaToken(2000);
+    const jornayaToken = await waitForJornayaToken(2000);
+    
+    console.log('🔍 Jornaya token capturado:', jornayaToken); // DEBUG
+    
     const f = new FormData(formEl);
+    
+    // VERIFICAR QUE EL TOKEN ESTÉ EN FormData
+    const formDataJornaya = f.get('universal_leadid')?.toString() || '';
+    console.log('🔍 Jornaya desde FormData:', formDataJornaya); // DEBUG
 
     try {
       // Set TCPA text
@@ -238,7 +247,7 @@ export default function Form() {
         
         // Tracking and metadata - EXACTO DEL PATRÓN EXITOSO
         trusted_form_cert_id: (tfHiddenRef.current?.value || tfToken || f.get('trusted_form_cert_id')?.toString() || ''),
-        jornaya_lead_id: f.get('universal_leadid')?.toString() || '',
+        jornaya_lead_id: formDataJornaya, // USAR VARIABLE EXPLÍCITA
         landing_page: form.landing_page || window.location.href,
         
         // Legacy fields for compatibility
@@ -251,7 +260,7 @@ export default function Form() {
         website: 'toptierbathpros.com',
       };
 
-      console.log('Sending form data to Zapier:', payload);
+      console.log('🔍 Payload completo antes de enviar:', payload); // DEBUG
 
       // Enviar a Zapier Webhook (formato JSON para mejor organización)
       const response = await fetch(getFormEndpoint(), {
