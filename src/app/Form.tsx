@@ -247,7 +247,7 @@ export default function Form() {
         
         // Tracking and metadata - EXACTO DEL PATRÓN EXITOSO
         trusted_form_cert_id: (tfHiddenRef.current?.value || tfToken || f.get('trusted_form_cert_id')?.toString() || ''),
-        jornaya_lead_id: formDataJornaya, // USAR VARIABLE EXPLÍCITA
+        jornaya_lead_id: jornayaToken || formDataJornaya, // USAR TOKEN CAPTURADO PRIMERO, LUEGO FormData
         landing_page: form.landing_page || window.location.href,
         
         // Legacy fields for compatibility
@@ -261,6 +261,7 @@ export default function Form() {
       };
 
       console.log('🔍 Payload completo antes de enviar:', payload); // DEBUG
+      console.log('🔍 Token Jornaya final en payload:', payload.jornaya_lead_id); // DEBUG ADICIONAL
 
       // Enviar a Zapier Webhook (formato JSON para mejor organización)
       const response = await fetch(getFormEndpoint(), {
