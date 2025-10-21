@@ -233,6 +233,7 @@ export default function Form() {
       return;
     }
     
+    console.log('🚀 Form submission started');
     hasSubmitted.current = true;
     setIsSubmitting(true);
     setSubmitStatus('idle');
@@ -240,10 +241,12 @@ export default function Form() {
     const formEl = e.currentTarget as HTMLFormElement;
     
     // ESPERAR AMBOS TOKENS ANTES DE CONTINUAR
+    console.log('⏳ Esperando TrustedForm token...');
     await waitForTrustedFormToken(2000);
-    const jornayaToken = await waitForJornayaToken(2000);
     
-    console.log('🔍 Jornaya token capturado:', jornayaToken); // DEBUG
+    console.log('⏳ Esperando Jornaya token...');
+    const jornayaToken = await waitForJornayaToken(2000);
+    console.log('🔍 Jornaya token final:', jornayaToken);
     
     const f = new FormData(formEl);
     
@@ -311,7 +314,8 @@ export default function Form() {
       });
 
       if (response.ok) {
-        console.log('Form submitted successfully');
+        console.log('✅ Form submitted successfully');
+        console.log('✅ Jornaya token enviado exitosamente:', payload.jornaya_lead_id);
         
         // Disparar Custom Event para GTM (solo una vez)
         if (typeof window !== 'undefined' && window.dataLayer) {

@@ -50,7 +50,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       ip_address: ip,
       trusted_form_cert_id: formBody.trusted_form_cert_id ?? 'NOT_PROVIDED',
       landing_page: formBody.landing_page ?? '',
-      jornaya_lead_id: formBody.leadid_token ?? formBody.universal_leadid ?? '',
+      jornaya_lead_id: formBody.jornaya_lead_id ?? formBody.leadid_token ?? formBody.universal_leadid ?? '',
       
       // Service and consent
       repair_or_replace: formBody.repair_or_replace ?? '',
