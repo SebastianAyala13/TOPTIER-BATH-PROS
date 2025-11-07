@@ -67,6 +67,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         
         {/* Google Tag Manager */}
         <GoogleTagManagerHead />
+
+        {/* Meta Pixel Code */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              !function(f,b,e,v,n,t,s)
+              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+              n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t,s)}(window, document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init', '1149265126710788');
+              fbq('track', 'PageView');
+            `,
+          }}
+        />
         
         {/* TrustedForm Lead Tracking - Professional Implementation */}
         <script
@@ -109,14 +127,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             `
           }}
         />
-        <noscript>
-          <img src='https://api.trustedform.com/ns.gif' />
-        </noscript>
+        <noscript
+          dangerouslySetInnerHTML={{
+            __html: `<img src="https://api.trustedform.com/ns.gif" alt="" />`,
+          }}
+        />
       </head>
 
       <body className="relative bg-gradient-to-b from-teal-50 to-white text-gray-900">
         {/* Google Tag Manager (noscript) */}
         <GoogleTagManagerNoScript />
+
+        <noscript
+          dangerouslySetInnerHTML={{
+            __html: `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1149265126710788&ev=PageView&noscript=1" alt="" />`,
+          }}
+        />
         
         {/* 🔁 Background Video Global */}
         <BackgroundVideo />
@@ -159,9 +185,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             `
           }}
         />
-        <noscript>
-          <img src='//create.leadid.com/noscript.gif?lac=1A0362DA-90B6-2BCA-983C-BC60069F93FC&lck=e65966e8-6ae1-2bff-6dd1-97b99a2c15cf&snippet_version=2' alt="" />
-        </noscript>
+        <noscript
+          dangerouslySetInnerHTML={{
+            __html: `<img src="//create.leadid.com/noscript.gif?lac=1A0362DA-90B6-2BCA-983C-BC60069F93FC&lck=e65966e8-6ae1-2bff-6dd1-97b99a2c15cf&snippet_version=2" alt="" />`,
+          }}
+        />
       </body>
     </html>
   );
