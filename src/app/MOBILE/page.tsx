@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import Link from 'next/link';
 import { isMobile as checkIsMobile } from '@/lib/videoUtils';
 
 import Header from '../components/Header';
