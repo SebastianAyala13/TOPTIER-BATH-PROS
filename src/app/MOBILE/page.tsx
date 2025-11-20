@@ -20,10 +20,11 @@ import SectionDivider from '../components/SectionDivider';
 import BeforeAfter from '../components/BeforeAfter';
 import ProcessSteps from '../components/ProcessSteps';
 import Packages from '../components/Packages';
+import TrackingScripts from './components/TrackingScripts';
 
-// Número de teléfono genérico - ACTUALIZAR CON EL NÚMERO REAL
-const PHONE_NUMBER = '+18005551234';
-const PHONE_DISPLAY = '(800) 555-1234';
+// Número de teléfono
+const PHONE_NUMBER = '+18337241011';
+const PHONE_DISPLAY = '(833) 724-1011';
 
 // Componente de botón de llamada para reemplazar el formulario
 // GARANTIZA que usa tel: directamente - NUNCA WhatsApp
@@ -296,6 +297,7 @@ export default function MobilePage() {
 
   return (
     <>
+      <TrackingScripts />
       <MobileVideoHandler />
       <Header />
       
