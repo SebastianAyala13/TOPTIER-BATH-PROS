@@ -41,12 +41,12 @@ export default function BannerConsent() {
   const t = text[language];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-gray-800 text-white text-sm p-4 z-50">
-      <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-        <p className="text-center sm:text-left">{t.message}</p>
+    <div className="fixed bottom-0 left-0 right-0 bg-gray-800 text-white text-sm p-3 sm:p-4 z-50 shadow-lg">
+      <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-3">
+        <p className="text-center sm:text-left text-xs sm:text-sm leading-tight">{t.message}</p>
         <button
           onClick={acceptConsent}
-          className="bg-teal-500 hover:bg-teal-600 text-white font-semibold px-4 py-2 rounded transition"
+          className="bg-teal-500 hover:bg-teal-600 text-white font-semibold px-3 py-1.5 sm:px-4 sm:py-2 rounded transition text-xs sm:text-sm whitespace-nowrap"
         >
           {t.button}
         </button>
