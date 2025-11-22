@@ -4,19 +4,32 @@ import { useState, useEffect } from 'react';
 
 export default function FloatingButton() {
   const [bannerVisible, setBannerVisible] = useState(false);
+  const [bottomOffset, setBottomOffset] = useState(16); // 16px = bottom-4 por defecto
 
   useEffect(() => {
-    // Verificar si el banner está visible al cargar
+    // Verificar si el banner está visible y calcular su altura
     const checkBannerVisibility = () => {
       if (typeof window === 'undefined') return;
       
       // Buscar el banner de consentimiento
-      const banner = document.querySelector('[data-banner-consent]');
+      const banner = document.querySelector('[data-banner-consent]') as HTMLElement;
       const isVisible = banner !== null && 
                        banner instanceof HTMLElement && 
                        banner.offsetParent !== null &&
                        window.getComputedStyle(banner).display !== 'none';
+      
       setBannerVisible(isVisible);
+      
+      // Si el banner está visible, calcular su altura y añadir margen
+      if (isVisible && banner) {
+        const bannerHeight = banner.offsetHeight;
+        // Altura del banner + altura del botón flotante (~50px) + margen adicional (20px)
+        const newOffset = bannerHeight + 50 + 20;
+        setBottomOffset(newOffset);
+      } else {
+        // Posición normal cuando no hay banner
+        setBottomOffset(16); // bottom-4
+      }
     };
 
     // Verificar inicialmente después de un pequeño delay para que el DOM esté listo
@@ -54,6 +67,9 @@ export default function FloatingButton() {
     
     window.addEventListener('banner-consent-change', handleBannerChange);
     
+    // Escuchar cambios de tamaño de ventana para recalcular
+    window.addEventListener('resize', checkBannerVisibility);
+    
     // Verificar periódicamente (fallback)
     const interval = setInterval(checkBannerVisibility, 300);
 
@@ -61,19 +77,16 @@ export default function FloatingButton() {
       clearTimeout(initialCheck);
       observer.disconnect();
       window.removeEventListener('banner-consent-change', handleBannerChange);
+      window.removeEventListener('resize', checkBannerVisibility);
       clearInterval(interval);
     };
   }, []);
 
-  // Posición dinámica: más arriba cuando el banner está visible
-  // bottom-28 cuando el banner está visible (más espacio para evitar solapamiento)
-  // bottom-4 cuando el banner no está visible (posición normal)
-  const bottomPosition = bannerVisible ? 'bottom-28' : 'bottom-4';
-
   return (
     <a 
       href="tel:+18337241011" 
-      className={`fixed ${bottomPosition} right-4 z-40 bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-600 hover:to-blue-700 text-white px-5 py-2.5 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 text-xs font-bold md:hidden animate-pulse`}
+      style={{ bottom: `${bottomOffset}px` }}
+      className="fixed right-4 z-40 bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-600 hover:to-blue-700 text-white px-5 py-2.5 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 text-xs font-bold md:hidden animate-pulse"
     >
       📞 Call Now - Free Quote
     </a>
