@@ -66,9 +66,9 @@ export default function FloatingButton() {
   }, []);
 
   // Posición dinámica: más arriba cuando el banner está visible
-  // bottom-20 cuando el banner está visible (más espacio)
+  // bottom-28 cuando el banner está visible (más espacio para evitar solapamiento)
   // bottom-4 cuando el banner no está visible (posición normal)
-  const bottomPosition = bannerVisible ? 'bottom-20' : 'bottom-4';
+  const bottomPosition = bannerVisible ? 'bottom-28' : 'bottom-4';
 
   return (
     <a 
