@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { useLanguage } from '../../context/LanguageContext';
-import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import { 
   getVideoUrl, 
@@ -172,12 +171,12 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <Link
-            href="#form-section"
+          <a
+            href="tel:+18337241011"
             className="inline-block bg-teal-500 hover:bg-teal-600 text-white font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
           >
-            {t.cta}
-          </Link>
+            📞 {t.cta}
+          </a>
         </motion.div>
       </div>
     </motion.section>

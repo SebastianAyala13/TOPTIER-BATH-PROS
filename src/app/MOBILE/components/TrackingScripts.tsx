@@ -2,14 +2,21 @@
 
 import { useEffect } from 'react';
 import Script from 'next/script';
-import { gtmScript, gtmNoScript } from '@/lib/gtm';
+import { gtmScript } from '@/lib/gtm';
 import { GoogleTagManagerNoScript } from '../../components/GoogleTagManager';
+
+interface WindowWithFbq extends Window {
+  fbq?: (action: string, event: string) => void;
+}
 
 export default function TrackingScripts() {
   useEffect(() => {
     // Meta Pixel - ya se carga con el Script component, pero asegurémonos de trackear PageView
-    if (typeof window !== 'undefined' && (window as any).fbq) {
-      (window as any).fbq('track', 'PageView');
+    if (typeof window !== 'undefined') {
+      const win = window as WindowWithFbq;
+      if (win.fbq) {
+        win.fbq('track', 'PageView');
+      }
     }
   }, []);
 

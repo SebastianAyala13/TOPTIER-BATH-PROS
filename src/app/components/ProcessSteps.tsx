@@ -40,8 +40,8 @@ export default function ProcessSteps() {
               <div className="flex justify-center mb-3">{s.icon}</div>
               <h3 className="font-semibold text-slate-800 mb-1">{s.title}</h3>
               <p className="text-sm text-slate-600">{s.desc}</p>
-              <a href="#form-section" className="inline-block mt-4 bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-full font-bold text-sm transition-all duration-300 hover:shadow-lg">
-                📋 {s.cta}
+              <a href="tel:+18337241011" className="inline-block mt-4 bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-full font-bold text-sm transition-all duration-300 hover:shadow-lg">
+                📞 Call Now - {s.cta}
               </a>
             </div>
           ))}

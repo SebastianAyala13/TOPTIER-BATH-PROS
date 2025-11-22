@@ -58,8 +58,8 @@ export default function Packages() {
                   ))}
                 </ul>
                 <div className="mt-5">
-                  <a href="#lead-form" className="inline-block bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-600 hover:to-blue-700 text-white font-bold py-3 px-6 rounded-full transition-all duration-300 hover:shadow-lg">
-                    💰 Get Free Quote
+                  <a href="tel:+18337241011" className="inline-block bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-600 hover:to-blue-700 text-white font-bold py-3 px-6 rounded-full transition-all duration-300 hover:shadow-lg">
+                    📞 Call Now - Get Free Quote
                   </a>
                 </div>
               </div>
