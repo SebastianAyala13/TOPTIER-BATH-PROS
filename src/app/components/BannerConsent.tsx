@@ -19,6 +19,8 @@ export default function BannerConsent() {
   const acceptConsent = () => {
     if (typeof window !== 'undefined') {
       localStorage.setItem('cookieConsent', 'true');
+      // Emitir evento personalizado para notificar que el banner desapareció
+      window.dispatchEvent(new CustomEvent('banner-consent-change'));
     }
     setVisible(false);
   };
@@ -41,7 +43,10 @@ export default function BannerConsent() {
   const t = text[language];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-gray-800 text-white text-sm p-3 sm:p-4 z-50 shadow-lg">
+    <div 
+      data-banner-consent
+      className="fixed bottom-0 left-0 right-0 bg-gray-800 text-white text-sm p-3 sm:p-4 z-50 shadow-lg"
+    >
       <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-3">
         <p className="text-center sm:text-left text-xs sm:text-sm leading-tight">{t.message}</p>
         <button
