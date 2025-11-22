@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 
 export default function FloatingButton() {
-  const [bannerVisible, setBannerVisible] = useState(false);
   const [bottomOffset, setBottomOffset] = useState(16); // 16px = bottom-4 por defecto
 
   useEffect(() => {
@@ -17,8 +16,6 @@ export default function FloatingButton() {
                        banner instanceof HTMLElement && 
                        banner.offsetParent !== null &&
                        window.getComputedStyle(banner).display !== 'none';
-      
-      setBannerVisible(isVisible);
       
       // Si el banner está visible, calcular su altura y añadir margen
       if (isVisible && banner) {
