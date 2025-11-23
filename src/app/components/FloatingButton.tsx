@@ -3,38 +3,41 @@
 import { useState, useEffect } from 'react';
 
 export default function FloatingButton() {
-  const [bottomOffset, setBottomOffset] = useState(16); // 16px = bottom-4 por defecto
+  // Inicializar con un valor alto por defecto para evitar solapamiento inicial
+  const [bottomOffset, setBottomOffset] = useState(300); // Valor alto inicial para evitar solapamiento
 
   useEffect(() => {
-    // Verificar si el banner está visible y calcular su altura
+    // Verificar si el banner está visible
     const checkBannerVisibility = () => {
       if (typeof window === 'undefined') return;
       
+      // Verificar primero si el consentimiento ya fue aceptado
+      const consentAccepted = localStorage.getItem('cookieConsent') === 'true';
+      
       // Buscar el banner de consentimiento
       const banner = document.querySelector('[data-banner-consent]') as HTMLElement;
-      const isVisible = banner !== null && 
+      const isVisible = !consentAccepted && 
+                       banner !== null && 
                        banner instanceof HTMLElement && 
                        banner.offsetParent !== null &&
                        window.getComputedStyle(banner).display !== 'none';
       
       // Si el banner está visible, usar un offset fijo MUY alto para evitar solapamiento
-      if (isVisible && banner) {
-        // Usar un valor fijo alto (250px) para asegurar que el botón esté bien separado del banner
-        // Esto evita problemas de timing con el cálculo de altura
-        setBottomOffset(250);
+      if (isVisible) {
+        // Usar un valor fijo alto (300px) para asegurar que el botón esté bien separado del banner
+        setBottomOffset(300);
       } else {
         // Posición normal cuando no hay banner
         setBottomOffset(16); // bottom-4
       }
     };
 
-    // Verificar inmediatamente
-    checkBannerVisibility();
-    
     // Verificar después de delays para asegurar que el DOM esté listo
-    const initialCheck = setTimeout(checkBannerVisibility, 100);
-    const loadCheck = setTimeout(checkBannerVisibility, 500);
-    const finalCheck = setTimeout(checkBannerVisibility, 1000);
+    // El banner se renderiza después de verificar localStorage, así que necesitamos esperar
+    const initialCheck = setTimeout(checkBannerVisibility, 50);
+    const loadCheck = setTimeout(checkBannerVisibility, 200);
+    const finalCheck = setTimeout(checkBannerVisibility, 500);
+    const extraCheck = setTimeout(checkBannerVisibility, 1000);
 
     // Observar cambios en el DOM para detectar cuando el banner aparece/desaparece
     const observer = new MutationObserver(() => {
@@ -78,6 +81,7 @@ export default function FloatingButton() {
       clearTimeout(initialCheck);
       clearTimeout(loadCheck);
       clearTimeout(finalCheck);
+      clearTimeout(extraCheck);
       observer.disconnect();
       window.removeEventListener('banner-consent-change', handleBannerChange);
       window.removeEventListener('resize', checkBannerVisibility);
