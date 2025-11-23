@@ -17,12 +17,12 @@ export default function FloatingButton() {
                        banner.offsetParent !== null &&
                        window.getComputedStyle(banner).display !== 'none';
       
-      // Si el banner está visible, calcular su altura y añadir margen
+      // Si el banner está visible, calcular su altura y añadir margen MUY generoso
       if (isVisible && banner) {
-        const bannerHeight = banner.offsetHeight || 80; // Fallback a 80px si no se puede calcular
-        // Altura del banner + altura del botón flotante (~50px) + margen adicional muy generoso (60px)
-        // Usar Math.max para asegurar un mínimo de 180px desde el bottom para evitar cualquier solapamiento
-        const newOffset = Math.max(bannerHeight + 70 + 60, 180);
+        const bannerHeight = banner.offsetHeight || 100; // Fallback si no se puede calcular
+        // Altura del banner + altura del botón flotante (~50px) + margen MUY generoso (80px)
+        // Usar Math.max para asegurar un mínimo de 200px desde el bottom para evitar CUALQUIER solapamiento
+        const newOffset = Math.max(bannerHeight + 60 + 80, 200);
         setBottomOffset(newOffset);
       } else {
         // Posición normal cuando no hay banner
@@ -33,7 +33,7 @@ export default function FloatingButton() {
     // Verificar inicialmente después de un delay para que el DOM esté listo
     const initialCheck = setTimeout(checkBannerVisibility, 200);
     // También verificar después de que la página esté completamente cargada
-    const loadCheck = setTimeout(checkBannerVisibility, 500);
+    const loadCheck = setTimeout(checkBannerVisibility, 600);
 
     // Observar cambios en el DOM para detectar cuando el banner aparece/desaparece
     const observer = new MutationObserver(() => {
