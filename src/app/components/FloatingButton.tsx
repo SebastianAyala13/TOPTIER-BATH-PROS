@@ -17,23 +17,24 @@ export default function FloatingButton() {
                        banner.offsetParent !== null &&
                        window.getComputedStyle(banner).display !== 'none';
       
-      // Si el banner está visible, calcular su altura y añadir margen MUY generoso
+      // Si el banner está visible, usar un offset fijo MUY alto para evitar solapamiento
       if (isVisible && banner) {
-        const bannerHeight = banner.offsetHeight || 100; // Fallback si no se puede calcular
-        // Altura del banner + altura del botón flotante (~50px) + margen MUY generoso (80px)
-        // Usar Math.max para asegurar un mínimo de 200px desde el bottom para evitar CUALQUIER solapamiento
-        const newOffset = Math.max(bannerHeight + 60 + 80, 200);
-        setBottomOffset(newOffset);
+        // Usar un valor fijo alto (250px) para asegurar que el botón esté bien separado del banner
+        // Esto evita problemas de timing con el cálculo de altura
+        setBottomOffset(250);
       } else {
         // Posición normal cuando no hay banner
         setBottomOffset(16); // bottom-4
       }
     };
 
-    // Verificar inicialmente después de un delay para que el DOM esté listo
-    const initialCheck = setTimeout(checkBannerVisibility, 200);
-    // También verificar después de que la página esté completamente cargada
-    const loadCheck = setTimeout(checkBannerVisibility, 600);
+    // Verificar inmediatamente
+    checkBannerVisibility();
+    
+    // Verificar después de delays para asegurar que el DOM esté listo
+    const initialCheck = setTimeout(checkBannerVisibility, 100);
+    const loadCheck = setTimeout(checkBannerVisibility, 500);
+    const finalCheck = setTimeout(checkBannerVisibility, 1000);
 
     // Observar cambios en el DOM para detectar cuando el banner aparece/desaparece
     const observer = new MutationObserver(() => {
@@ -76,6 +77,7 @@ export default function FloatingButton() {
     return () => {
       clearTimeout(initialCheck);
       clearTimeout(loadCheck);
+      clearTimeout(finalCheck);
       observer.disconnect();
       window.removeEventListener('banner-consent-change', handleBannerChange);
       window.removeEventListener('resize', checkBannerVisibility);
