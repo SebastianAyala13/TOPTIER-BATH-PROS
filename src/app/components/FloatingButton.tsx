@@ -34,8 +34,11 @@ export default function FloatingButton() {
                            computedStyle.opacity !== '0';
         
         if (isDisplayed) {
-          // Banner visible - mantener botón arriba
-          setBottomOffset(300);
+          // Banner visible - calcular altura y posicionar justo arriba
+          const bannerHeight = banner.offsetHeight || 80; // Fallback si no se puede calcular
+          // Altura del banner + margen pequeño (20px) para que quede justo arriba del texto
+          const newOffset = bannerHeight + 20;
+          setBottomOffset(newOffset);
           return;
         }
       }
