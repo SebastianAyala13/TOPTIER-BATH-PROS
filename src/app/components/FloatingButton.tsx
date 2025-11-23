@@ -20,9 +20,9 @@ export default function FloatingButton() {
       // Si el banner está visible, calcular su altura y añadir margen
       if (isVisible && banner) {
         const bannerHeight = banner.offsetHeight;
-        // Altura del banner + altura del botón flotante (~50px) + margen adicional generoso (40px)
-        // Usar Math.max para asegurar un mínimo de 120px desde el bottom para evitar solapamiento
-        const newOffset = Math.max(bannerHeight + 60 + 40, 120);
+        // Altura del banner + altura del botón flotante (~50px) + margen adicional muy generoso (60px)
+        // Usar Math.max para asegurar un mínimo de 150px desde el bottom para evitar cualquier solapamiento
+        const newOffset = Math.max(bannerHeight + 70 + 60, 150);
         setBottomOffset(newOffset);
       } else {
         // Posición normal cuando no hay banner
