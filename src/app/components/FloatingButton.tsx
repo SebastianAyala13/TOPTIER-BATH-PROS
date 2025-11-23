@@ -14,21 +14,39 @@ export default function FloatingButton() {
       // Verificar primero si el consentimiento ya fue aceptado
       const consentAccepted = localStorage.getItem('cookieConsent') === 'true';
       
+      // Si el consentimiento fue aceptado, bajar el botón inmediatamente
+      if (consentAccepted) {
+        setBottomOffset(16); // bottom-4
+        return;
+      }
+      
+      // Si el consentimiento NO fue aceptado, el banner debería estar visible
       // Buscar el banner de consentimiento
       const banner = document.querySelector('[data-banner-consent]') as HTMLElement;
-      const isVisible = !consentAccepted && 
-                       banner !== null && 
-                       banner instanceof HTMLElement && 
-                       banner.offsetParent !== null &&
-                       window.getComputedStyle(banner).display !== 'none';
       
-      // Si el banner está visible, usar un offset fijo MUY alto para evitar solapamiento
-      if (isVisible) {
-        // Usar un valor fijo alto (300px) para asegurar que el botón esté bien separado del banner
+      // Si encontramos el banner en el DOM, mantener el botón arriba
+      if (banner !== null && 
+          banner instanceof HTMLElement && 
+          banner.offsetParent !== null) {
+        const computedStyle = window.getComputedStyle(banner);
+        const isDisplayed = computedStyle.display !== 'none' && 
+                           computedStyle.visibility !== 'hidden' &&
+                           computedStyle.opacity !== '0';
+        
+        if (isDisplayed) {
+          // Banner visible - mantener botón arriba
+          setBottomOffset(300);
+          return;
+        }
+      }
+      
+      // Si no encontramos el banner pero el consentimiento no fue aceptado,
+      // mantener el botón arriba por precaución (el banner puede estar renderizándose)
+      if (!consentAccepted) {
         setBottomOffset(300);
       } else {
-        // Posición normal cuando no hay banner
-        setBottomOffset(16); // bottom-4
+        // Solo bajar si el consentimiento fue aceptado
+        setBottomOffset(16);
       }
     };
 
