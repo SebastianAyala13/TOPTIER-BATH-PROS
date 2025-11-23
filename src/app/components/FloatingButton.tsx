@@ -3,8 +3,8 @@
 import { useState, useEffect } from 'react';
 
 export default function FloatingButton() {
-  // Inicializar con un valor alto por defecto para evitar solapamiento inicial
-  const [bottomOffset, setBottomOffset] = useState(300); // Valor alto inicial para evitar solapamiento
+  // Inicializar con un valor moderado por defecto para evitar solapamiento inicial
+  const [bottomOffset, setBottomOffset] = useState(120); // Valor inicial moderado
 
   useEffect(() => {
     // Verificar si el banner está visible
@@ -41,9 +41,10 @@ export default function FloatingButton() {
       }
       
       // Si no encontramos el banner pero el consentimiento no fue aceptado,
-      // mantener el botón arriba por precaución (el banner puede estar renderizándose)
+      // usar un valor por defecto moderado (el banner puede estar renderizándose)
       if (!consentAccepted) {
-        setBottomOffset(300);
+        // Usar un valor por defecto basado en altura típica del banner (~100px) + margen
+        setBottomOffset(120);
       } else {
         // Solo bajar si el consentimiento fue aceptado
         setBottomOffset(16);
