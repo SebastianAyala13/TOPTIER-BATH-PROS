@@ -157,6 +157,7 @@ export const AUTHORIZED_ZIP_CODES = new Set([
   '06062',
   '06063',
   '06065',
+  '06066',
   '06067',
   '06068',
   '06069',
