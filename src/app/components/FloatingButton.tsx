@@ -113,11 +113,11 @@ export default function FloatingButton() {
 
   return (
     <a 
-      href="tel:+18337241011" 
+      href="#form-section" 
       style={{ bottom: `${bottomOffset}px` }}
       className="fixed right-4 z-40 bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-600 hover:to-blue-700 text-white px-5 py-2.5 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 text-xs font-bold md:hidden animate-pulse"
     >
-      📞 Call Now - Free Quote
+      ✏️ Fill Form - Free Quote
     </a>
   );
 }

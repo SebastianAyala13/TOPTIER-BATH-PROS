@@ -73,13 +73,13 @@ export default function Hero() {
       title: 'Transform your bathroom with',
       highlight: 'premium remodeling experts',
       subtitle: 'Design, materials, and installation — on time and stress-free.',
-      cta: 'Get Free Quote Now →',
+      cta: 'Fill Out Form - Get Free Quote →',
     },
     es: {
       title: 'Transforma tu baño con',
       highlight: 'expertos en remodelación',
       subtitle: 'Diseño, materiales e instalación — a tiempo y sin estrés.',
-      cta: 'Cotización Gratis Ahora →',
+      cta: 'Completa el Formulario - Cotización Gratis →',
     },
   };
 
@@ -172,10 +172,10 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.6 }}
         >
           <a
-            href="tel:+18337241011"
+            href="#form-section"
             className="inline-block bg-teal-500 hover:bg-teal-600 text-white font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
           >
-            📞 {t.cta}
+            ✏️ {t.cta}
           </a>
         </motion.div>
       </div>

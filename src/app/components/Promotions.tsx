@@ -93,8 +93,8 @@ export default function Promotions() {
               {card.icon}
               <h3 className="text-lg font-semibold mb-2">{card.title}</h3>
               <p className="text-sm text-slate-600">{card.description}</p>
-              <a href="tel:+18337241011" className="mt-4 inline-block bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-600 hover:to-blue-700 text-white px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 hover:shadow-lg">
-                📞 Call Now - Get Free Quote
+              <a href="#form-section" className="mt-4 inline-block bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-600 hover:to-blue-700 text-white px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 hover:shadow-lg">
+                ✏️ Fill Out Form - Get Free Quote
               </a>
             </motion.div>
           ))}
