@@ -6,7 +6,7 @@ import { gtmScript } from '@/lib/gtm';
 import { GoogleTagManagerNoScript } from '../../components/GoogleTagManager';
 
 interface WindowWithFbq extends Window {
-  fbq?: (action: string, event: string) => void;
+  fbq?: (...args: unknown[]) => void;
 }
 
 export default function TrackingScripts() {
