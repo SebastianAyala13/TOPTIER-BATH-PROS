@@ -255,7 +255,7 @@ export default function FormularioPage() {
 
           {/* Conversational form - one question per step */}
           <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-6 md:p-8 mb-10">
-            <input ref={tfRef} type="hidden" name="trusted_form_cert_id" />
+            <input ref={tfRef} type="hidden" id="xxTrustedFormCertUrl" name="xxTrustedFormCertUrl" />
             <input id="leadid_token" type="hidden" name="universal_leadid" />
 
             <AnimatePresence mode="wait">
@@ -333,12 +333,12 @@ export default function FormularioPage() {
             )}
           </div>
 
-          {/* Consent (shown on last step or always at bottom) */}
-          <p className="text-xs text-slate-500 text-center mb-10 px-2">
-            By submitting, you agree to receive marketing communications from Home Services Partners and agree to our{' '}
-            <Link href="/privacy-policy" className="underline text-teal-600">Privacy Policy</Link> and{' '}
-            <Link href="/terms" className="underline text-teal-600">Terms</Link>.
-          </p>
+          {/* TCPA Consent - debajo del form con hipervínculos */}
+          <label className="bg-gray-50 p-4 rounded-lg border border-gray-200 block mb-10" data-tf-element-role="consent-language">
+            <span className="text-xs leading-relaxed text-gray-700">
+              By clicking Submit, You agree to give express consent to receive marketing communications regarding Home Improvement services by automatic dialing system and pre-recorded calls and artificial voice messages from <Link href="/partners" className="underline text-teal-600 hover:text-teal-800">Home Services Partners</Link> at the phone number and E-mail address provided by you, including wireless numbers, if applicable, even if you have previously registered the provided number on the Do not Call Registry. SMS/MMS and data messaging rates may apply. You understand that my consent here is not a condition for buying any goods or services. You agree to the <Link href="/privacy-policy" className="underline text-teal-600 hover:text-teal-800" target="_blank" rel="noreferrer">Privacy Policy</Link> and <Link href="/terms" className="underline text-teal-600 hover:text-teal-800" target="_blank" rel="noreferrer">Terms &amp; Conditions</Link>.
+            </span>
+          </label>
 
           {/* Q&A Objeciones */}
           <section className="border-t border-slate-200 pt-10">

@@ -1,21 +1,28 @@
+export interface SendToZapierOptions {
+  /** Override webhook URL (e.g. for /formulario dedicated hook) */
+  url?: string;
+  /** Override secret (Zapier Catch Hooks often don't need one) */
+  secret?: string;
+}
+
 export async function sendToZapier(
-  data: Record<string, unknown>
+  data: Record<string, unknown>,
+  options?: SendToZapierOptions
 ): Promise<{ ok: boolean; skipped?: boolean; status?: number; body?: string }> {
-  const url = process.env.ZAPIER_HOOK_URL as string | undefined;
-  const secret = process.env.ZAPIER_SECRET as string | undefined;
-  if (!url || !secret) {
-    console.log('ZAPIER env vars missing, skipping webhook');
+  const url = options?.url ?? (process.env.ZAPIER_HOOK_URL as string | undefined);
+  const secret = options?.secret ?? (process.env.ZAPIER_SECRET as string | undefined);
+  if (!url) {
+    console.log('ZAPIER webhook URL missing, skipping');
     return { ok: false, skipped: true };
   }
 
+  const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+  if (secret) headers['x-zapier-secret'] = secret;
+
   const r = await fetch(url, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-zapier-secret': secret,
-    },
+    headers,
     body: JSON.stringify(data),
-    // Do not cache at the edge
     next: { revalidate: 0 },
   });
   const text = await r.text();
