@@ -5,7 +5,7 @@ import Script from 'next/script';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
-import { getFormEndpoint } from '@/lib/formConfig';
+import { getFormularioEndpoint } from '@/lib/formConfig';
 import { isValidZipCode } from '@/lib/authorizedZipCodes';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -175,7 +175,7 @@ export default function FormularioPage() {
       website: 'toptierbathpros.com',
     };
     try {
-      const res = await fetch(getFormEndpoint(), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      const res = await fetch(getFormularioEndpoint(), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
       if (res.ok && typeof window !== 'undefined' && window.dataLayer) {
         window.dataLayer.push({
           event: 'lead_submit',

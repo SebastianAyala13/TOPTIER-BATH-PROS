@@ -63,7 +63,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       ownership: formBody.ownership ?? '',
       timestamp: formBody.timestamp ?? new Date().toISOString(),
       source: formBody.source ?? 'TOPTIER BATH PROS Website',
-      form_type: (String(formBody.source ?? '')).includes('Formulario') ? 'formulario_landing' : 'main_form',
+      form_type: 'main_form',
       language: formBody.language ?? 'en',
       website: formBody.website ?? 'toptierbathpros.com',
     };
@@ -71,13 +71,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     // DEBUG: Log del payload final
     console.log('🔍 Payload final para Zapier:', JSON.stringify(payload, null, 2));
 
-    // /formulario usa webhook dedicado si está configurado
-    const isFormulario = (formBody.source as string)?.includes('Formulario') || (formBody.landing_page as string)?.includes('/formulario');
-    const formularioUrl = process.env.ZAPIER_FORMULARIO_HOOK_URL as string | undefined;
-    const sendOptions = isFormulario && formularioUrl
-      ? { url: formularioUrl, secret: process.env.ZAPIER_FORMULARIO_SECRET as string | undefined }
-      : undefined;
-    const result = await sendToZapier(payload, sendOptions);
+    // Nota: /formulario usa su propia ruta /api/zapier/formulario
+    const result = await sendToZapier(payload);
     
     // DEBUG: Log de respuesta de Zapier
     if (result.ok) {
