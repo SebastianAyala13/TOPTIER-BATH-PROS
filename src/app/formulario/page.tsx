@@ -20,14 +20,6 @@ declare global {
 }
 
 const STEPS: { key: string; labelEn: string; labelEs: string; type: 'text' | 'email' | 'tel' | 'radio'; placeholderEn?: string; placeholderEs?: string; options?: { value: string; labelEn: string; labelEs: string }[] }[] = [
-  { key: 'first_name', labelEn: 'What is your first name?', labelEs: '¿Cuál es tu nombre?', type: 'text', placeholderEn: 'First name', placeholderEs: 'Nombre' },
-  { key: 'last_name', labelEn: 'And your last name?', labelEs: '¿Y tu apellido?', type: 'text', placeholderEn: 'Last name', placeholderEs: 'Apellido' },
-  { key: 'email_address', labelEn: 'What is your email address?', labelEs: '¿Cuál es tu correo electrónico?', type: 'email', placeholderEn: 'you@email.com', placeholderEs: 'tu@email.com' },
-  { key: 'phone_home', labelEn: 'What is your phone number?', labelEs: '¿Cuál es tu número de teléfono?', type: 'tel', placeholderEn: 'Phone', placeholderEs: 'Teléfono' },
-  { key: 'address', labelEn: 'What is your street address?', labelEs: '¿Cuál es tu dirección?', type: 'text', placeholderEn: 'Street address', placeholderEs: 'Dirección' },
-  { key: 'city', labelEn: 'Which city?', labelEs: '¿En qué ciudad?', type: 'text', placeholderEn: 'City', placeholderEs: 'Ciudad' },
-  { key: 'state', labelEn: 'Which state?', labelEs: '¿Estado?', type: 'text', placeholderEn: 'State', placeholderEs: 'Estado' },
-  { key: 'zip_code', labelEn: 'What is your ZIP code?', labelEs: '¿Cuál es tu código postal?', type: 'text', placeholderEn: 'ZIP', placeholderEs: 'Código postal' },
   {
     key: 'repair_or_replace',
     labelEn: 'Do you need to repair your existing bathroom or replace/remodel it completely?',
@@ -38,6 +30,13 @@ const STEPS: { key: string; labelEn: string; labelEs: string; type: 'text' | 'em
       { value: 'replace', labelEn: 'Replace / Full remodel', labelEs: 'Reemplazar / Remodelación completa' },
     ],
   },
+  { key: 'zip_code', labelEn: 'What is your ZIP code?', labelEs: '¿Cuál es tu código postal?', type: 'text', placeholderEn: 'ZIP', placeholderEs: 'Código postal' },
+  { key: 'state', labelEn: 'Which state?', labelEs: '¿Estado?', type: 'text', placeholderEn: 'State', placeholderEs: 'Estado' },
+  { key: 'address', labelEn: 'What is your street address?', labelEs: '¿Cuál es tu dirección?', type: 'text', placeholderEn: 'Street address', placeholderEs: 'Dirección' },
+  { key: 'first_name', labelEn: 'What is your first name?', labelEs: '¿Cuál es tu nombre?', type: 'text', placeholderEn: 'First name', placeholderEs: 'Nombre' },
+  { key: 'last_name', labelEn: 'And your last name?', labelEs: '¿Y tu apellido?', type: 'text', placeholderEn: 'Last name', placeholderEs: 'Apellido' },
+  { key: 'email_address', labelEn: 'What is your email address?', labelEs: '¿Cuál es tu correo electrónico?', type: 'email', placeholderEn: 'you@email.com', placeholderEs: 'tu@email.com' },
+  { key: 'phone_home', labelEn: 'What is your phone number?', labelEs: '¿Cuál es tu número de teléfono?', type: 'tel', placeholderEn: 'Phone', placeholderEs: 'Teléfono' },
 ];
 
 const OBJECTION_FAQS = [
@@ -58,7 +57,6 @@ export default function FormularioPage() {
     email_address: '',
     phone_home: '',
     address: '',
-    city: '',
     state: '',
     zip_code: '',
     repair_or_replace: '',
@@ -152,7 +150,7 @@ export default function FormularioPage() {
       lp_s1: process.env.NEXT_PUBLIC_LP_S1 || 'Provided',
       lp_s2: process.env.NEXT_PUBLIC_LP_S2 || 'toptierbathpros',
       lp_response: 'JSON',
-      city: form.city,
+      city: form.city ?? '',
       state: form.state,
       zip_code: form.zip_code,
       first_name: form.first_name,
