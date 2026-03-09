@@ -12,3 +12,8 @@ export function getFormEndpoint(): string {
 export function getFormularioEndpoint(): string {
   return '/api/zapier/formulario';
 }
+
+// Fresh Bath Renovations - landing /freshbathremodel
+export function getFreshBathRemodelEndpoint(): string {
+  return '/api/zapier/freshbathremodel';
+}
