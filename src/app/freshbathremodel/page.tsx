@@ -109,8 +109,8 @@ export default function FreshBathRemodelPage() {
               <FAQ />
               <Footer />
             </div>
-            <aside id="form-section" className="fixed right-0 top-0 h-full w-96 bg-white border-l border-slate-200 shadow-xl z-30 overflow-y-auto">
-              <div className="p-6">
+            <aside id="form-section" className="fixed right-0 top-0 h-full w-96 bg-white border-l border-slate-200 shadow-xl z-30 overflow-y-auto flex items-center">
+              <div className="p-6 w-full">
                 <h2 className="text-xl font-bold text-slate-900 mb-1">Get Your Free Quote</h2>
                 <p className="text-sm text-slate-600 mb-6">Tell us about your bathroom renovation project.</p>
                 <div className="border-2 rounded-2xl p-4" style={{ borderColor: `${BRAND}40` }}>
