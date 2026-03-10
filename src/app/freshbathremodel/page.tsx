@@ -64,7 +64,7 @@ export default function FreshBathRemodelPage() {
         <img height="1" width="1" style={{ display: 'none' }} src="https://www.facebook.com/tr?id=1149265126710788&ev=PageView&noscript=1" alt="" />
       </noscript>
 
-      <div className="min-h-screen relative">
+      <div className="min-h-screen relative scroll-smooth">
         {/* Blurred background */}
         <div
           className="fixed inset-0 -z-10 bg-cover bg-center"
@@ -74,7 +74,7 @@ export default function FreshBathRemodelPage() {
             transform: 'scale(1.05)',
           }}
         />
-        <div className="fixed inset-0 -z-10 bg-white/60" aria-hidden />
+        <div className="fixed inset-0 -z-10 bg-white/50" aria-hidden />
 
         {/* Header */}
         <header className="bg-white/95 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-50">
@@ -93,7 +93,7 @@ export default function FreshBathRemodelPage() {
               <a href="#faq">FAQ</a>
               <a href="#form-section" className="px-4 py-2 rounded-full text-white font-bold text-sm" style={{ backgroundColor: BRAND }}>Get Free Quote</a>
             </nav>
-            <Link href="/" className="text-sm text-slate-600 hover:text-slate-900">← Main Site</Link>
+            <Link href="/" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">← Back to Main</Link>
           </div>
         </header>
 
@@ -121,16 +121,16 @@ export default function FreshBathRemodelPage() {
           </>
         ) : (
           <>
-            <div id="form-section" className="bg-white border-b border-slate-200 shadow-sm py-6 px-4">
+            <Hero />
+            <div id="form-section" className="bg-white/95 backdrop-blur-sm border-y border-slate-200 shadow-lg py-8 px-4">
               <div className="max-w-lg mx-auto">
-                <h2 className="text-xl font-bold text-slate-900 mb-2 text-center">Get Your Free Quote</h2>
-                <p className="text-sm text-slate-600 mb-4 text-center">Tell us about your bathroom renovation.</p>
-                <div className="border-2 rounded-2xl p-4" style={{ borderColor: `${BRAND}40` }}>
+                <h2 className="text-xl font-bold text-slate-900 mb-2 text-center">Bathroom Renovation Quote</h2>
+                <p className="text-sm text-slate-600 mb-4 text-center">Get a free, no-obligation estimate in a few steps.</p>
+                <div className="border-2 rounded-2xl p-4 shadow-sm" style={{ borderColor: `${BRAND}40` }}>
                   <FreshBathWizardForm />
                 </div>
               </div>
             </div>
-            <Hero />
             <WhyChooseUs />
             <Services />
             <Process />
@@ -147,8 +147,8 @@ export default function FreshBathRemodelPage() {
 
 function Hero() {
   return (
-    <section className="relative py-16 md:py-24 px-4 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-white to-sky-50" />
+    <section className="relative py-16 md:py-28 px-4 overflow-hidden min-h-[320px] flex flex-col justify-center">
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-100/90 via-white/85 to-sky-50/90" aria-hidden />
       <div className="relative max-w-4xl mx-auto text-center">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
@@ -258,9 +258,9 @@ function Process() {
 
 function Testimonials() {
   const reviews = [
-    { name: 'Carlos M.', text: 'Excellent guidance and flawless finishes in my primary bathroom.', img: '/clients/carlos.jpg' },
-    { name: 'Lindsey W.', text: 'They converted my tub to a shower. Clean and fast work.', img: '/clients/lindsey.jpg' },
-    { name: 'Laura P.', text: 'They handled permits and delivered on time.', img: '/clients/laura.jpg' },
+    { name: 'Carlos M.', text: 'Excellent guidance and flawless finishes in my primary bathroom.', initials: 'CM' },
+    { name: 'Lindsey W.', text: 'They converted my tub to a shower. Clean and fast work.', initials: 'LW' },
+    { name: 'Laura P.', text: 'They handled permits and delivered on time.', initials: 'LP' },
   ];
   return (
     <section className="py-16 px-4" style={{ backgroundColor: `${BRAND}08` }}>
@@ -271,7 +271,7 @@ function Testimonials() {
             <div key={i} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
               <p className="text-slate-700 mb-4">&ldquo;{r.text}&rdquo;</p>
               <div className="flex items-center gap-3">
-                <Image src={r.img} alt={r.name} width={40} height={40} className="rounded-full object-cover" />
+                <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold text-sm" style={{ backgroundColor: BRAND }}>{r.initials}</div>
                 <span className="font-semibold text-slate-900">{r.name}</span>
               </div>
             </div>
