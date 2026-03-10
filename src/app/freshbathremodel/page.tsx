@@ -1,171 +1,49 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Script from 'next/script';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { getFreshBathRemodelEndpoint } from '@/lib/formConfig';
-import { isValidZipCode } from '@/lib/authorizedZipCodes';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { CheckCircle, ShieldCheck, Zap, Pencil, Ruler, ShowerHead } from 'lucide-react';
+import FreshBathWizardForm from './FreshBathWizardForm';
 
 declare global {
   interface Window {
-    TrustedForm?: { getCertUrl?: () => string };
     fbq?: (...args: unknown[]) => void;
-    dataLayer?: Record<string, unknown>[];
   }
 }
 
-const BRAND_COLOR = '#5BA3D0';
-
-const STEPS: { key: string; labelEn: string; labelEs: string; type: 'text' | 'email' | 'tel' | 'radio'; placeholderEn?: string; placeholderEs?: string; options?: { value: string; labelEn: string; labelEs: string }[] }[] = [
-  {
-    key: 'repair_or_replace',
-    labelEn: 'Do you need to repair your existing bathroom or replace/remodel it completely?',
-    labelEs: '¿Necesitas reparar tu baño actual o reemplazar/remodelar por completo?',
-    type: 'radio',
-    options: [
-      { value: 'repair', labelEn: 'Repair existing bathroom', labelEs: 'Reparar baño existente' },
-      { value: 'replace', labelEn: 'Replace / Full remodel', labelEs: 'Reemplazar / Remodelación completa' },
-    ],
-  },
-  { key: 'zip_code', labelEn: 'What is your ZIP code?', labelEs: '¿Cuál es tu código postal?', type: 'text', placeholderEn: 'ZIP', placeholderEs: 'Código postal' },
-  { key: 'state', labelEn: 'Which state?', labelEs: '¿Estado?', type: 'text', placeholderEn: 'State', placeholderEs: 'Estado' },
-  { key: 'address', labelEn: 'What is your street address?', labelEs: '¿Cuál es tu dirección?', type: 'text', placeholderEn: 'Street address', placeholderEs: 'Dirección' },
-  { key: 'first_name', labelEn: 'What is your first name?', labelEs: '¿Cuál es tu nombre?', type: 'text', placeholderEn: 'First name', placeholderEs: 'Nombre' },
-  { key: 'last_name', labelEn: 'And your last name?', labelEs: '¿Y tu apellido?', type: 'text', placeholderEn: 'Last name', placeholderEs: 'Apellido' },
-  { key: 'email_address', labelEn: 'What is your email address?', labelEs: '¿Cuál es tu correo electrónico?', type: 'email', placeholderEn: 'you@email.com', placeholderEs: 'tu@email.com' },
-  { key: 'phone_home', labelEn: 'What is your phone number?', labelEs: '¿Cuál es tu número de teléfono?', type: 'tel', placeholderEn: 'Phone', placeholderEs: 'Teléfono' },
-];
+const BRAND = '#5BA3D0';
 
 const FAQS = [
   { q: 'Is the bathroom renovation quote free?', a: 'Yes. We offer free, no-obligation estimates. See what\'s possible for your space before you commit.' },
-  { q: 'What bathroom renovation services do you offer?', a: 'Full bathroom remodels, tub-to-shower conversions, vanity upgrades, tile replacement, and more. Tell us your vision.' },
+  { q: 'What bathroom renovation services do you offer?', a: 'Full bathroom remodels, tub-to-shower conversions, vanity upgrades, tile replacement, and more.' },
   { q: 'How long does a bathroom renovation take?', a: 'Most projects take 1–3 weeks depending on scope. We\'ll give you a clear timeline during your free estimate.' },
   { q: 'Do you handle permits and inspections?', a: 'Yes. We manage permits and coordinate inspections when required by your local codes.' },
   { q: 'Am I obligated if I submit this form?', a: 'No. This form only requests a free estimate. You decide next steps after we send your quote.' },
 ];
 
 export default function FreshBathRemodelPage() {
-  const router = useRouter();
-  const [step, setStep] = useState(0);
-  const [form, setForm] = useState<Record<string, string>>({
-    first_name: '', last_name: '', email_address: '', phone_home: '',
-    address: '', state: '', zip_code: '', repair_or_replace: '',
-  });
-  const [zipCodeError, setZipCodeError] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const tfRef = useRef<HTMLInputElement>(null);
-  const [tfToken, setTfToken] = useState('');
-  const hasSubmitted = useRef(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setForm((p) => ({ ...p, landing_page: typeof window !== 'undefined' ? window.location.href : '' }));
+    setIsClient(true);
+    const mq = window.matchMedia('(min-width: 1024px)');
+    const setFromMQ = () => setIsDesktop(mq.matches);
+    setFromMQ();
+    mq.addEventListener('change', setFromMQ);
+    return () => mq.removeEventListener('change', setFromMQ);
   }, []);
 
-  useEffect(() => {
-    if (!tfRef.current) return;
-    const apply = () => {
-      try {
-        const val = (typeof window !== 'undefined' && window.TrustedForm?.getCertUrl?.()) || '';
-        if (val && tfRef.current) { tfRef.current.value = val; setTfToken(val); }
-      } catch {}
-    };
-    apply();
-    const id = setInterval(apply, 300);
-    return () => clearInterval(id);
-  }, []);
-
-  const validateZipCode = (z: string) => isValidZipCode(z);
-
-  async function waitForJornayaToken(max = 2000): Promise<string> {
-    const start = Date.now();
-    const poll = async (): Promise<string> => {
-      const inp = document.getElementById('leadid_token') as HTMLInputElement | null;
-      if (inp?.value?.trim()) return inp.value.trim();
-      if (Date.now() - start >= max) return '';
-      await new Promise((r) => setTimeout(r, 150));
-      return poll();
-    };
-    return poll();
+  if (!isClient) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="animate-pulse text-slate-400">Loading...</div>
+      </div>
+    );
   }
-
-  async function waitForTrustedFormToken(max = 2000): Promise<string> {
-    const start = Date.now();
-    const poll = async (): Promise<string> => {
-      const val = tfRef.current?.value?.trim() || (typeof window !== 'undefined' && window.TrustedForm?.getCertUrl?.()) || '';
-      if (val) return val;
-      if (Date.now() - start >= max) return '';
-      await new Promise((r) => setTimeout(r, 150));
-      return poll();
-    };
-    return poll();
-  }
-
-  const currentStep = STEPS[step];
-  const progress = Math.round(((step + 1) / STEPS.length) * 100);
-  const isLastStep = step === STEPS.length - 1;
-  const value = form[currentStep?.key ?? ''] ?? '';
-
-  const handleNext = () => {
-    if (currentStep.key === 'zip_code' && form.zip_code && !validateZipCode(form.zip_code)) {
-      setZipCodeError('Out of coverage area');
-      return;
-    }
-    setZipCodeError('');
-    if (!value || (typeof value === 'string' && !value.trim())) {
-      alert('Please complete this field.');
-      return;
-    }
-    if (step < STEPS.length - 1) setStep((s) => s + 1);
-  };
-
-  const handleSubmit = async () => {
-    if (hasSubmitted.current || isSubmitting) return;
-    if (!validateZipCode(form.zip_code)) {
-      setZipCodeError('Out of coverage area');
-      return;
-    }
-    hasSubmitted.current = true;
-    setIsSubmitting(true);
-    await waitForTrustedFormToken(2000);
-    await waitForJornayaToken(2000);
-    const tcpaText = 'By clicking Submit, You agree to give express consent to receive marketing communications regarding Home Improvement services by automatic dialing system and pre-recorded calls and artificial voice messages from Home Services Partners at the phone number and E-mail address provided by you, including wireless numbers, if applicable, even if you have previously registered the provided number on the Do not Call Registry. SMS/MMS and data messaging rates may apply. You understand that my consent here is not a condition for buying any goods or services. You agree to the Privacy Policy and Terms & Conditions.';
-    const payload = {
-      lp_campaign_id: 'Provided', lp_campaign_key: 'Provided', lp_s1: 'Provided', lp_s2: 'freshbathrenovations',
-      lp_response: 'JSON', city: '', state: form.state, zip_code: form.zip_code, first_name: form.first_name,
-      last_name: form.last_name, address: form.address, phone_home: form.phone_home, email_address: form.email_address,
-      repair_or_replace: form.repair_or_replace, tcpaText, 'consent-language': true,
-      trusted_form_cert_id: tfRef.current?.value || tfToken || '',
-      jornaya_lead_id: (document.getElementById('leadid_token') as HTMLInputElement)?.value || '',
-      landing_page: form.landing_page || (typeof window !== 'undefined' ? window.location.href : ''),
-      bathroomStyle: '', urgency: '', ownership: 'yes', timestamp: new Date().toISOString(),
-      source: 'Fresh Bath Renovations', language: 'en', website: 'toptierbathpros.com',
-    };
-    try {
-      const res = await fetch(getFreshBathRemodelEndpoint(), {
-        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload),
-      });
-      if (res.ok && typeof window !== 'undefined' && window.dataLayer) {
-        window.dataLayer.push({
-          event: 'lead_submit', form_id: 'fresh_bath_remodel',
-          lead_data: { first_name: form.first_name, last_name: form.last_name, email: form.email_address, phone: form.phone_home, service: form.repair_or_replace, zip_code: form.zip_code },
-        });
-      }
-      setSubmitted(true);
-      router.push('/thankyou');
-    } catch {
-      setSubmitted(true);
-      router.push('/thankyou');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const label = currentStep?.labelEn ?? '';
-  const placeholder = currentStep?.placeholderEn ?? '';
 
   return (
     <>
@@ -186,135 +64,294 @@ export default function FreshBathRemodelPage() {
         <img height="1" width="1" style={{ display: 'none' }} src="https://www.facebook.com/tr?id=1149265126710788&ev=PageView&noscript=1" alt="" />
       </noscript>
 
-      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+      <div className="min-h-screen relative">
+        {/* Blurred background */}
+        <div
+          className="fixed inset-0 -z-10 bg-cover bg-center"
+          style={{
+            backgroundImage: 'url(/freshbath/bg-blur.png)',
+            filter: 'blur(12px)',
+            transform: 'scale(1.05)',
+          }}
+        />
+        <div className="fixed inset-0 -z-10 bg-white/60" aria-hidden />
+
         {/* Header */}
-        <header className="bg-white/95 backdrop-blur border-b border-slate-200 sticky top-0 z-50">
-          <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
+        <header className="bg-white/95 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-50">
+          <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
             <Link href="/freshbathremodel" className="flex items-center gap-3">
-              <Image src="/freshbath/logo.png" alt="Fresh Bath Renovations" width={56} height={56} className="object-contain" />
+              <Image src="/freshbath/logo.png" alt="Fresh Bath Renovations" width={48} height={48} className="object-contain" />
               <div>
-                <p className="text-lg font-bold text-slate-900 leading-tight">FRESH BATH</p>
-                <p className="text-sm font-bold uppercase tracking-wide" style={{ color: BRAND_COLOR }}>RENOVATIONS</p>
+                <p className="text-base font-bold text-slate-900 leading-tight">FRESH BATH</p>
+                <p className="text-xs font-bold uppercase tracking-wide" style={{ color: BRAND }}>RENOVATIONS</p>
               </div>
             </Link>
-            <Link href="/" className="text-sm font-medium text-slate-600 hover:text-slate-900 transition">← Back to Main</Link>
+            <nav className="hidden sm:flex items-center gap-6 text-sm font-medium text-slate-700">
+              <a href="#benefits">Why Us</a>
+              <a href="#services">Services</a>
+              <a href="#process">Process</a>
+              <a href="#faq">FAQ</a>
+              <a href="#form-section" className="px-4 py-2 rounded-full text-white font-bold text-sm" style={{ backgroundColor: BRAND }}>Get Free Quote</a>
+            </nav>
+            <Link href="/" className="text-sm text-slate-600 hover:text-slate-900">← Main Site</Link>
           </div>
         </header>
 
-        <main className="max-w-2xl mx-auto px-4 py-10 md:py-14">
-          {/* Hero */}
-          <section className="text-center mb-10 md:mb-12">
-            <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-3">
-              Bathroom Renovation <span style={{ color: BRAND_COLOR }}>Quote</span>
-            </h1>
-            <p className="text-lg text-slate-600 max-w-xl mx-auto">
-              Get a free, no-obligation estimate for your bathroom renovation. Tell us your project in a few simple steps.
-            </p>
-          </section>
-
-          {/* Progress */}
-          <div className="mb-6">
-            <div className="flex justify-between text-sm text-slate-600 mb-1">
-              <span>Progress</span>
-              <span>{progress}%</span>
+        {isDesktop ? (
+          <>
+            <div className="lg:mr-96">
+              <Hero />
+              <WhyChooseUs />
+              <Services />
+              <Process />
+              <Testimonials />
+              <BeforeAfter />
+              <FAQ />
+              <Footer />
             </div>
-            <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
-              <motion.div
-                className="h-full rounded-full"
-                style={{ backgroundColor: BRAND_COLOR }}
-                initial={{ width: 0 }}
-                animate={{ width: `${progress}%` }}
-                transition={{ duration: 0.3 }}
-              />
-            </div>
-          </div>
-
-          {/* Form */}
-          <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-6 md:p-8 mb-8">
-            <input ref={tfRef} type="hidden" id="xxTrustedFormCertUrl" name="xxTrustedFormCertUrl" />
-            <input id="leadid_token" type="hidden" name="universal_leadid" />
-
-            <AnimatePresence mode="wait">
-              {!submitted && currentStep && (
-                <motion.div key={step} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25 }} className="min-h-[120px]">
-                  <label className="block text-lg font-semibold text-slate-800 mb-4">{label}</label>
-                  {currentStep.type === 'radio' && currentStep.options ? (
-                    <div className="space-y-3">
-                      {currentStep.options.map((opt) => (
-                        <label key={opt.value} className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-[#5BA3D0] hover:bg-sky-50/50 cursor-pointer transition" style={{ borderColor: value === opt.value ? BRAND_COLOR : undefined, backgroundColor: value === opt.value ? `${BRAND_COLOR}10` : undefined }}>
-                          <input type="radio" name={currentStep.key} value={opt.value} checked={value === opt.value} onChange={(e) => setForm((f) => ({ ...f, [currentStep.key]: e.target.value }))} className="text-[#5BA3D0] focus:ring-[#5BA3D0]" />
-                          <span className="text-slate-700">{opt.labelEn}</span>
-                        </label>
-                      ))}
-                    </div>
-                  ) : (
-                    <input
-                      type={currentStep.type}
-                      value={value}
-                      onChange={(e) => {
-                        setForm((f) => ({ ...f, [currentStep.key]: e.target.value }));
-                        if (currentStep.key === 'zip_code') setZipCodeError(e.target.value.trim() && !validateZipCode(e.target.value.trim()) ? 'Out of coverage area' : '');
-                      }}
-                      placeholder={placeholder}
-                      className="w-full border border-slate-300 rounded-xl px-4 py-3 text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-[#5BA3D0] focus:border-[#5BA3D0]"
-                      autoFocus
-                    />
-                  )}
-                  {currentStep.key === 'zip_code' && zipCodeError && <p className="mt-2 text-sm text-red-600">{zipCodeError}</p>}
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            {!submitted && (
-              <div className="flex gap-3 mt-6">
-                {step > 0 && (
-                  <button type="button" onClick={() => setStep((s) => s - 1)} className="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-50">Back</button>
-                )}
-                <button
-                  type="button"
-                  onClick={isLastStep ? handleSubmit : handleNext}
-                  disabled={isSubmitting}
-                  className="flex-1 text-white font-semibold py-2.5 px-5 rounded-xl transition disabled:opacity-60"
-                  style={{ backgroundColor: BRAND_COLOR }}
-                >
-                  {isSubmitting ? 'Submitting...' : isLastStep ? 'Submit' : 'Next'}
-                </button>
+            <aside id="form-section" className="fixed right-0 top-0 h-full w-96 bg-white border-l border-slate-200 shadow-xl z-30 overflow-y-auto">
+              <div className="p-6">
+                <h2 className="text-xl font-bold text-slate-900 mb-1">Get Your Free Quote</h2>
+                <p className="text-sm text-slate-600 mb-6">Tell us about your bathroom renovation project.</p>
+                <div className="border-2 rounded-2xl p-4" style={{ borderColor: `${BRAND}40` }}>
+                  <FreshBathWizardForm compact />
+                </div>
               </div>
-            )}
-          </div>
-
-          {/* TCPA */}
-          <label className="bg-slate-50 p-4 rounded-xl border border-slate-200 block mb-10" data-tf-element-role="consent-language">
-            <span className="text-xs leading-relaxed text-slate-700">
-              By clicking Submit, You agree to give express consent to receive marketing communications regarding Home Improvement services by automatic dialing system and pre-recorded calls and artificial voice messages from <Link href="/partners" className="underline font-medium" style={{ color: BRAND_COLOR }}>Home Services Partners</Link> at the phone number and E-mail address provided by you, including wireless numbers, if applicable, even if you have previously registered the provided number on the Do not Call Registry. SMS/MMS and data messaging rates may apply. You understand that my consent here is not a condition for buying any goods or services. You agree to the <Link href="/privacy-policy" className="underline" target="_blank" rel="noreferrer">Privacy Policy</Link> and <Link href="/terms" className="underline" target="_blank" rel="noreferrer">Terms &amp; Conditions</Link>.
-            </span>
-          </label>
-
-          {/* FAQ */}
-          <section className="border-t border-slate-200 pt-10">
-            <h2 className="text-2xl font-bold text-slate-900 mb-6 text-center">Frequently Asked Questions</h2>
-            <div className="space-y-3">
-              {FAQS.map((faq, i) => (
-                <details key={i} className="bg-white border border-slate-200 p-4 rounded-xl shadow-sm group">
-                  <summary className="font-semibold cursor-pointer list-none flex justify-between items-center text-slate-800">
-                    {faq.q}
-                    <span className="ml-2 transition-transform group-open:rotate-180" style={{ color: BRAND_COLOR }}>▼</span>
-                  </summary>
-                  <p className="mt-2 text-slate-600 text-sm">{faq.a}</p>
-                </details>
-              ))}
+            </aside>
+          </>
+        ) : (
+          <>
+            <div id="form-section" className="bg-white border-b border-slate-200 shadow-sm py-6 px-4">
+              <div className="max-w-lg mx-auto">
+                <h2 className="text-xl font-bold text-slate-900 mb-2 text-center">Get Your Free Quote</h2>
+                <p className="text-sm text-slate-600 mb-4 text-center">Tell us about your bathroom renovation.</p>
+                <div className="border-2 rounded-2xl p-4" style={{ borderColor: `${BRAND}40` }}>
+                  <FreshBathWizardForm />
+                </div>
+              </div>
             </div>
-          </section>
-
-          {/* Footer */}
-          <footer className="mt-12 py-6 text-center text-sm text-slate-500 border-t border-slate-200">
-            <p>© Fresh Bath Renovations. Bathroom remodeling &amp; renovation services.</p>
-            <p className="mt-1">
-              <Link href="/" className="underline hover:text-slate-700">TopTier Bath Pros</Link> · <Link href="/privacy-policy" className="underline hover:text-slate-700">Privacy</Link> · <Link href="/terms" className="underline hover:text-slate-700">Terms</Link>
-            </p>
-          </footer>
-        </main>
+            <Hero />
+            <WhyChooseUs />
+            <Services />
+            <Process />
+            <Testimonials />
+            <BeforeAfter />
+            <FAQ />
+            <Footer />
+          </>
+        )}
       </div>
     </>
+  );
+}
+
+function Hero() {
+  return (
+    <section className="relative py-16 md:py-24 px-4 overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-white to-sky-50" />
+      <div className="relative max-w-4xl mx-auto text-center">
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-4xl md:text-5xl font-bold text-slate-900 mb-4"
+        >
+          Bathroom Renovation <span style={{ color: BRAND }}>Done Right</span>
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="text-xl text-slate-600 max-w-2xl mx-auto mb-8"
+        >
+          Transform your bathroom with expert design, quality materials, and professional installation. Free estimates, no obligation.
+        </motion.p>
+        <motion.a
+          href="#form-section"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="inline-block px-8 py-3 rounded-full text-white font-bold shadow-lg hover:shadow-xl transition"
+          style={{ backgroundColor: BRAND }}
+        >
+          Get Free Estimate →
+        </motion.a>
+      </div>
+    </section>
+  );
+}
+
+function WhyChooseUs() {
+  const features = [
+    { icon: <ShieldCheck className="w-8 h-8" style={{ color: BRAND }} />, title: 'Licensed & Insured', desc: 'Bathroom renovation specialists with years of experience.' },
+    { icon: <Zap className="w-8 h-8" style={{ color: BRAND }} />, title: 'Fast Turnaround', desc: 'Efficient design, sourcing, and installation without delays.' },
+    { icon: <CheckCircle className="w-8 h-8" style={{ color: BRAND }} />, title: 'Quality Warranty', desc: 'Warranties on materials and workmanship.' },
+  ];
+  return (
+    <section id="benefits" className="py-16 px-4 bg-white">
+      <div className="max-w-5xl mx-auto">
+        <h2 className="text-3xl font-bold text-slate-900 mb-10 text-center">Why Homeowners Choose Fresh Bath Renovations</h2>
+        <div className="grid md:grid-cols-3 gap-8">
+          {features.map((f, i) => (
+            <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="bg-slate-50 p-6 rounded-2xl border border-slate-100 text-center">
+              <div className="flex justify-center mb-3">{f.icon}</div>
+              <h3 className="font-semibold text-slate-900 mb-2">{f.title}</h3>
+              <p className="text-slate-600 text-sm">{f.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Services() {
+  const services = [
+    'Full bathroom remodels',
+    'Tub-to-shower conversions',
+    'Vanity & sink upgrades',
+    'Tile replacement',
+    'Fixtures & lighting',
+  ];
+  return (
+    <section id="services" className="py-16 px-4" style={{ backgroundColor: `${BRAND}10` }}>
+      <div className="max-w-5xl mx-auto">
+        <h2 className="text-3xl font-bold text-slate-900 mb-8 text-center">Bathroom Renovation Services</h2>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {services.map((s, i) => (
+            <div key={i} className="bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex items-center gap-3">
+              <CheckCircle className="w-5 h-5 flex-shrink-0" style={{ color: BRAND }} />
+              <span className="font-medium text-slate-800">{s}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Process() {
+  const steps = [
+    { icon: <Pencil className="w-8 h-8" style={{ color: BRAND }} />, title: 'Consultation', desc: 'We align style, layout, and budget with your goals.' },
+    { icon: <Ruler className="w-8 h-8" style={{ color: BRAND }} />, title: 'Materials & Permits', desc: 'Choose finishes and we handle permits.' },
+    { icon: <ShowerHead className="w-8 h-8" style={{ color: BRAND }} />, title: 'Installation', desc: 'Certified installers complete the work on time.' },
+    { icon: <CheckCircle className="w-8 h-8" style={{ color: BRAND }} />, title: 'Walkthrough', desc: 'We verify every detail and deliver.' },
+  ];
+  return (
+    <section id="process" className="py-16 px-4 bg-white">
+      <div className="max-w-5xl mx-auto">
+        <h2 className="text-3xl font-bold text-slate-900 mb-10 text-center">Our 4-Step Process</h2>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {steps.map((s, i) => (
+            <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="bg-slate-50 p-6 rounded-2xl border border-slate-100 text-center">
+              <div className="flex justify-center mb-3">{s.icon}</div>
+              <h3 className="font-semibold text-slate-900 mb-1">{s.title}</h3>
+              <p className="text-sm text-slate-600">{s.desc}</p>
+              <a href="#form-section" className="inline-block mt-4 px-4 py-2 rounded-full text-white text-sm font-bold" style={{ backgroundColor: BRAND }}>Get Quote</a>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Testimonials() {
+  const reviews = [
+    { name: 'Carlos M.', text: 'Excellent guidance and flawless finishes in my primary bathroom.', img: '/clients/carlos.jpg' },
+    { name: 'Lindsey W.', text: 'They converted my tub to a shower. Clean and fast work.', img: '/clients/lindsey.jpg' },
+    { name: 'Laura P.', text: 'They handled permits and delivered on time.', img: '/clients/laura.jpg' },
+  ];
+  return (
+    <section className="py-16 px-4" style={{ backgroundColor: `${BRAND}08` }}>
+      <div className="max-w-5xl mx-auto">
+        <h2 className="text-3xl font-bold text-slate-900 mb-10 text-center">What Our Customers Say</h2>
+        <div className="grid md:grid-cols-3 gap-6">
+          {reviews.map((r, i) => (
+            <div key={i} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+              <p className="text-slate-700 mb-4">&ldquo;{r.text}&rdquo;</p>
+              <div className="flex items-center gap-3">
+                <Image src={r.img} alt={r.name} width={40} height={40} className="rounded-full object-cover" />
+                <span className="font-semibold text-slate-900">{r.name}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function BeforeAfter() {
+  return (
+    <section className="py-16 px-4 bg-white">
+      <div className="max-w-5xl mx-auto">
+        <h2 className="text-3xl font-bold text-slate-900 mb-3 text-center">Fresh Bath Signature Bathrooms</h2>
+        <p className="text-sm md:text-base text-slate-600 max-w-2xl mx-auto mb-10 text-center">
+          Two different ways to elevate your bathroom – from bright spa-like retreats to moody luxury suites.
+        </p>
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-lg">
+            <Image src="/freshbath/style-bright.png" alt="Bright spa-style bathroom with freestanding tub and large vanity" width={600} height={400} className="w-full h-64 object-cover" />
+            <div className="p-3 bg-slate-50 text-sm font-medium text-slate-700 flex items-center justify-between">
+              <span>Bright Spa · Freestanding tub, natural light & warm wood vanity</span>
+              <span className="text-xs uppercase tracking-wide text-sky-600">SPA STYLE</span>
+            </div>
+          </div>
+          <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-lg">
+            <Image src="/freshbath/style-dark.png" alt="Dark luxury bathroom with stone tile, double vanity and soaking tub" width={600} height={400} className="w-full h-64 object-cover" />
+            <div className="p-3 bg-slate-50 text-sm font-medium text-slate-700 flex items-center justify-between">
+              <span>Moody Luxury · Stone finishes, double vanity & soaking tub</span>
+              <span className="text-xs uppercase tracking-wide text-amber-600">LUXURY</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FAQ() {
+  return (
+    <section id="faq" className="py-16 px-4 bg-slate-50">
+      <div className="max-w-3xl mx-auto">
+        <h2 className="text-3xl font-bold text-slate-900 mb-8 text-center">Frequently Asked Questions</h2>
+        <div className="space-y-3">
+          {FAQS.map((faq, i) => (
+            <details key={i} className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm group">
+              <summary className="font-semibold cursor-pointer list-none flex justify-between items-center text-slate-800">
+                {faq.q}
+                <span className="ml-2 transition-transform group-open:rotate-180" style={{ color: BRAND }}>▼</span>
+              </summary>
+              <p className="mt-2 text-slate-600 text-sm">{faq.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="bg-slate-900 text-white py-12 px-6">
+      <div className="max-w-5xl mx-auto text-center">
+        <div className="flex items-center justify-center gap-2 mb-4">
+          <Image src="/freshbath/logo.png" alt="Fresh Bath" width={40} height={40} className="object-contain" />
+          <div className="text-left">
+            <p className="text-sm font-bold text-white">FRESH BATH</p>
+            <p className="text-xs font-bold" style={{ color: '#7ec8e3' }}>RENOVATIONS</p>
+          </div>
+        </div>
+        <p className="text-slate-400 text-sm mb-6">Professional bathroom renovation & remodeling. Free estimates.</p>
+        <div className="flex flex-wrap justify-center gap-4 text-sm">
+          <Link href="/" className="text-slate-400 hover:text-white">TopTier Bath Pros</Link>
+          <Link href="/privacy-policy" className="text-slate-400 hover:text-white">Privacy</Link>
+          <Link href="/terms" className="text-slate-400 hover:text-white">Terms</Link>
+          <Link href="/partners" className="text-slate-400 hover:text-white">Partners</Link>
+        </div>
+        <p className="mt-6 text-slate-500 text-xs">© {new Date().getFullYear()} Fresh Bath Renovations</p>
+      </div>
+    </footer>
   );
 }
