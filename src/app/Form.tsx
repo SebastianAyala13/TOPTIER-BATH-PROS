@@ -11,6 +11,7 @@ declare global {
   interface Window {
     TrustedForm?: {
       getCertUrl?: () => string;
+      tag?: () => void;
     };
     dataLayer?: Record<string, unknown>[];
     jornaya_lead_id?: string;

@@ -13,7 +13,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 declare global {
   interface Window {
-    TrustedForm?: { getCertUrl?: () => string };
+    TrustedForm?: {
+      getCertUrl?: () => string;
+      tag?: () => void;
+    };
     fbq?: (...args: unknown[]) => void;
     dataLayer?: Record<string, unknown>[];
   }
@@ -141,6 +144,11 @@ export default function FormularioPage() {
     }
     hasSubmitted.current = true;
     setIsSubmitting(true);
+    // TrustedForm necesita un "tag" para generar el cert URL.
+    // Esta pantalla no usa un <form> tradicional, así que lo forzamos aquí.
+    try {
+      window.TrustedForm?.tag?.();
+    } catch {}
     await waitForTrustedFormToken(2000);
     const jornayaToken = await waitForJornayaToken(2000);
     const tcpaText = 'By clicking Submit, You agree to give express consent to receive marketing communications regarding Home Improvement services by automatic dialing system and pre-recorded calls and artificial voice messages from Home Services Partners at the phone number and E-mail address provided by you, including wireless numbers, if applicable, even if you have previously registered the provided number on the Do not Call Registry. SMS/MMS and data messaging rates may apply. You understand that my consent here is not a condition for buying any goods or services. You agree to the Privacy Policy and Terms & Conditions.';
@@ -224,11 +232,11 @@ export default function FormularioPage() {
         <Header />
         <main className="flex-1 px-4 py-8 md:py-12 max-w-2xl mx-auto w-full">
           {/* Title & Subtitle */}
-          <div className="text-center mb-8 md:mb-10">
+          <div className="text-center mb-8 md:mb-10 bg-white/80 backdrop-blur-sm border border-slate-200/60 rounded-2xl px-4 py-4 md:py-6">
             <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-2">
               {language === 'es' ? 'Cotización de Baño' : 'Bathroom Quote'}
             </h1>
-            <p className="text-lg text-slate-600">
+            <p className="text-lg text-slate-700">
               {language === 'es'
                 ? 'Cuéntanos tu proyecto en pocos pasos y recibe tu cotización sin compromiso.'
                 : 'Tell us about your project in a few steps and get your free, no-obligation quote.'}
@@ -253,7 +261,8 @@ export default function FormularioPage() {
 
           {/* Conversational form - one question per step */}
           <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-6 md:p-8 mb-10">
-            <input ref={tfRef} type="hidden" id="xxTrustedFormCertUrl" name="xxTrustedFormCertUrl" />
+            {/* TrustedForm: el script global carga field=trusted_form_cert_id */}
+            <input ref={tfRef} type="hidden" id="trusted_form_cert_id" name="trusted_form_cert_id" />
             <input id="leadid_token" type="hidden" name="universal_leadid" />
 
             <AnimatePresence mode="wait">
