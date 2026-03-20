@@ -88,24 +88,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 
                 // Enhanced tracking for form interactions
                 document.addEventListener('DOMContentLoaded', function() {
-                  // Track form focus events
-                  var forms = document.querySelectorAll('form');
-                  forms.forEach(function(form) {
-                    var inputs = form.querySelectorAll('input, select, textarea');
-                    inputs.forEach(function(input) {
-                      input.addEventListener('focus', function() {
-                        if (window.TrustedForm) {
-                          window.TrustedForm.tag();
-                        }
-                      });
-                    });
-                  });
-                  
-                  // Track form submission attempts
-                  document.addEventListener('submit', function(e) {
-                    if (window.TrustedForm) {
-                      window.TrustedForm.tag();
+                  // Track form focus - incluye inputs fuera de <form> (ej. wizard /formulario)
+                  document.addEventListener('focusin', function(e) {
+                    var t = e.target;
+                    if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT')) {
+                      if (window.TrustedForm) window.TrustedForm.tag();
                     }
+                  });
+                  document.addEventListener('submit', function() {
+                    if (window.TrustedForm) window.TrustedForm.tag();
                   });
                 });
               })();

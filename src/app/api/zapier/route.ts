@@ -67,7 +67,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       language: formBody.language ?? 'en',
       website: formBody.website ?? 'toptierbathpros.com',
     };
-    
+
     // DEBUG: Log del payload final
     console.log('🔍 Payload final para Zapier:', JSON.stringify(payload, null, 2));
 

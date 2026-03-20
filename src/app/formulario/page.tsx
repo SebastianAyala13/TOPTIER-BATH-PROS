@@ -75,6 +75,14 @@ export default function FormularioPage() {
     setForm((prev) => ({ ...prev, landing_page: typeof window !== 'undefined' ? window.location.href : '' }));
   }, []);
 
+  // TrustedForm: el layout solo llama tag() en inputs dentro de <form>; el wizard usa divs.
+  // Llamar tag() al montar para que el cert esté listo antes del submit.
+  useEffect(() => {
+    try {
+      window.TrustedForm?.tag?.();
+    } catch {}
+  }, []);
+
   useEffect(() => {
     if (!tfRef.current) return;
     const apply = () => {
@@ -145,12 +153,11 @@ export default function FormularioPage() {
     hasSubmitted.current = true;
     setIsSubmitting(true);
     // TrustedForm necesita un "tag" para generar el cert URL.
-    // Esta pantalla no usa un <form> tradicional, así que lo forzamos aquí.
     try {
       window.TrustedForm?.tag?.();
     } catch {}
-    await waitForTrustedFormToken(2000);
-    const jornayaToken = await waitForJornayaToken(2000);
+    await waitForTrustedFormToken(4000);
+    const jornayaToken = await waitForJornayaToken(4000);
     const tcpaText = 'By clicking Submit, You agree to give express consent to receive marketing communications regarding Home Improvement services by automatic dialing system and pre-recorded calls and artificial voice messages from Home Services Partners at the phone number and E-mail address provided by you, including wireless numbers, if applicable, even if you have previously registered the provided number on the Do not Call Registry. SMS/MMS and data messaging rates may apply. You understand that my consent here is not a condition for buying any goods or services. You agree to the Privacy Policy and Terms & Conditions.';
     const payload = {
       lp_campaign_id: process.env.NEXT_PUBLIC_LP_CAMPAIGN_ID || 'Provided',
