@@ -30,6 +30,10 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const forwarded = req.headers.get('x-forwarded-for');
     const ip = forwarded ? forwarded.split(',')[0] : req.headers.get('x-real-ip') || 'unknown';
 
+    const certRaw = formBody.trusted_form_cert_id ?? formBody.xxTrustedFormCertUrl ?? '';
+    const cert =
+      typeof certRaw === 'string' && certRaw.trim() ? certRaw.trim() : 'NOT_PROVIDED';
+
     const payload = {
       lp_campaign_id: formBody.lp_campaign_id ?? 'Provided',
       lp_campaign_key: formBody.lp_campaign_key ?? 'Provided',
@@ -45,7 +49,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       phone_home: formBody.phone_home ?? '',
       email_address: formBody.email_address ?? '',
       ip_address: ip,
-      trusted_form_cert_id: formBody.trusted_form_cert_id ?? formBody.xxTrustedFormCertUrl ?? 'NOT_PROVIDED',
+      trusted_form_cert_id: cert,
+      xxTrustedFormCertUrl: cert === 'NOT_PROVIDED' ? '' : cert,
       landing_page: formBody.landing_page ?? '',
       jornaya_lead_id: formBody.jornaya_lead_id ?? formBody.leadid_token ?? formBody.universal_leadid ?? '',
       repair_or_replace: formBody.repair_or_replace ?? '',

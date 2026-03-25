@@ -114,10 +114,20 @@ export default function FormularioPage() {
     return poll();
   }
 
+  function resolveTrustedFormCert(hidden: HTMLInputElement | null): string {
+    const fromHidden = hidden?.value?.trim() || '';
+    const fromApi =
+      (typeof window !== 'undefined' && window.TrustedForm?.getCertUrl?.()?.trim()) || '';
+    const fromDom =
+      document.querySelector<HTMLInputElement>('input[name="trusted_form_cert_id"]')?.value?.trim() ||
+      '';
+    return fromHidden || fromApi || fromDom;
+  }
+
   async function waitForTrustedFormToken(maxWait = 2000): Promise<string> {
     const start = Date.now();
     const poll = async (): Promise<string> => {
-      const val = tfRef.current?.value?.trim() || (typeof window !== 'undefined' && window.TrustedForm?.getCertUrl?.()) || '';
+      const val = resolveTrustedFormCert(tfRef.current);
       if (val) return val;
       if (Date.now() - start >= maxWait) return '';
       await new Promise((r) => setTimeout(r, 150));
@@ -158,6 +168,7 @@ export default function FormularioPage() {
     } catch {}
     await waitForTrustedFormToken(4000);
     const jornayaToken = await waitForJornayaToken(4000);
+    const trustedCert = resolveTrustedFormCert(tfRef.current) || tfToken.trim();
     const tcpaText = 'By clicking Submit, You agree to give express consent to receive marketing communications regarding Home Improvement services by automatic dialing system and pre-recorded calls and artificial voice messages from Home Services Partners at the phone number and E-mail address provided by you, including wireless numbers, if applicable, even if you have previously registered the provided number on the Do not Call Registry. SMS/MMS and data messaging rates may apply. You understand that my consent here is not a condition for buying any goods or services. You agree to the Privacy Policy and Terms & Conditions.';
     const payload = {
       lp_campaign_id: process.env.NEXT_PUBLIC_LP_CAMPAIGN_ID || 'Provided',
@@ -176,7 +187,8 @@ export default function FormularioPage() {
       repair_or_replace: form.repair_or_replace,
       tcpaText,
       'consent-language': true,
-      trusted_form_cert_id: tfRef.current?.value || tfToken || '',
+      trusted_form_cert_id: trustedCert,
+      xxTrustedFormCertUrl: trustedCert,
       jornaya_lead_id: jornayaToken || (document.getElementById('leadid_token') as HTMLInputElement)?.value || '',
       landing_page: form.landing_page || (typeof window !== 'undefined' ? window.location.href : ''),
       bathroomStyle: '',
