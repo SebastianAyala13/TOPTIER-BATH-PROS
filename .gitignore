@@ -23,3 +23,8 @@ pnpm-debug.log*
 # build cache
 coverage/
 .cache/
+
+# Excel files
+*.xlsx
+*.xls
+*.xlsm
