@@ -4,7 +4,73 @@
 
 El proyecto ha sido exitosamente convertido para funcionar como sitio estático en Hostinger.
 
-## 📁 Archivos Listos para Subir
+## � Actualizar ZIP Codes Autorizados
+
+Los ZIP codes permitidos en los formularios se almacenan en `src/lib/authorizedZipCodes.ts` y provienen de un archivo Excel.
+
+### **Procedimiento para Actualizar:**
+
+#### 1. **Preparar el archivo Excel**
+- Abre el archivo .xlsx que contiene los datos
+- Navega a la hoja **"Zips-Bath"**
+- Verifica que la columna **F** (Zips exl landing) contenga los códigos ZIP
+
+#### 2. **Colocar el archivo en la carpeta del proyecto**
+```bash
+# Copia el .xlsx a la raíz del proyecto o en una carpeta data/
+cp /ruta/al/archivo.xlsx ./data/zipcodes.xlsx
+```
+
+#### 3. **Ejecutar el script generador**
+```bash
+# El script leerá Excel y generará src/lib/authorizedZipCodes.ts
+npm run update:zips -- data/zipcodes.xlsx
+```
+
+O si prefieres usar Python directamente:
+```bash
+python scripts/generate_authorized_zip_codes.py data/zipcodes.xlsx
+```
+
+#### 4. **Validar los cambios**
+```bash
+# Revisar el diff del archivo generado
+git diff src/lib/authorizedZipCodes.ts
+
+# Verificar que la sintaxis TypeScript es válida
+npm run lint
+
+# Hacer un build para asegurar compatibilidad
+npm run build
+```
+
+#### 5. **Probar en la interfaz**
+- Ingresa un ZIP code válido en cualquiera de los formularios (Form.tsx, formulario/page.tsx o freshbathremodel/ page.tsx)
+- Verifica que se acepte
+- Ingresa un ZIP code inválido y verifica que muestre error
+
+#### 6. **Desplegar**
+```bash
+npm run build
+# Subir los cambios a producción (ver secciones de despliegue abajo)
+```
+
+### **Notas Técnicas**
+
+- El script usa **openpyxl** para leer Excel. Si no está instalado:
+  ```bash
+  pip install openpyxl
+  ```
+- El script **automáticamente**:
+  - Elimina duplicados
+  - Normaliza ZIP codes a 5 dígitos
+  - Ordena la lista alfabéticamente
+  - Valida la hoja y columna esperadas
+- Salida esperada: `Generated ✓ authorized zip codes from X rows, Y valid codes`
+
+---
+
+## �📁 Archivos Listos para Subir
 
 **Subir TODO el contenido de la carpeta `/out` a `public_html` en Hostinger:**
 
