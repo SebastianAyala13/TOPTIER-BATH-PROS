@@ -172,7 +172,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.6 }}
         >
           <a
-            href="#form-section"
+            href="/formulario"
             className="inline-block bg-teal-500 hover:bg-teal-600 text-white font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
           >
             ✏️ {t.cta}

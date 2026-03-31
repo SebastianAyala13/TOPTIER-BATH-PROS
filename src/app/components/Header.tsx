@@ -27,7 +27,7 @@ export default function Header() {
         {/* Menú + idioma */}
           <div className="flex items-center space-x-6">
             <nav className="hidden sm:flex space-x-6 text-sm text-slate-700 font-medium">
-              <a href="#form-section" className="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-full font-bold text-sm transition-all duration-300 hover:shadow-lg">
+              <a href="/formulario" className="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-full font-bold text-sm transition-all duration-300 hover:shadow-lg">
                 ✏️ Fill Out Form - Free Quote
               </a>
               <a href="#benefits" className="hover:text-teal-500 transition">
