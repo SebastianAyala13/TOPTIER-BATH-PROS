@@ -93,7 +93,7 @@ export default function Promotions() {
               {card.icon}
               <h3 className="text-lg font-semibold mb-2">{card.title}</h3>
               <p className="text-sm text-slate-600">{card.description}</p>
-              <a href="#form-section" className="mt-4 inline-block bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-600 hover:to-blue-700 text-white px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 hover:shadow-lg">
+              <a href="/formulario" className="mt-4 inline-block bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-600 hover:to-blue-700 text-white px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 hover:shadow-lg">
                 ✏️ Fill Out Form - Get Free Quote
               </a>
             </motion.div>

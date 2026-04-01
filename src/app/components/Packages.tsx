@@ -58,7 +58,7 @@ export default function Packages() {
                   ))}
                 </ul>
                 <div className="mt-5">
-                  <a href="#form-section" className="inline-block bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-600 hover:to-blue-700 text-white font-bold py-3 px-6 rounded-full transition-all duration-300 hover:shadow-lg">
+                  <a href="/formulario" className="inline-block bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-600 hover:to-blue-700 text-white font-bold py-3 px-6 rounded-full transition-all duration-300 hover:shadow-lg">
                     ✏️ Fill Out Form - Get Free Quote
                   </a>
                 </div>
