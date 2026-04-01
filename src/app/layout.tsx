@@ -92,11 +92,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   document.addEventListener('focusin', function(e) {
                     var t = e.target;
                     if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT')) {
-                      if (window.TrustedForm) window.TrustedForm.tag();
+                      if (window.trustedFormStartRecording) window.trustedFormStartRecording();
                     }
                   });
                   document.addEventListener('submit', function() {
-                    if (window.TrustedForm) window.TrustedForm.tag();
+                    if (window.trustedFormStartRecording) window.trustedFormStartRecording();
                   });
                 });
               })();

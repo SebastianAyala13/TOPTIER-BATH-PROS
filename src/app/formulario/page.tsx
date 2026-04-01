@@ -13,10 +13,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 declare global {
   interface Window {
-    TrustedForm?: {
-      getCertUrl?: () => string;
-      tag?: () => void;
+    trustedForm?: {
+      cert_id?: string;
+      token?: string;
+      startRecording?: () => void;
+      stopRecording?: () => void;
     };
+    trustedFormStartRecording?: () => void;
+    trustedFormStopRecording?: () => void;
     fbq?: (...args: unknown[]) => void;
     dataLayer?: Record<string, unknown>[];
   }
@@ -79,7 +83,7 @@ export default function FormularioPage() {
   // Llamar tag() al montar para que el cert esté listo antes del submit.
   useEffect(() => {
     try {
-      window.TrustedForm?.tag?.();
+      window.trustedFormStartRecording?.();
     } catch {}
   }, []);
 
@@ -87,7 +91,8 @@ export default function FormularioPage() {
     if (!tfRef.current) return;
     const apply = () => {
       try {
-        const val = (typeof window !== 'undefined' && window.TrustedForm?.getCertUrl?.()) || '';
+        const certId = (typeof window !== 'undefined' && window.trustedForm?.cert_id) || '';
+      const val = certId ? `https://cert.trustedform.com/${certId}` : '';
         if (val && tfRef.current) {
           tfRef.current.value = val;
           setTfToken(val);
@@ -116,8 +121,8 @@ export default function FormularioPage() {
 
   function resolveTrustedFormCert(hidden: HTMLInputElement | null): string {
     const fromHidden = hidden?.value?.trim() || '';
-    const fromApi =
-      (typeof window !== 'undefined' && window.TrustedForm?.getCertUrl?.()?.trim()) || '';
+    const certId = (typeof window !== 'undefined' && window.trustedForm?.cert_id?.trim()) || '';
+    const fromApi = certId ? `https://cert.trustedform.com/${certId}` : '';
     const fromDom =
       document.querySelector<HTMLInputElement>('input[name="trusted_form_cert_id"]')?.value?.trim() ||
       '';
@@ -164,7 +169,7 @@ export default function FormularioPage() {
     setIsSubmitting(true);
     // TrustedForm necesita un "tag" para generar el cert URL.
     try {
-      window.TrustedForm?.tag?.();
+      window.trustedFormStartRecording?.();
     } catch {}
     await waitForTrustedFormToken(4000);
     const jornayaToken = await waitForJornayaToken(4000);
